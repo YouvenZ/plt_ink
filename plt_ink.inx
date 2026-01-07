@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <name>Matplotlib Figure Generator</name>
+    <id>org.inkscape.matplotlib.generator</id>
+    
+    <param name="tab" type="notebook">
+        <page name="script" gui-text="Script">
+            <param name="python_path" type="string" gui-text="Python executable path:">python</param>
+            <label>Path to Python with matplotlib installed (e.g., python, python3, or full path)</label>
+            <spacer/>
+            
+            <param name="script_source" type="optiongroup" appearance="combo" gui-text="Script source:">
+                <option value="inline">Inline code</option>
+                <option value="file">External file</option>
+                <option value="bank">Script Bank</option>
+            </param>
+            <spacer/>
+            
+            <param name="script_code" type="string" appearance="multiline" max_length="1000" gui-text="Python code:">import matplotlib.pyplot as plt
+import numpy as np
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+plt.plot(x, y)
+plt.title('Sine Wave')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.grid(True)</param>
+            <label>Multi-line code supported. Don't include plt.show() or plt.savefig()</label>
+            <spacer/>
+            
+            <param name="script_file" type="string" gui-text="Script file path:"></param>
+            <label>Only used when 'External file' is selected</label>
+        </page>
+        
+        <page name="bank" gui-text="Script Bank">
+            <label appearance="header">Research Figure Templates</label>
+            <label>Pre-built scripts for common research visualizations</label>
+            <spacer/>
+            
+            <param name="bank_category" type="optiongroup" appearance="combo" gui-text="Category:">
+                <option value="line_plots">Line Plots</option>
+                <option value="scatter_plots">Scatter Plots</option>
+                <option value="bar_charts">Bar Charts</option>
+                <option value="statistical">Statistical Plots</option>
+                <option value="heatmaps">Heatmaps &amp; Matrices</option>
+                <option value="time_series">Time Series</option>
+                <option value="distributions">Distributions</option>
+                <option value="multi_panel">Multi-Panel Figures</option>
+            </param>
+            <spacer/>
+            
+            <param name="bank_script" type="optiongroup" appearance="combo" gui-text="Script:">
+                <!-- Line Plots -->
+                <option value="basic_line">Basic Line Plot</option>
+                <option value="multi_line">Multiple Lines with Legend</option>
+                <option value="error_bars">Line with Error Bars</option>
+                <option value="fill_between">Filled Area Plot</option>
+                <!-- Scatter Plots -->
+                <option value="basic_scatter">Basic Scatter Plot</option>
+                <option value="scatter_regression">Scatter with Regression</option>
+                <option value="bubble_chart">Bubble Chart</option>
+                <!-- Bar Charts -->
+                <option value="basic_bar">Basic Bar Chart</option>
+                <option value="grouped_bar">Grouped Bar Chart</option>
+                <option value="stacked_bar">Stacked Bar Chart</option>
+                <option value="horizontal_bar">Horizontal Bar Chart</option>
+                <!-- Statistical -->
+                <option value="box_plot">Box Plot</option>
+                <option value="violin_plot">Violin Plot</option>
+                <option value="error_bar_plot">Error Bar Comparison</option>
+                <!-- Heatmaps -->
+                <option value="correlation_matrix">Correlation Matrix</option>
+                <option value="basic_heatmap">Basic Heatmap</option>
+                <!-- Time Series -->
+                <option value="time_series_basic">Basic Time Series</option>
+                <option value="time_series_dual_axis">Dual Y-Axis Time Series</option>
+                <!-- Distributions -->
+                <option value="histogram">Histogram</option>
+                <option value="kde_plot">KDE Density Plot</option>
+                <option value="histogram_kde">Histogram with KDE</option>
+                <!-- Multi-Panel -->
+                <option value="subplot_2x2">2x2 Subplot Grid</option>
+                <option value="subplot_comparison">Side-by-side Comparison</option>
+            </param>
+            <spacer/>
+            
+            <label>Note: Select category then choose a script. Scripts use extension settings for styling.</label>
+            <label>Data can be loaded from the Data Import tab or use sample data.</label>
+        </page>
+        
+        <page name="format" gui-text="Format">
+            <param name="output_format" type="optiongroup" appearance="combo" gui-text="Output format:">
+                <option value="svg">SVG (Vector, best for Inkscape)</option>
+                <option value="png">PNG (Raster)</option>
+                <option value="pdf">PDF (Vector)</option>
+            </param>
+            <spacer/>
+            
+            <param name="figure_width" type="float" min="1.0" max="50.0" precision="1" gui-text="Figure width (inches):">8.0</param>
+            <param name="figure_height" type="float" min="1.0" max="50.0" precision="1" gui-text="Figure height (inches):">6.0</param>
+            <label>Matplotlib uses inches as unit (1 inch = 96 pixels at default DPI)</label>
+            <spacer/>
+            
+            <param name="dpi" type="int" min="50" max="600" gui-text="DPI (resolution):">96</param>
+            <label>96 DPI = standard screen resolution (matches Inkscape default)</label>
+            <label>Higher DPI = better quality but larger file size</label>
+            <spacer/>
+            
+            <param name="transparent" type="bool" gui-text="Transparent background">false</param>
+            <param name="tight_layout" type="bool" gui-text="Use tight layout">true</param>
+        </page>
+        
+        <page name="style" gui-text="Style">
+            <param name="plot_style" type="optiongroup" appearance="combo" gui-text="Plot style:">
+                <option value="default">Default</option>
+                <option value="seaborn-v0_8">Seaborn</option>
+                <option value="ggplot">ggplot</option>
+                <option value="bmh">Bayesian Methods</option>
+                <option value="dark_background">Dark Background</option>
+                <option value="grayscale">Grayscale</option>
+                <option value="fivethirtyeight">FiveThirtyEight</option>
+                <option value="tableau-colorblind10">Tableau Colorblind</option>
+            </param>
+            <spacer/>
+            
+            <param name="color_map" type="optiongroup" appearance="combo" gui-text="Color map:">
+                <option value="viridis">Viridis</option>
+                <option value="plasma">Plasma</option>
+                <option value="inferno">Inferno</option>
+                <option value="magma">Magma</option>
+                <option value="coolwarm">Cool Warm</option>
+                <option value="rainbow">Rainbow</option>
+                <option value="jet">Jet</option>
+                <option value="hsv">HSV</option>
+            </param>
+            <spacer/>
+            
+            <param name="grid" type="bool" gui-text="Show grid">true</param>
+            <param name="legend" type="bool" gui-text="Show legend">true</param>
+            <param name="legend_position" type="optiongroup" appearance="combo" gui-text="Legend position:">
+                <option value="best">Best</option>
+                <option value="upper right">Upper Right</option>
+                <option value="upper left">Upper Left</option>
+                <option value="lower right">Lower Right</option>
+                <option value="lower left">Lower Left</option>
+                <option value="center">Center</option>
+            </param>
+        </page>
+        
+        <page name="placement" gui-text="Placement">
+            <param name="position_mode" type="optiongroup" appearance="combo" gui-text="Position:">
+                <option value="center">Center of canvas</option>
+                <option value="cursor">At cursor/selected object</option>
+                <option value="top_left">Top left</option>
+                <option value="top_center">Top center</option>
+                <option value="top_right">Top right</option>
+                <option value="bottom_left">Bottom left</option>
+                <option value="bottom_center">Bottom center</option>
+                <option value="bottom_right">Bottom right</option>
+            </param>
+            <label>Figure will be inserted at original size (width × height × DPI)</label>
+            <spacer/>
+            
+            <param name="embed_image" type="bool" gui-text="Embed image in SVG">true</param>
+            <label>If unchecked, links to external file (not recommended)</label>
+        </page>
+        
+        <page name="advanced" gui-text="Advanced">
+            <param name="font_family" type="string" gui-text="Font family:">sans-serif</param>
+            <param name="font_size" type="int" min="6" max="72" gui-text="Base font size:">10</param>
+            <spacer/>
+            
+            <param name="line_width" type="float" min="0.5" max="10.0" precision="1" gui-text="Line width:">1.5</param>
+            <param name="marker_size" type="float" min="1.0" max="20.0" precision="1" gui-text="Marker size:">6.0</param>
+            <spacer/>
+            
+            <param name="use_latex" type="bool" gui-text="Use LaTeX rendering">false</param>
+            <label>Requires LaTeX installation on system</label>
+            <spacer/>
+            
+            <param name="save_script" type="bool" gui-text="Save generated script to file">false</param>
+            <param name="script_save_path" type="string" gui-text="Script save path:"></param>
+            <spacer/>
+            
+            <param name="keep_temp_files" type="bool" gui-text="Keep temporary files for debugging">false</param>
+        </page>
+        
+        <page name="data" gui-text="Data Import">
+            <param name="use_data_file" type="bool" gui-text="Import data from file">false</param>
+            <param name="data_file_path" type="string" gui-text="Data file path:"></param>
+            <param name="data_format" type="optiongroup" appearance="combo" gui-text="Data format:">
+                <option value="csv">CSV</option>
+                <option value="txt">Text (space/tab separated)</option>
+                <option value="excel">Excel (.xlsx)</option>
+                <option value="json">JSON</option>
+            </param>
+            <spacer/>
+            
+            <param name="csv_delimiter" type="string" gui-text="CSV delimiter:">,</param>
+            <param name="skip_header" type="bool" gui-text="Skip header row">true</param>
+            <spacer/>
+            
+            <param name="x_column" type="int" min="0" max="100" gui-text="X column index (0-based):">0</param>
+            <param name="y_column" type="int" min="0" max="100" gui-text="Y column index (0-based):">1</param>
+            <spacer/>
+            
+            <label>When using Script Bank with data import:</label>
+            <label>- x_data and y_data arrays will be available</label>
+            <label>- df (DataFrame) available for CSV/Excel</label>
+        </page>
+        
+        <page name="help" gui-text="Help">
+            <label appearance="header">Matplotlib Figure Generator</label>
+            <spacer/>
+            <label>How to use:</label>
+            <label>1. Ensure matplotlib is installed (pip install matplotlib)</label>
+            <label>2. Select script source: inline, file, or Script Bank</label>
+            <label>3. For Script Bank: choose category and script</label>
+            <label>4. Configure format, style, and placement</label>
+            <label>5. Optionally import data from CSV/Excel</label>
+            <label>6. Click Apply to generate and insert figure</label>
+            <spacer/>
+            <label appearance="header">Script Bank Categories:</label>
+            <label>• Line Plots: Basic, multi-line, error bars, filled</label>
+            <label>• Scatter: Basic, regression, bubble charts</label>
+            <label>• Bar Charts: Basic, grouped, stacked, horizontal</label>
+            <label>• Statistical: Box plots, violin, error bars</label>
+            <label>• Heatmaps: Correlation matrices, basic heatmaps</label>
+            <label>• Time Series: Single/dual axis temporal data</label>
+            <label>• Distributions: Histograms, KDE plots</label>
+            <label>• Multi-Panel: 2x2 grids, comparisons</label>
+            <spacer/>
+            <label appearance="header">Figure Sizing:</label>
+            <label>- Width/height in inches (matplotlib standard)</label>
+            <label>- DPI: 96 (screen), 150 (draft), 300 (print)</label>
+            <label>- Example: 8" × 6" at 96 DPI = 768 × 576 px</label>
+            <spacer/>
+            <label>Required: matplotlib, numpy</label>
+            <label>Optional: pandas (for data import)</label>
+        </page>
+    </param>
+    
+    <effect>
+        <object-type>all</object-type>
+        <effects-menu>
+            <submenu name="Generate"/>
+        </effects-menu>
+    </effect>
+    
+    <script>
+        <command location="inx" interpreter="python">plt_ink.py</command>
+    </script>
+</inkscape-extension>
