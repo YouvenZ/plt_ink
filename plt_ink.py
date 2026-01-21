@@ -3,6 +3,13 @@
 Inkscape extension to generate and insert matplotlib figures.
 """
 
+
+# MIT License
+
+# Copyright (c) 2026 Rachid, Youven ZEGHLACHE
+#!/usr/bin/env python3
+
+
 import inkex
 from inkex import Image, Group
 import subprocess
