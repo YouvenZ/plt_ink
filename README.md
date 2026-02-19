@@ -1,12 +1,13 @@
-Collecting workspace information# Poster Utilities for Inkscape
+# Matplotlib Figure Generator for Inkscape
 
 [![Inkscape](https://img.shields.io/badge/Inkscape-1.0+-blue.svg)](https://inkscape.org/)
 [![Python](https://img.shields.io/badge/Python-3.6+-green.svg)](https://www.python.org/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-3.0+-orange.svg)](https://matplotlib.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **Automate poster header creation in Inkscape with professional formatting**
+> **Generate and embed matplotlib figures directly in Inkscape**
 
-A powerful Inkscape extension that automatically adds formatted title, authors, affiliations, and conference information to academic posters. Supports both native Inkscape text rendering and LaTeX compilation for publication-quality output.
+A powerful Inkscape extension that allows you to create matplotlib visualizations and insert them seamlessly into your SVG documents. Perfect for scientific illustrations, data visualization in design projects, and publication-ready graphics.
 
 ---
 
@@ -19,31 +20,38 @@ A powerful Inkscape extension that automatically adds formatted title, authors, 
 - Dependencies
 - Examples
 - Troubleshooting
-- Advanced Features
+- Script Bank
 - Contributing
 
 ---
 
 ## ✨ Features
 
-- **🎨 Two Rendering Modes**
-  - **Inkscape Native**: Fast, simple, no external dependencies
-  - **LaTeX**: Publication-quality typography with full LaTeX support
+- **📊 Multiple Script Sources**
+  - **Inline Code**: Write matplotlib code directly in the extension dialog
+  - **External File**: Load scripts from `.py` files
+  - **Script Bank**: Pre-built templates for common plot types
 
-- **👥 Smart Author-Affiliation Mapping**
-  - Superscript, subscript, parenthesis, or symbol markers
-  - Automatic or manual author-institution linking
-  - Multiple affiliations per author
+- **🎨 Flexible Output Formats**
+  - **SVG**: Native vector graphics, fully editable in Inkscape
+  - **PNG**: High-resolution raster images
+  - **PDF**: Publication-quality vector output
 
-- **📁 Flexible Input**
-  - Direct text input in the extension dialog
-  - CSV file import for batch processing
-  - Custom LaTeX templates
+- **📁 Data Import Support**
+  - CSV, Excel, JSON, and text file formats
+  - Automatic column extraction
+  - Pandas DataFrame integration
 
-- **🎯 Customizable Formatting**
-  - Font sizes for each element (title, authors, conference, institutions)
-  - Text alignment (left, center, right)
-  - Adjustable line spacing and positioning
+- **🎯 Customizable Styling**
+  - Built-in matplotlib styles (seaborn, ggplot, etc.)
+  - Font family and size controls
+  - Color map selection
+  - Grid and legend customization
+
+- **📐 Smart Positioning**
+  - Center, corners, or cursor-based placement
+  - Automatic size calculation based on DPI
+  - Preserve aspect ratio
 
 ---
 
@@ -68,167 +76,241 @@ C:\Users\[YourUsername]\AppData\Roaming\inkscape\extensions\
 
 ### Step 2: Install the Extension
 
-1. **Download the extension files:**
-   - poster_utilities.py
-   - poster_utilities.inx
-
-2. **Create the extension folder:**
+1. **Download/Clone the extension:**
    ```bash
-   mkdir -p [extensions-directory]/poster_utils
+   git clone https://github.com/YouvenZ/plt_ink.git
    ```
 
-3. **Copy files to the folder:**
+2. **Copy to extensions directory:**
    ```bash
-   cp poster_utilities.py [extensions-directory]/poster_utils/
-   cp poster_utilities.inx [extensions-directory]/poster_utils/
+   # Windows (PowerShell)
+   Copy-Item -Recurse plt_ink [extensions-directory]\plt_ink
+   
+   # macOS/Linux
+   cp -r plt_ink [extensions-directory]/plt_ink
+   ```
+
+3. **Verify file structure:**
+   ```
+   plt_ink/
+   ├── plt_ink.py
+   ├── plt_ink.inx
+   └── plt_ink_scripts/
+       ├── line_plots/
+       ├── scatter_plots/
+       ├── bar_charts/
+       ├── statistical/
+       ├── scientific/
+       ├── time_series/
+       └── publication/
    ```
 
 4. **Restart Inkscape**
 
 ### Step 3: Verify Installation
 
-Open Inkscape and check: **Extensions → Text → Poster Utilities**
+Open Inkscape and check: **Extensions → Render → Matplotlib Figure Generator**
 
 ---
 
 ## 🚀 Quick Start
 
-### Basic Example (Inkscape Mode)
+### Basic Example (Inline Code)
 
-1. Open your poster in Inkscape
-2. Go to **Extensions → Text → Poster Utilities**
-3. Fill in the fields:
+1. Open your document in Inkscape
+2. Go to **Extensions → Render → Matplotlib Figure Generator**
+3. In the Script tab, select **Inline Code** as source
+4. Enter your matplotlib code:
+   ```python
+   import numpy as np
+   x = np.linspace(0, 10, 100)
+   y = np.sin(x)
+   plt.plot(x, y, label='sin(x)')
+   plt.xlabel('X axis')
+   plt.ylabel('Y axis')
+   plt.title('Simple Sine Wave')
+   if _show_legend:
+       plt.legend(loc=_legend_position)
+   if _show_grid:
+       plt.grid(True)
    ```
-   Title: Novel Approaches to Machine Learning
-   Authors: Jane Smith; John Doe; Alice Johnson
-   Conference: ICML 2024
-   Institution: MIT; Stanford University; UC Berkeley
-   ```
-4. Set position (e.g., X: 100, Y: 100)
 5. Click **Apply**
 
-**Result:** Formatted text appears on your poster!
+**Result:** A matplotlib figure appears in your Inkscape document!
 
 ---
 
 ## 📖 Usage Guide
 
-### Input Tab
+### Script Tab
 
-#### Direct Input Mode
+#### Inline Code Mode
 
 <details>
 <summary><b>Click to expand</b></summary>
 
-**Fields:**
-- **Title**: Your poster title
-- **Authors**: Semicolon-separated list (e.g., `Jane Smith; John Doe`)
-- **Conference**: Conference name/details
-- **Institution**: Semicolon-separated affiliations
+Write matplotlib code directly in the text area. The extension provides:
+
+**Pre-defined Variables:**
+- `_fig_width` - Figure width from settings
+- `_fig_height` - Figure height from settings
+- `_dpi` - DPI setting
+- `_show_grid` - Grid toggle
+- `_show_legend` - Legend toggle
+- `_legend_position` - Legend location
+- `_colormap` - Selected colormap
+
+**Auto-imported Modules:**
+- `matplotlib.pyplot as plt`
+- `numpy as np`
 
 **Example:**
-```
-Title: Deep Learning for Climate Modeling
-Authors: Dr. Sarah Chen; Prof. Michael Rodriguez; Dr. Emily Zhang
-Conference: NeurIPS 2024 - Vancouver, Canada
-Institution: MIT CSAIL; Stanford AI Lab; Oxford Deep Learning Group
+```python
+# Data
+x = np.linspace(0, 2*np.pi, 100)
+y1 = np.sin(x)
+y2 = np.cos(x)
+
+# Plot
+plt.plot(x, y1, label='sin(x)', color='blue')
+plt.plot(x, y2, label='cos(x)', color='red')
+
+plt.title('Trigonometric Functions')
+plt.xlabel('Radians')
+plt.ylabel('Value')
+
+if _show_legend:
+    plt.legend(loc=_legend_position)
+if _show_grid:
+    plt.grid(True, alpha=0.3)
 ```
 
 </details>
 
-#### CSV Input Mode
+#### External File Mode
 
 <details>
 <summary><b>Click to expand</b></summary>
 
-**CSV Format:**
-```csv
-title,authors,conference,institutions,author_inst_map
-"Your Title","Author1; Author2","Conference Name","Inst1; Inst2","1,2; 2"
-```
+Load a Python script from your filesystem:
 
-**Example CSV (`poster_data.csv`):**
-```csv
-title,authors,conference,institutions,author_inst_map
-"Quantum Computing for Drug Discovery","Dr. Alice Smith; Prof. Bob Johnson; Dr. Carol Williams","QCHEM 2024","Harvard University; MIT; Caltech","1; 1,2; 3"
-```
-
-**How to use:**
-1. ☑ Check "Use CSV file"
-2. Browse to your CSV file
+1. Select **External File** as source
+2. Browse to your `.py` file
 3. Click Apply
+
+**File Requirements:**
+- Must use `plt` for plotting
+- Don't call `plt.show()` (handled automatically)
+- Don't call `plt.savefig()` (handled automatically)
 
 </details>
 
-### Author-Institution Mapping Tab
+#### Script Bank Mode
 
-#### Mapping Formats
+<details>
+<summary><b>Click to expand</b></summary>
 
-**1. Positional Format** (simplest)
-```
-Author-Inst Map: 1; 2; 1,2
-```
-- First author → Institution 1
-- Second author → Institution 2  
-- Third author → Institutions 1 and 2
+Use pre-built templates from the script bank:
 
-**2. Explicit Format** (recommended)
-```
-Author-Inst Map: Jane Smith:1; John Doe:2; Alice Johnson:1,2
-```
+**Available Categories:**
+| Category | Description |
+|----------|-------------|
+| `line_plots` | Basic line and curve plots |
+| `scatter_plots` | Scatter and bubble charts |
+| `bar_charts` | Bar and histogram plots |
+| `statistical` | Box plots, violin plots, etc. |
+| `scientific` | Contour, vector fields, etc. |
+| `time_series` | Time-based data visualization |
+| `publication` | Publication-ready templates |
 
-**3. Marker Styles:**
-- **Superscript**: Jane Smith¹ ²  
-- **Subscript**: Jane Smith₁ ₂
-- **Parenthesis**: Jane Smith (1, 2)
-- **Symbol**: Jane Smith* †
+**How to use:**
+1. Select **Script Bank** as source
+2. Choose category
+3. Choose script
+4. Click Apply
 
-### Formatting Tab
+</details>
+
+### Format Tab
 
 | Parameter | Default | Range | Description |
 |-----------|---------|-------|-------------|
-| Title Size | 48 | 12-120 | Font size in pixels |
-| Author Size | 32 | 12-96 | Font size in pixels |
-| Conference Size | 28 | 12-96 | Font size in pixels |
-| Institution Size | 24 | 12-72 | Font size in pixels |
-| X Position | 100 | 0-10000 | Horizontal position |
-| Y Position | 100 | 0-10000 | Vertical position |
-| Line Spacing | 80 | 20-200 | Space between elements |
-| Text Align | Left | Left/Center/Right | Text alignment |
+| Output Format | SVG | SVG/PNG/PDF | Output file format |
+| Figure Width | 8.0 | 1-20 | Width in inches |
+| Figure Height | 6.0 | 1-20 | Height in inches |
+| DPI | 96 | 72-600 | Resolution |
+| Transparent | No | Yes/No | Transparent background |
+| Tight Layout | Yes | Yes/No | Remove extra whitespace |
 
-### LaTeX Mode
+### Style Tab
+
+| Parameter | Default | Options | Description |
+|-----------|---------|---------|-------------|
+| Plot Style | default | default, seaborn, ggplot, etc. | Matplotlib style |
+| Color Map | viridis | viridis, plasma, etc. | Default colormap |
+| Show Grid | Yes | Yes/No | Enable grid |
+| Show Legend | Yes | Yes/No | Enable legend |
+| Legend Position | best | best, upper right, etc. | Legend location |
+
+### Placement Tab
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| Position Mode | center | Where to place the figure |
+| Embed Image | Yes | Embed as data URI vs. link |
+
+**Position Options:**
+- `center` - Center of document
+- `top_left`, `top_center`, `top_right`
+- `bottom_left`, `bottom_center`, `bottom_right`
+- `cursor` - At selected object position
+
+### Advanced Tab
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| Font Family | sans-serif | Plot font family |
+| Font Size | 10 | Base font size |
+| Line Width | 1.5 | Default line width |
+| Marker Size | 6.0 | Default marker size |
+| Use LaTeX | No | LaTeX text rendering |
+| Save Script | No | Save generated script |
+| Keep Temp Files | No | Don't delete temp files |
+
+### Data Import Tab
 
 <details>
-<summary><b>Advanced LaTeX Features</b></summary>
+<summary><b>Click to expand</b></summary>
 
-**Custom Preamble:**
-```latex
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath}
-\usepackage{fontspec}
-\setmainfont{Times New Roman}
+Import external data files for plotting:
+
+**Supported Formats:**
+| Format | Extension | Description |
+|--------|-----------|-------------|
+| CSV | .csv | Comma-separated values |
+| Excel | .xlsx, .xls | Excel spreadsheets |
+| JSON | .json | JSON arrays/objects |
+| Text | .txt, .dat | Space/tab-delimited |
+
+**Parameters:**
+- **Data File Path**: Path to your data file
+- **CSV Delimiter**: Separator character (default: `,`)
+- **Skip Header**: Skip first row
+- **X Column**: Column index for X data
+- **Y Column**: Column index for Y data
+
+**Available Variables (after import):**
+- `x_data` - X column as numpy array
+- `y_data` - Y column as numpy array
+- `data` or `df` - Full DataFrame
+
+**Example with CSV:**
+```python
+# x_data and y_data are automatically loaded
+plt.scatter(x_data, y_data, c='blue', alpha=0.6)
+plt.xlabel('X Values')
+plt.ylabel('Y Values')
 ```
-
-**Custom Template:**
-```latex
-\documentclass{article}
-\usepackage[utf8]{inputenc}
-\begin{document}
-\begin{center}
-{\Huge\textbf{{title}}}\\[0.5cm]
-{\Large {authors}}\\[0.3cm]
-{\large\textit{{conference}}}\\[0.3cm]
-{\normalsize {institution}}
-\end{center}
-\end{document}
-```
-
-**Placeholders:**
-- `{title}` → Your title
-- `{authors}` → Author list
-- `{conference}` → Conference info
-- `{institution}` → Affiliations
-- `{author_inst_map}` → Mapping string
 
 </details>
 
@@ -242,137 +324,118 @@ Author-Inst Map: Jane Smith:1; John Doe:2; Alice Johnson:1,2
 |-----------|---------|---------|
 | **Inkscape** | 1.0+ | Vector graphics editor |
 | **Python** | 3.6+ | Extension runtime |
-| **lxml** | Latest | XML parsing |
+| **matplotlib** | 3.0+ | Plotting library |
+| **numpy** | 1.15+ | Numerical computing |
 
 **Installation:**
 ```bash
-# Usually pre-installed with Inkscape
-pip install lxml
+pip install matplotlib numpy
 ```
 
-### LaTeX Mode (Optional)
+### Optional Dependencies
 
-Required only if using LaTeX backend:
-
-| Tool | Purpose | Installation |
-|------|---------|--------------|
-| **pdflatex** | LaTeX compilation | Install TeX Live or MiKTeX |
-| **Inkscape CLI** | PDF→SVG conversion | Included with Inkscape |
+| Component | Purpose | Installation |
+|-----------|---------|--------------|
+| **pandas** | Data file import | `pip install pandas` |
+| **openpyxl** | Excel file support | `pip install openpyxl` |
+| **LaTeX** | LaTeX text rendering | Install TeX distribution |
 
 **Check Installation:**
 ```bash
-# Test LaTeX
-pdflatex --version
-
-# Test Inkscape CLI
-inkscape --version
+python -c "import matplotlib; print(matplotlib.__version__)"
+python -c "import numpy; print(numpy.__version__)"
 ```
-
-**Install LaTeX:**
-
-<details>
-<summary><b>Windows</b></summary>
-
-1. Download **MiKTeX**: https://miktex.org/download
-2. Run installer
-3. Add to PATH during installation
-
-</details>
-
-<details>
-<summary><b>macOS</b></summary>
-
-```bash
-brew install --cask mactex
-```
-
-Or download MacTeX: https://tug.org/mactex/
-
-</details>
-
-<details>
-<summary><b>Linux (Debian/Ubuntu)</b></summary>
-
-```bash
-sudo apt-get update
-sudo apt-get install texlive-latex-base texlive-latex-extra
-```
-
-</details>
 
 ---
 
 ## 💡 Examples
 
-### Example 1: Simple Conference Poster
+### Example 1: Simple Line Plot
 
-**Input:**
-```
-Backend: Inkscape Native
-Title: Advances in Neural Networks
-Authors: Jane Smith; John Doe
-Conference: ICML 2024
-Institution: MIT; Stanford
-Position: X=100, Y=100
-```
+**Inline Code:**
+```python
+x = np.linspace(0, 10, 100)
+y = np.sin(x) * np.exp(-x/10)
 
-**Output:**
-```
-Advances in Neural Networks
-Jane Smith, John Doe
-ICML 2024
-MIT, Stanford
+plt.plot(x, y, 'b-', linewidth=2, label='Damped sine')
+plt.fill_between(x, y, alpha=0.3)
+plt.xlabel('Time')
+plt.ylabel('Amplitude')
+plt.title('Damped Oscillation')
+plt.legend()
+plt.grid(True, alpha=0.3)
 ```
 
-### Example 2: Multi-Affiliation Authors
+### Example 2: Multi-Panel Figure
 
-**Input:**
-```
-Authors: Dr. Sarah Chen; Prof. Michael Brown; Dr. Emily White
-Institution: Harvard Med; MIT CSAIL; Stanford AI Lab
-Author-Inst Map: 1; 1,2; 2,3
-Mapping Style: Superscript
+```python
+fig, axes = plt.subplots(2, 2, figsize=(_fig_width, _fig_height))
+
+x = np.linspace(0, 2*np.pi, 100)
+
+axes[0,0].plot(x, np.sin(x))
+axes[0,0].set_title('sin(x)')
+
+axes[0,1].plot(x, np.cos(x))
+axes[0,1].set_title('cos(x)')
+
+axes[1,0].plot(x, np.tan(x))
+axes[1,0].set_ylim(-5, 5)
+axes[1,0].set_title('tan(x)')
+
+axes[1,1].plot(x, np.sin(x)**2)
+axes[1,1].set_title('sin²(x)')
+
+for ax in axes.flat:
+    ax.grid(True, alpha=0.3)
 ```
 
-**Output:**
-```
-Dr. Sarah Chen¹, Prof. Michael Brown¹ ², Dr. Emily White² ³
-¹Harvard Med, ²MIT CSAIL, ³Stanford AI Lab
+### Example 3: Scientific Visualization
+
+```python
+# Create meshgrid
+x = np.linspace(-3, 3, 100)
+y = np.linspace(-3, 3, 100)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(X) * np.cos(Y)
+
+# Contour plot
+fig, ax = plt.subplots(figsize=(_fig_width, _fig_height))
+contour = ax.contourf(X, Y, Z, levels=20, cmap=_colormap)
+plt.colorbar(contour, label='Value')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_title('Contour Plot')
 ```
 
-### Example 3: CSV Batch Processing
+### Example 4: Using External Data
 
-**CSV File (`posters.csv`):**
+**CSV file (data.csv):**
 ```csv
-title,authors,conference,institutions,author_inst_map
-"Poster A","A1; A2","Conf A","Inst1; Inst2","1; 2"
-"Poster B","B1; B2; B3","Conf B","Inst1; Inst2; Inst3","1; 2; 3"
+time,temperature,humidity
+0,20.5,65
+1,21.2,63
+2,22.1,60
+3,23.5,58
+4,24.0,55
 ```
 
-**Workflow:**
-1. Create poster template in Inkscape
-2. Use CSV input mode
-3. Process each row
-4. Export results
+**Script:**
+```python
+# x_data and y_data loaded from columns 0 and 1
+# df contains full DataFrame
 
-### Example 4: LaTeX Mode with Math
+fig, ax1 = plt.subplots()
 
-**Custom Template:**
-```latex
-\documentclass{article}
-\usepackage{amsmath}
-\begin{document}
-\begin{center}
-{\Huge\textbf{{title}}}\\[0.5cm]
-{\Large {authors}}\\[0.3cm]
-{\normalsize {institution}}
-\end{center}
-\end{document}
-```
+ax1.plot(df.iloc[:,0], df.iloc[:,1], 'b-', label='Temperature')
+ax1.set_xlabel('Time (hours)')
+ax1.set_ylabel('Temperature (°C)', color='b')
 
-**Input Title:**
-```
-Neural Networks with $\mathcal{L}_2$ Regularization
+ax2 = ax1.twinx()
+ax2.plot(df.iloc[:,0], df.iloc[:,2], 'r--', label='Humidity')
+ax2.set_ylabel('Humidity (%)', color='r')
+
+plt.title('Temperature and Humidity Over Time')
 ```
 
 ---
@@ -384,151 +447,176 @@ Neural Networks with $\mathcal{L}_2$ Regularization
 <details>
 <summary><b>Extension not appearing in menu</b></summary>
 
-**Solution:**
-1. Check file locations:
+**Solutions:**
+1. Check file locations match the expected structure
+2. Verify file permissions:
    ```bash
-   ls [extensions-directory]/poster_utils/
-   # Should show: poster_utilities.py, poster_utilities.inx
+   # Linux/macOS
+   chmod +x plt_ink.py
    ```
-2. Verify permissions:
-   ```bash
-   chmod +x poster_utilities.py
-   ```
-3. Check Inkscape error log:
-   - **Edit → Preferences → System → View Error Log**
+3. Check Inkscape error console: **View → Messages**
 4. Restart Inkscape completely
+5. Verify Python path in extension settings
 
 </details>
 
 <details>
-<summary><b>LaTeX mode fails</b></summary>
-
-**Error:** "LaTeX rendering failed"
+<summary><b>"Python not found" error</b></summary>
 
 **Solutions:**
-1. Verify LaTeX installation:
-   ```bash
-   pdflatex --version
+1. In the extension dialog, set **Python Path** to your Python executable:
    ```
-2. Check Inkscape CLI:
-   ```bash
-   inkscape --help
+   # Windows
+   C:\Python39\python.exe
+   
+   # macOS/Linux
+   /usr/bin/python3
    ```
-3. Review error message in Inkscape console
-4. Try Inkscape mode as fallback
-
-**Debug Mode:**
-- Enable "Keep Temp Files" in extension
-- Check temp directory for `.tex`, `.pdf`, `.log` files
-- Review LaTeX error log
+2. Check Python installation:
+   ```bash
+   python --version
+   python3 --version
+   ```
 
 </details>
 
 <details>
-<summary><b>CSV not loading</b></summary>
+<summary><b>"Matplotlib not installed" error</b></summary>
 
-**Common Causes:**
-- Incorrect CSV format
-- File encoding issues
-- Missing headers
-
-**Solution:**
-```csv
-title,authors,conference,institutions,author_inst_map
-"Test Title","Author1","Conference","Institution",""
-```
-
-**Encoding:** Save as **UTF-8** encoding
+**Solutions:**
+1. Install matplotlib for your Python version:
+   ```bash
+   pip install matplotlib
+   # or
+   pip3 install matplotlib
+   ```
+2. Verify installation:
+   ```bash
+   python -c "import matplotlib; print(matplotlib.__version__)"
+   ```
+3. Ensure you're using the same Python that Inkscape uses
 
 </details>
 
 <details>
-<summary><b>Formatting issues</b></summary>
+<summary><b>Script execution fails</b></summary>
 
-**Text overlapping:**
-- Increase line spacing (default: 80)
-- Reduce font sizes
-- Adjust Y position
+**Debug Steps:**
+1. Enable **Keep Temp Files** in Advanced tab
+2. Check the log file:
+   ```
+   # Windows
+   %TEMP%\matplotlib_inkscape_debug.log
+   
+   # macOS/Linux
+   /tmp/matplotlib_inkscape_debug.log
+   ```
+3. Check the generated script in temp directory
+4. Run the script manually to see errors:
+   ```bash
+   python /tmp/matplotlib_output_*.py
+   ```
 
-**Text cut off:**
-- Check canvas size
-- Adjust X/Y position
-- Use text wrapping (automatic)
+</details>
+
+<details>
+<summary><b>Figure not appearing or wrong size</b></summary>
+
+**Solutions:**
+1. Check output format (SVG recommended for vector graphics)
+2. Verify figure dimensions aren't too large
+3. Check document units match expectations
+4. Try enabling **Embed Image** option
 
 </details>
 
 ### Debug Tips
 
-**Enable Debug Output:**
+**Check Log File:**
+The extension writes detailed logs to:
+```
+[temp-directory]/matplotlib_inkscape_debug.log
+```
+
+**Test Inline Code:**
+Start with a minimal example:
 ```python
-# In poster_utilities.py
-inkex.utils.debug(f"Data: {data}")
+plt.plot([1, 2, 3], [1, 4, 9])
+plt.title('Test Plot')
 ```
 
-**Check Error Console:**
-- **Extensions → Error Log** (Inkscape 1.2+)
-- Terminal output (if launched from command line)
-
-**Test with Minimal Example:**
-```
-Title: Test
-Authors: A
-Conference: C
-Institution: I
-```
+**Verify Script Generation:**
+1. Enable **Save Script** option
+2. Set **Script Save Path** to a known location
+3. Examine the generated script for issues
 
 ---
 
-## 🎓 Advanced Features
+## 📚 Script Bank
 
-### Custom Marker Symbols
+### Available Scripts
 
-Edit in `poster_utilities.py` line 155:
+#### Line Plots (`line_plots/`)
+- `basic_line.py` - Simple line plot
+- `multi_line.py` - Multiple lines with legend
+- `styled_line.py` - Custom line styles
+
+#### Scatter Plots (`scatter_plots/`)
+- `basic_scatter.py` - Simple scatter plot
+- `bubble_chart.py` - Size-coded scatter
+- `colored_scatter.py` - Color-mapped scatter
+
+#### Bar Charts (`bar_charts/`)
+- `basic_bar.py` - Vertical bar chart
+- `horizontal_bar.py` - Horizontal bars
+- `grouped_bar.py` - Grouped comparison
+- `stacked_bar.py` - Stacked bars
+
+#### Statistical (`statistical/`)
+- `histogram.py` - Histogram with density
+- `box_plot.py` - Box and whisker
+- `violin_plot.py` - Violin plot
+
+#### Scientific (`scientific/`)
+- `contour.py` - Contour plot
+- `heatmap.py` - 2D heatmap
+- `vector_field.py` - Quiver plot
+
+#### Time Series (`time_series/`)
+- `time_plot.py` - Time-indexed data
+- `financial.py` - OHLC/candlestick
+
+#### Publication (`publication/`)
+- `paper_figure.py` - Journal-ready styling
+- `subplot_grid.py` - Multi-panel figures
+
+### Creating Custom Scripts
+
+Add scripts to `plt_ink_scripts/[category]/`:
 
 ```python
-symbols = ['*', '†', '‡', '§', '¶', '‖', '**', '††']  # Add more symbols
-```
+"""
+My Custom Plot Template
+Description of what this plot does
+"""
 
-### Text Wrapping Control
+import numpy as np
+import matplotlib.pyplot as plt
 
-Adjust max characters per line (line 210):
+# Use pre-defined variables
+fig, ax = plt.subplots(figsize=(_fig_width, _fig_height))
 
-```python
-def wrap_text(self, text, max_chars=60):  # Change 60 to your preference
-```
+# Your plotting code here
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
 
-### Custom Fonts
+ax.plot(x, y)
+ax.set_title('My Custom Plot')
 
-Inkscape mode (line 323):
-
-```python
-style = {
-    'font-family': 'Helvetica, Arial, sans-serif',  # Change font
-    # ...
-}
-```
-
-LaTeX mode (line 509):
-
-```latex
-\usepackage{fontspec}
-\setmainfont{Times New Roman}
-```
-
-### Batch Processing Script
-
-```python
-import subprocess
-import csv
-
-with open('posters.csv') as f:
-    reader = csv.DictReader(f)
-    for row in reader:
-        # Export as PNG with author names
-        subprocess.run([
-            'inkscape', 'template.svg',
-            '--export-filename', f"{row['authors']}.png"
-        ])
+if _show_grid:
+    ax.grid(True, alpha=0.3)
+if _show_legend:
+    ax.legend(loc=_legend_position)
 ```
 
 ---
@@ -536,14 +624,21 @@ with open('posters.csv') as f:
 ## 📝 File Structure
 
 ```
-poster_utils/
-├── poster_utilities.py      # Main extension code
-├── poster_utilities.inx     # Inkscape extension definition
-├── README.md                # This file
-└── examples/
-    ├── sample_poster.svg
-    ├── sample_data.csv
-    └── latex_template.tex
+plt_ink/
+├── plt_ink.py              # Main extension code
+├── plt_ink.inx             # Inkscape extension definition
+├── README.md               # This file
+├── LICENSE                 # MIT License
+└── plt_ink_scripts/        # Script bank directory
+    ├── line_plots/
+    │   ├── basic_line.py
+    │   └── ...
+    ├── scatter_plots/
+    ├── bar_charts/
+    ├── statistical/
+    ├── scientific/
+    ├── time_series/
+    └── publication/
 ```
 
 ---
@@ -558,12 +653,19 @@ Contributions welcome! Please:
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
 
+**Adding Scripts to Bank:**
+- Create your script in the appropriate category folder
+- Include docstring with description
+- Use pre-defined variables (`_fig_width`, `_show_grid`, etc.)
+- Test with the extension before submitting
+
 **Development Setup:**
 ```bash
-git clone https://github.com/yourusername/poster-utilities.git
-cd poster-utilities
+git clone https://github.com/YouvenZ/plt_ink.git
+cd plt_ink
 # Symlink to extensions directory for testing
-ln -s $(pwd) ~/.config/inkscape/extensions/poster_utils
+# Windows (PowerShell as Admin)
+New-Item -ItemType Junction -Path "$env:APPDATA\inkscape\extensions\plt_ink" -Target "$(Get-Location)"
 ```
 
 ---
@@ -572,22 +674,28 @@ ln -s $(pwd) ~/.config/inkscape/extensions/poster_utils
 
 This project is licensed under the MIT License - see LICENSE file for details.
 
+Copyright (c) 2026 Rachid, Youven ZEGHLACHE
+
 ---
 
 ## 📧 Support
 
-- **Issues**: [GitHub Issues](https://github.com/YouvenZ/poster-utilities/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/YouvenZ/poster-utilities/discussions)
+- **Issues**: [GitHub Issues](https://github.com/YouvenZ/plt_ink/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/YouvenZ/plt_ink/discussions)
 - **Email**: youvenz.pro@gmail.com
 
 ---
 
 ## 🔄 Changelog
 
-### v1.0.0 (2024-01-15)
+### v1.0.0 (2026-02-19)
 - ✨ Initial release
-- ✅ Inkscape native text rendering
-- ✅ LaTeX rendering support
-- ✅ CSV input
-- ✅ Author-institution mapping
-- ✅ Multiple marker styles
+- ✅ Inline code execution
+- ✅ External file loading
+- ✅ Script bank with templates
+- ✅ SVG, PNG, PDF output formats
+- ✅ Data import (CSV, Excel, JSON, Text)
+- ✅ Multiple matplotlib styles
+- ✅ Custom positioning options
+- ✅ LaTeX support
+- ✅ Comprehensive logging
