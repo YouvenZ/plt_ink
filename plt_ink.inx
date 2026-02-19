@@ -16,19 +16,22 @@
             </param>
             <spacer/>
             
-            <param name="script_code" type="string" appearance="multiline" max_length="1000" gui-text="Python code:">import matplotlib.pyplot as plt
-import numpy as np
-x = np.linspace(0, 10, 100)
+            <param name="script_code" type="string" appearance="multiline" max_length="5000" gui-text="Python code:">x = np.linspace(0, 10, 100)
 y = np.sin(x)
-plt.plot(x, y)
+plt.plot(x, y, label='sin(x)')
 plt.title('Sine Wave')
 plt.xlabel('X')
 plt.ylabel('Y')
-plt.grid(True)</param>
-            <label>Multi-line code supported. Don't include plt.show() or plt.savefig()</label>
+if _show_legend:
+    plt.legend(loc=_legend_position)</param>
+            <label>Use _fig_width, _fig_height, _show_grid, _show_legend, _colormap variables</label>
+            <label>Don't include plt.show() or plt.savefig() - handled automatically</label>
             <spacer/>
             
-            <param name="script_file" type="string" gui-text="Script file path:"></param>
+            <param name="script_file" type="path" mode="file" gui-text="Script file path:"  filetypes=".py">C:\Users\youve\AppData\Roaming\inkscape\extensions\plt_ink\template_script.py</param>
+        
+
+
             <label>Only used when 'External file' is selected</label>
         </page>
         
@@ -42,10 +45,12 @@ plt.grid(True)</param>
                 <option value="scatter_plots">Scatter Plots</option>
                 <option value="bar_charts">Bar Charts</option>
                 <option value="statistical">Statistical Plots</option>
+                <option value="scientific">Scientific Plots</option>
                 <option value="heatmaps">Heatmaps &amp; Matrices</option>
                 <option value="time_series">Time Series</option>
                 <option value="distributions">Distributions</option>
                 <option value="multi_panel">Multi-Panel Figures</option>
+                <option value="publication">Publication Ready</option>
             </param>
             <spacer/>
             
@@ -68,6 +73,10 @@ plt.grid(True)</param>
                 <option value="box_plot">Box Plot</option>
                 <option value="violin_plot">Violin Plot</option>
                 <option value="error_bar_plot">Error Bar Comparison</option>
+                <!-- Scientific -->
+                <option value="contour_plot">Contour Plot</option>
+                <option value="vector_field">Vector Field</option>
+                <option value="3d_surface">3D Surface Plot</option>
                 <!-- Heatmaps -->
                 <option value="correlation_matrix">Correlation Matrix</option>
                 <option value="basic_heatmap">Basic Heatmap</option>
@@ -81,11 +90,46 @@ plt.grid(True)</param>
                 <!-- Multi-Panel -->
                 <option value="subplot_2x2">2x2 Subplot Grid</option>
                 <option value="subplot_comparison">Side-by-side Comparison</option>
+                <!-- Publication -->
+                <option value="publication_single">Publication Single Panel</option>
+                <option value="publication_multi">Publication Multi-Panel</option>
             </param>
             <spacer/>
             
-            <label>Note: Select category then choose a script. Scripts use extension settings for styling.</label>
-            <label>Data can be loaded from the Data Import tab or use sample data.</label>
+            <label>Scripts use extension settings (_fig_width, _colormap, etc.)</label>
+            <label>Data can be imported from the Data Import tab.</label>
+        </page>
+        
+        <page name="preamble" gui-text="Preamble">
+            <label appearance="header">Script Preamble Settings</label>
+            <spacer/>
+            
+            <param name="use_preamble" type="bool" gui-text="Include full preamble">true</param>
+            <label>Adds imports, style config, and helper functions</label>
+            <spacer/>
+            
+            <param name="auto_imports" type="bool" gui-text="Auto-import numpy/matplotlib">true</param>
+            <label>Automatically imports: matplotlib.pyplot as plt, numpy as np</label>
+            <spacer/>
+            
+            <param name="additional_imports" type="string" appearance="multiline" max_length="1000" gui-text="Additional imports:"></param>
+            <label>Add extra imports (e.g., "from scipy import stats")</label>
+            <spacer/>
+            
+            <param name="custom_preamble" type="string" appearance="multiline" max_length="2000" gui-text="Custom preamble code:"></param>
+            <label>Custom code added before your script (after imports)</label>
+            <spacer/>
+            
+            <label appearance="header">Figure Creation</label>
+            <param name="auto_create_figure" type="bool" gui-text="Auto-create figure if not in code">true</param>
+            <hbox>
+                <param name="subplot_rows" type="int" min="1" max="10" gui-text="Subplot rows:">1</param>
+                <param name="subplot_cols" type="int" min="1" max="10" gui-text="Subplot cols:">1</param>
+            </hbox>
+            <hbox>
+                <param name="share_x" type="bool" gui-text="Share X axis">false</param>
+                <param name="share_y" type="bool" gui-text="Share Y axis">false</param>
+            </hbox>
         </page>
         
         <page name="format" gui-text="Format">
@@ -98,59 +142,101 @@ plt.grid(True)</param>
             
             <param name="figure_width" type="float" min="1.0" max="50.0" precision="1" gui-text="Figure width (inches):">8.0</param>
             <param name="figure_height" type="float" min="1.0" max="50.0" precision="1" gui-text="Figure height (inches):">6.0</param>
-            <label>Matplotlib uses inches as unit (1 inch = 96 pixels at default DPI)</label>
+            <label>Matplotlib uses inches (1 inch = 96 pixels at default DPI)</label>
             <spacer/>
             
             <param name="dpi" type="int" min="50" max="600" gui-text="DPI (resolution):">96</param>
-            <label>96 DPI = standard screen resolution (matches Inkscape default)</label>
-            <label>Higher DPI = better quality but larger file size</label>
+            <label>96 = screen, 150 = draft print, 300 = publication quality</label>
             <spacer/>
             
             <param name="transparent" type="bool" gui-text="Transparent background">false</param>
             <param name="tight_layout" type="bool" gui-text="Use tight layout">true</param>
+            <param name="constrained_layout" type="bool" gui-text="Use constrained layout (alternative)">false</param>
+            <label>Constrained layout is newer and often better for complex figures</label>
         </page>
         
         <page name="style" gui-text="Style">
             <param name="plot_style" type="optiongroup" appearance="combo" gui-text="Plot style:">
                 <option value="default">Default</option>
                 <option value="seaborn-v0_8">Seaborn</option>
+                <option value="seaborn-v0_8-whitegrid">Seaborn Whitegrid</option>
+                <option value="seaborn-v0_8-darkgrid">Seaborn Darkgrid</option>
                 <option value="ggplot">ggplot</option>
                 <option value="bmh">Bayesian Methods</option>
                 <option value="dark_background">Dark Background</option>
                 <option value="grayscale">Grayscale</option>
                 <option value="fivethirtyeight">FiveThirtyEight</option>
                 <option value="tableau-colorblind10">Tableau Colorblind</option>
+                <option value="classic">Classic Matplotlib</option>
             </param>
             <spacer/>
             
             <param name="color_map" type="optiongroup" appearance="combo" gui-text="Color map:">
-                <option value="viridis">Viridis</option>
+                <option value="viridis">Viridis (perceptual)</option>
                 <option value="plasma">Plasma</option>
                 <option value="inferno">Inferno</option>
                 <option value="magma">Magma</option>
-                <option value="coolwarm">Cool Warm</option>
+                <option value="cividis">Cividis (colorblind)</option>
+                <option value="coolwarm">Cool Warm (diverging)</option>
+                <option value="RdBu">Red-Blue (diverging)</option>
                 <option value="rainbow">Rainbow</option>
                 <option value="jet">Jet</option>
                 <option value="hsv">HSV</option>
+                <option value="turbo">Turbo</option>
             </param>
             <spacer/>
             
+            <param name="color_cycle" type="optiongroup" appearance="combo" gui-text="Color cycle:">
+                <option value="default">Default</option>
+                <option value="tab10">Tab10 (10 colors)</option>
+                <option value="tab20">Tab20 (20 colors)</option>
+                <option value="set1">Set1 (9 colors)</option>
+                <option value="set2">Set2 (8 colors)</option>
+                <option value="paired">Paired (12 colors)</option>
+                <option value="dark2">Dark2 (8 colors)</option>
+            </param>
+            <spacer/>
+            
+            <param name="background_color" type="string" gui-text="Background color:">white</param>
+            <label>Use color name (white, lightgray) or hex (#f0f0f0)</label>
+            <spacer/>
+            
+            <label appearance="header">Grid Settings</label>
             <param name="grid" type="bool" gui-text="Show grid">true</param>
+            <param name="grid_style" type="optiongroup" appearance="combo" gui-text="Grid line style:">
+                <option value="--">Dashed (--)</option>
+                <option value="-">Solid (-)</option>
+                <option value=":">Dotted (:)</option>
+                <option value="-.">Dash-dot (-.)</option>
+            </param>
+            <param name="grid_alpha" type="float" min="0.0" max="1.0" precision="2" gui-text="Grid transparency:">0.3</param>
+            <spacer/>
+            
+            <label appearance="header">Legend Settings</label>
             <param name="legend" type="bool" gui-text="Show legend">true</param>
             <param name="legend_position" type="optiongroup" appearance="combo" gui-text="Legend position:">
-                <option value="best">Best</option>
+                <option value="best">Best (auto)</option>
                 <option value="upper right">Upper Right</option>
                 <option value="upper left">Upper Left</option>
                 <option value="lower right">Lower Right</option>
                 <option value="lower left">Lower Left</option>
                 <option value="center">Center</option>
+                <option value="center right">Center Right</option>
+                <option value="center left">Center Left</option>
+                <option value="upper center">Upper Center</option>
+                <option value="lower center">Lower Center</option>
             </param>
+            <spacer/>
+            
+            <param name="auto_despine" type="bool" gui-text="Remove top/right spines">false</param>
+            <label>Creates cleaner look by removing unnecessary axis borders</label>
         </page>
         
         <page name="placement" gui-text="Placement">
             <param name="position_mode" type="optiongroup" appearance="combo" gui-text="Position:">
                 <option value="center">Center of canvas</option>
                 <option value="cursor">At cursor/selected object</option>
+                <option value="custom">Custom coordinates</option>
                 <option value="top_left">Top left</option>
                 <option value="top_center">Top center</option>
                 <option value="top_right">Top right</option>
@@ -158,7 +244,18 @@ plt.grid(True)</param>
                 <option value="bottom_center">Bottom center</option>
                 <option value="bottom_right">Bottom right</option>
             </param>
-            <label>Figure will be inserted at original size (width × height × DPI)</label>
+            <spacer/>
+            
+            <label appearance="header">Custom Position</label>
+            <hbox>
+                <param name="custom_x" type="float" min="-10000" max="10000" precision="1" gui-text="X:">0.0</param>
+                <param name="custom_y" type="float" min="-10000" max="10000" precision="1" gui-text="Y:">0.0</param>
+            </hbox>
+            <label>Only used when position mode is "Custom coordinates"</label>
+            <spacer/>
+            
+            <param name="scale_factor" type="float" min="0.1" max="10.0" precision="2" gui-text="Scale factor:">1.0</param>
+            <label>Scale the output (1.0 = original size)</label>
             <spacer/>
             
             <param name="embed_image" type="bool" gui-text="Embed image in SVG">true</param>
@@ -166,28 +263,60 @@ plt.grid(True)</param>
         </page>
         
         <page name="advanced" gui-text="Advanced">
-            <param name="font_family" type="string" gui-text="Font family:">sans-serif</param>
-            <param name="font_size" type="int" min="6" max="72" gui-text="Base font size:">10</param>
+            <label appearance="header">Typography</label>
+            <param name="font_family" type="optiongroup" appearance="combo" gui-text="Font family:">
+                <option value="sans-serif">Sans-serif</option>
+                <option value="serif">Serif</option>
+                <option value="monospace">Monospace</option>
+                <option value="DejaVu Sans">DejaVu Sans</option>
+                <option value="Arial">Arial</option>
+                <option value="Helvetica">Helvetica</option>
+                <option value="Times New Roman">Times New Roman</option>
+            </param>
+            <hbox>
+                <param name="font_size" type="int" min="6" max="72" gui-text="Base font:">10</param>
+                <param name="title_size" type="int" min="6" max="72" gui-text="Title:">14</param>
+                <param name="label_size" type="int" min="6" max="72" gui-text="Labels:">12</param>
+            </hbox>
             <spacer/>
             
-            <param name="line_width" type="float" min="0.5" max="10.0" precision="1" gui-text="Line width:">1.5</param>
-            <param name="marker_size" type="float" min="1.0" max="20.0" precision="1" gui-text="Marker size:">6.0</param>
+            <label appearance="header">Line &amp; Marker</label>
+            <hbox>
+                <param name="line_width" type="float" min="0.5" max="10.0" precision="1" gui-text="Line width:">1.5</param>
+                <param name="marker_size" type="float" min="1.0" max="20.0" precision="1" gui-text="Marker size:">6.0</param>
+            </hbox>
             <spacer/>
             
+            <label appearance="header">LaTeX Rendering</label>
             <param name="use_latex" type="bool" gui-text="Use LaTeX rendering">false</param>
-            <label>Requires LaTeX installation on system</label>
+            <label>Requires LaTeX installation (texlive, miktex)</label>
             <spacer/>
             
+            <label appearance="header">Error Handling</label>
+            <param name="error_handling" type="optiongroup" appearance="combo" gui-text="On error:">
+                <option value="stop">Stop and show error</option>
+                <option value="warn">Show warning and continue</option>
+            </param>
+            <param name="show_warnings" type="bool" gui-text="Show Python warnings">true</param>
+            <spacer/>
+            
+            <label appearance="header">Debugging</label>
             <param name="save_script" type="bool" gui-text="Save generated script to file">false</param>
             <param name="script_save_path" type="string" gui-text="Script save path:"></param>
-            <spacer/>
-            
-            <param name="keep_temp_files" type="bool" gui-text="Keep temporary files for debugging">false</param>
+            <param name="keep_temp_files" type="bool" gui-text="Keep temporary files">false</param>
+            <label>Temp files saved to system temp directory</label>
         </page>
         
         <page name="data" gui-text="Data Import">
+            <label appearance="header">Data File Settings</label>
             <param name="use_data_file" type="bool" gui-text="Import data from file">false</param>
-            <param name="data_file_path" type="string" gui-text="Data file path:"></param>
+
+
+
+            <param name="data_file_path" type="path" mode="file" gui-text="Data file path:"  filetypes="csv,json,excel,txt">C:\Users\youve\AppData\Roaming\inkscape\extensions\plt_ink\data.csv</param>
+        
+
+
             <param name="data_format" type="optiongroup" appearance="combo" gui-text="Data format:">
                 <option value="csv">CSV</option>
                 <option value="txt">Text (space/tab separated)</option>
@@ -196,54 +325,92 @@ plt.grid(True)</param>
             </param>
             <spacer/>
             
+            <label appearance="header">CSV/Text Options</label>
             <param name="csv_delimiter" type="string" gui-text="CSV delimiter:">,</param>
-            <param name="skip_header" type="bool" gui-text="Skip header row">true</param>
+            <param name="skip_header" type="bool" gui-text="File has header row">true</param>
+            <param name="header_row" type="int" min="0" max="100" gui-text="Header row number (0-indexed):">0</param>
             <spacer/>
             
-            <param name="x_column" type="int" min="0" max="100" gui-text="X column index (0-based):">0</param>
-            <param name="y_column" type="int" min="0" max="100" gui-text="Y column index (0-based):">1</param>
+            <label appearance="header">Column Selection (Multi-column support)</label>
+            <param name="x_columns" type="string" gui-text="X column(s):">0</param>
+            <param name="y_columns" type="string" gui-text="Y column(s):">1</param>
+            <label>Comma-separated indices or ranges: "0,1,2" or "0-3" or "0,2-4,6"</label>
             <spacer/>
             
-            <label>When using Script Bank with data import:</label>
-            <label>- x_data and y_data arrays will be available</label>
-            <label>- df (DataFrame) available for CSV/Excel</label>
+            <param name="column_names" type="string" gui-text="Column names (optional):"></param>
+            <label>Load columns by name: "time,temperature,pressure"</label>
+            <spacer/>
+            
+            <param name="load_all_columns" type="bool" gui-text="Load all columns">false</param>
+            <label>Makes all columns available in 'columns' dict</label>
+            <spacer/>
+            
+            <label appearance="header">Date/Time Parsing</label>
+            <param name="date_columns" type="string" gui-text="Date column(s):"></param>
+            <label>Column indices to parse as dates (e.g., "0" or "0,2")</label>
+            <param name="date_format" type="string" gui-text="Date format:">%Y-%m-%d</param>
+            <label>Python strftime format (%Y=year, %m=month, %d=day, %H=hour)</label>
+            <spacer/>
+            
+            <label appearance="header">Available Variables in Scripts</label>
+            <label>• df / data - Full DataFrame</label>
+            <label>• x_data, y_data - Single column arrays</label>
+            <label>• x_columns, y_columns - Lists of arrays (multi-column)</label>
+            <label>• columns - Dict with all extracted columns</label>
         </page>
         
         <page name="help" gui-text="Help">
-            <label appearance="header">Matplotlib Figure Generator</label>
+            <label appearance="header">Matplotlib Figure Generator v1.0</label>
             <spacer/>
-            <label>How to use:</label>
-            <label>1. Ensure matplotlib is installed (pip install matplotlib)</label>
-            <label>2. Select script source: inline, file, or Script Bank</label>
-            <label>3. For Script Bank: choose category and script</label>
-            <label>4. Configure format, style, and placement</label>
-            <label>5. Optionally import data from CSV/Excel</label>
-            <label>6. Click Apply to generate and insert figure</label>
+            
+            <label appearance="header">Quick Start</label>
+            <label>1. Ensure matplotlib is installed: pip install matplotlib</label>
+            <label>2. Choose script source: inline code, file, or Script Bank</label>
+            <label>3. Configure format, style, and placement options</label>
+            <label>4. Click Apply to generate and insert figure</label>
             <spacer/>
-            <label appearance="header">Script Bank Categories:</label>
+            
+            <label appearance="header">Available Variables in Scripts</label>
+            <label>• _fig_width, _fig_height - Figure dimensions</label>
+            <label>• _dpi - Resolution setting</label>
+            <label>• _show_grid, _show_legend - Boolean toggles</label>
+            <label>• _legend_position - Legend location string</label>
+            <label>• _colormap - Selected colormap name</label>
+            <label>• _transparent - Background transparency</label>
+            <label>• _subplot_rows, _subplot_cols - Subplot grid</label>
+            <label>• fig, ax - Auto-created figure and axis</label>
+            <spacer/>
+            
+            <label appearance="header">Helper Functions</label>
+            <label>• apply_style(ax) - Apply grid/despine settings</label>
+            <label>• get_cmap(name) - Get colormap object</label>
+            <spacer/>
+            
+            <label appearance="header">Multi-Column Data Examples</label>
+            <label>X columns: "0" (single) or "0,1,2" or "0-3"</label>
+            <label>Y columns: "1,2,3" for multiple Y series</label>
+            <label>Then use: for i, y in enumerate(y_columns): plt.plot(x_data, y)</label>
+            <spacer/>
+            
+            <label appearance="header">Script Bank Categories</label>
             <label>• Line Plots: Basic, multi-line, error bars, filled</label>
             <label>• Scatter: Basic, regression, bubble charts</label>
             <label>• Bar Charts: Basic, grouped, stacked, horizontal</label>
             <label>• Statistical: Box plots, violin, error bars</label>
+            <label>• Scientific: Contour, vector field, 3D surface</label>
             <label>• Heatmaps: Correlation matrices, basic heatmaps</label>
             <label>• Time Series: Single/dual axis temporal data</label>
             <label>• Distributions: Histograms, KDE plots</label>
-            <label>• Multi-Panel: 2x2 grids, comparisons</label>
+            <label>• Publication: Journal-ready figure templates</label>
             <spacer/>
-            <label appearance="header">Figure Sizing:</label>
-            <label>- Width/height in inches (matplotlib standard)</label>
-            <label>- DPI: 96 (screen), 150 (draft), 300 (print)</label>
-            <label>- Example: 8" × 6" at 96 DPI = 768 × 576 px</label>
-            <spacer/>
-            <label>Required: matplotlib, numpy</label>
-            <label>Optional: pandas (for data import)</label>
+            
         </page>
     </param>
     
     <effect>
         <object-type>all</object-type>
         <effects-menu>
-            <submenu name="Generate"/>
+            <submenu name="Render"/>
         </effects-menu>
     </effect>
     
