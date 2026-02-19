@@ -28,7 +28,7 @@ if _show_legend:
             <label>Don't include plt.show() or plt.savefig() - handled automatically</label>
             <spacer/>
             
-            <param name="script_file" type="path" mode="file" gui-text="Script file path:"  filetypes=".py">C:\Users\youve\AppData\Roaming\inkscape\extensions\plt_ink\template_script.py</param>
+            <param name="script_file" type="path" mode="file" gui-text="Script file path:"  filetypes="py">C:\Users\youve\AppData\Roaming\inkscape\extensions\plt_ink\template_script.py</param>
         
 
 
@@ -313,7 +313,7 @@ if _show_legend:
 
 
 
-            <param name="data_file_path" type="path" mode="file" gui-text="Data file path:"  filetypes="csv,json,excel,txt">C:\Users\youve\AppData\Roaming\inkscape\extensions\plt_ink\data.csv</param>
+            <param name="data_file_path" type="path" mode="file" gui-text="Data file path:"  filetypes="csv,json,xlsx,txt">C:\Users\youve\AppData\Roaming\inkscape\extensions\plt_ink\data.csv</param>
         
 
 
