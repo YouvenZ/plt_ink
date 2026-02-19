@@ -20,6 +20,7 @@ import shutil
 from datetime import datetime
 from lxml import etree
 import sys
+import re
 
 
 SCRIPT_CATEGORIES = {
@@ -78,6 +79,12 @@ class MatplotlibGenerator(inkex.EffectExtension):
         pars.add_argument("--bank_category", type=str, default="line_plots", help="Script bank category")
         pars.add_argument("--bank_script", type=str, default="basic_line", help="Script from bank")
         
+        # Preamble parameters (NEW)
+        pars.add_argument("--use_preamble", type=inkex.Boolean, default=True, help="Include preamble")
+        pars.add_argument("--custom_preamble", type=str, default="", help="Custom preamble code")
+        pars.add_argument("--auto_imports", type=inkex.Boolean, default=True, help="Auto import numpy/matplotlib")
+        pars.add_argument("--additional_imports", type=str, default="", help="Additional import statements")
+        
         # Format parameters
         pars.add_argument("--output_format", type=str, default="svg", help="Output format")
         pars.add_argument("--figure_width", type=float, default=8.0, help="Figure width in inches")
@@ -95,11 +102,16 @@ class MatplotlibGenerator(inkex.EffectExtension):
         
         # Placement parameters
         pars.add_argument("--position_mode", type=str, default="center", help="Position mode")
+        pars.add_argument("--custom_x", type=float, default=0.0, help="Custom X position")
+        pars.add_argument("--custom_y", type=float, default=0.0, help="Custom Y position")
         pars.add_argument("--embed_image", type=inkex.Boolean, default=True, help="Embed image")
+        pars.add_argument("--scale_factor", type=float, default=1.0, help="Scale factor for output")
         
         # Advanced parameters
         pars.add_argument("--font_family", type=str, default="sans-serif", help="Font family")
         pars.add_argument("--font_size", type=int, default=10, help="Font size")
+        pars.add_argument("--title_size", type=int, default=14, help="Title font size")
+        pars.add_argument("--label_size", type=int, default=12, help="Axis label font size")
         pars.add_argument("--line_width", type=float, default=1.5, help="Line width")
         pars.add_argument("--marker_size", type=float, default=6.0, help="Marker size")
         pars.add_argument("--use_latex", type=inkex.Boolean, default=False, help="Use LaTeX")
@@ -107,14 +119,42 @@ class MatplotlibGenerator(inkex.EffectExtension):
         pars.add_argument("--script_save_path", type=str, default="", help="Script save path")
         pars.add_argument("--keep_temp_files", type=inkex.Boolean, default=False, help="Keep temp files")
         
+        # Figure creation options (NEW)
+        pars.add_argument("--auto_create_figure", type=inkex.Boolean, default=True, help="Auto create figure")
+        pars.add_argument("--subplot_rows", type=int, default=1, help="Subplot rows")
+        pars.add_argument("--subplot_cols", type=int, default=1, help="Subplot columns")
+        pars.add_argument("--share_x", type=inkex.Boolean, default=False, help="Share X axis")
+        pars.add_argument("--share_y", type=inkex.Boolean, default=False, help="Share Y axis")
+        
         # Data import parameters
         pars.add_argument("--use_data_file", type=inkex.Boolean, default=False, help="Use data file")
         pars.add_argument("--data_file_path", type=str, default="", help="Data file path")
         pars.add_argument("--data_format", type=str, default="csv", help="Data format")
         pars.add_argument("--csv_delimiter", type=str, default=",", help="CSV delimiter")
         pars.add_argument("--skip_header", type=inkex.Boolean, default=True, help="Skip header")
-        pars.add_argument("--x_column", type=int, default=0, help="X column")
-        pars.add_argument("--y_column", type=int, default=1, help="Y column")
+        pars.add_argument("--header_row", type=int, default=0, help="Header row number (0-indexed)")
+        
+        # Multi-column selection (NEW - replaces single x_column/y_column)
+        pars.add_argument("--x_columns", type=str, default="0", help="X column indices (comma-separated)")
+        pars.add_argument("--y_columns", type=str, default="1", help="Y column indices (comma-separated)")
+        pars.add_argument("--column_names", type=str, default="", help="Column names to load (comma-separated)")
+        pars.add_argument("--load_all_columns", type=inkex.Boolean, default=False, help="Load all columns")
+        pars.add_argument("--date_columns", type=str, default="", help="Date column indices (comma-separated)")
+        pars.add_argument("--date_format", type=str, default="%Y-%m-%d", help="Date format string")
+        
+        # Color/Style presets (NEW)
+        pars.add_argument("--color_cycle", type=str, default="default", help="Color cycle preset")
+        pars.add_argument("--background_color", type=str, default="white", help="Background color")
+        pars.add_argument("--grid_style", type=str, default="--", help="Grid line style")
+        pars.add_argument("--grid_alpha", type=float, default=0.3, help="Grid transparency")
+        
+        # Error handling (NEW)
+        pars.add_argument("--error_handling", type=str, default="stop", help="Error handling mode")
+        pars.add_argument("--show_warnings", type=inkex.Boolean, default=True, help="Show warnings")
+        
+        # Post-processing (NEW)
+        pars.add_argument("--auto_despine", type=inkex.Boolean, default=False, help="Remove top/right spines")
+        pars.add_argument("--constrained_layout", type=inkex.Boolean, default=False, help="Use constrained layout")
     
     def effect(self):
         """Main effect function."""
@@ -245,6 +285,37 @@ class MatplotlibGenerator(inkex.EffectExtension):
         script_path = os.path.join(self.script_bank_dir, self.options.bank_category, script_name)
         return script_path
     
+    def parse_column_indices(self, column_str):
+        """Parse comma-separated column indices or ranges.
+        
+        Supports formats like:
+        - "0,1,2" -> [0, 1, 2]
+        - "0-3" -> [0, 1, 2, 3]
+        - "0,2-4,6" -> [0, 2, 3, 4, 6]
+        """
+        if not column_str or column_str.strip() == "":
+            return []
+        
+        indices = []
+        parts = column_str.replace(' ', '').split(',')
+        
+        for part in parts:
+            if '-' in part and not part.startswith('-'):
+                # Handle range like "2-5"
+                try:
+                    start, end = part.split('-')
+                    indices.extend(range(int(start), int(end) + 1))
+                except ValueError:
+                    self.log(f"Invalid range format: {part}", "WARNING")
+            else:
+                # Handle single index
+                try:
+                    indices.append(int(part))
+                except ValueError:
+                    self.log(f"Invalid column index: {part}", "WARNING")
+        
+        return indices
+    
     def generate_script(self):
         """Generate the matplotlib script based on settings."""
         self.log(f"Script source: {self.options.script_source}")
@@ -311,61 +382,25 @@ class MatplotlibGenerator(inkex.EffectExtension):
             inkex.errormsg("No code provided.")
             return None
         
-        # Build complete script with preamble and postamble
+        # Build complete script
         script_parts = []
         
-        # Imports
-        script_parts.append("import matplotlib")
-        script_parts.append("matplotlib.use('Agg')  # Non-interactive backend")
-        script_parts.append("import matplotlib.pyplot as plt")
-        script_parts.append("import numpy as np")
-        script_parts.append("import os")
-        
-        # Optional imports for data
-        if self.options.use_data_file:
-            self.log("Adding data import libraries")
-            script_parts.append("import pandas as pd")
-            if self.options.data_format == "json":
-                script_parts.append("import json")
-        
-        script_parts.append("")
-        
-        # Apply style
-        if self.options.plot_style != "default":
-            self.log(f"Applying plot style: {self.options.plot_style}")
-            script_parts.append(f"plt.style.use('{self.options.plot_style}')")
-        
-        # Configure matplotlib
-        script_parts.append("# Configure matplotlib")
-        script_parts.append(f"plt.rcParams['font.family'] = '{self.options.font_family}'")
-        script_parts.append(f"plt.rcParams['font.size'] = {self.options.font_size}")
-        script_parts.append(f"plt.rcParams['lines.linewidth'] = {self.options.line_width}")
-        script_parts.append(f"plt.rcParams['lines.markersize'] = {self.options.marker_size}")
-        
-        if self.options.use_latex:
-            script_parts.append("plt.rcParams['text.usetex'] = True")
-        
-        script_parts.append("")
-        
-        # Provide configuration variables to user scripts
-        script_parts.append("# Extension configuration (available to user scripts)")
-        script_parts.append(f"_fig_width = {self.options.figure_width}")
-        script_parts.append(f"_fig_height = {self.options.figure_height}")
-        script_parts.append(f"_dpi = {self.options.dpi}")
-        script_parts.append(f"_show_grid = {self.options.grid}")
-        script_parts.append(f"_show_legend = {self.options.legend}")
-        script_parts.append(f"_legend_position = '{self.options.legend_position}'")
-        script_parts.append(f"_colormap = '{self.options.color_map}'")
-        script_parts.append("")
-        
-        # Create figure if user code doesn't
-        if 'plt.figure' not in user_code and 'plt.subplots' not in user_code:
-            self.log("Creating figure (user code doesn't create figure)")
-            script_parts.append("# Create figure")
-            script_parts.append(f"fig = plt.figure(figsize=({self.options.figure_width}, {self.options.figure_height}))")
+        # Only add preamble if requested
+        if self.options.use_preamble:
+            script_parts.extend(self.generate_preamble(user_code))
+        else:
+            # Minimal setup without preamble
+            if self.options.auto_imports:
+                script_parts.append("import matplotlib")
+                script_parts.append("matplotlib.use('Agg')")
+                script_parts.append("import matplotlib.pyplot as plt")
+                script_parts.append("import numpy as np")
+                script_parts.append("import random")
+                script_parts.append("import scipy")
+                
             script_parts.append("")
         
-        # Load data if requested
+        # Load data if requested (before user code)
         if self.options.use_data_file and self.options.data_file_path and os.path.exists(self.options.data_file_path):
             self.log(f"Loading data from: {self.options.data_file_path}")
             script_parts.append("# Load data")
@@ -377,12 +412,185 @@ class MatplotlibGenerator(inkex.EffectExtension):
         script_parts.append(user_code)
         script_parts.append("")
         
-        if self.options.tight_layout:
-            script_parts.append("plt.tight_layout()")
+        # Post-processing
+        script_parts.extend(self.generate_postamble())
+        
+        return '\n'.join(script_parts)
+    
+    def generate_preamble(self, user_code):
+        """Generate the preamble (imports, configuration, etc.)."""
+        preamble = []
+        
+        # Error handling setup
+        if self.options.error_handling == "warn":
+            preamble.append("import warnings")
+            if not self.options.show_warnings:
+                preamble.append("warnings.filterwarnings('ignore')")
+            preamble.append("")
+        
+        # Auto imports
+        if self.options.auto_imports:
+            preamble.append("import matplotlib")
+            preamble.append("matplotlib.use('Agg')  # Non-interactive backend")
+            preamble.append("import matplotlib.pyplot as plt")
+            preamble.append("import numpy as np")
+            preamble.append("import os")
+            preamble.append("from matplotlib import cm")
+            preamble.append("from matplotlib.colors import Normalize")
+        
+        # Additional imports
+        if self.options.additional_imports:
+            preamble.append("")
+            preamble.append("# Additional imports")
+            additional = self.options.additional_imports.replace('\\n', '\n')
+            for line in additional.split('\n'):
+                if line.strip():
+                    preamble.append(line.strip())
+        
+        # Optional imports for data
+        if self.options.use_data_file:
+            self.log("Adding data import libraries")
+            preamble.append("import pandas as pd")
+            if self.options.data_format == "json":
+                preamble.append("import json")
+            if self.options.date_columns:
+                preamble.append("from datetime import datetime")
+        
+        preamble.append("")
+        
+        # Custom preamble
+        if self.options.custom_preamble:
+            preamble.append("# Custom preamble")
+            custom = self.options.custom_preamble.replace('\\n', '\n')
+            for line in custom.split('\n'):
+                preamble.append(line)
+            preamble.append("")
+        
+        # Apply style
+        if self.options.plot_style != "default":
+            self.log(f"Applying plot style: {self.options.plot_style}")
+            preamble.append(f"plt.style.use('{self.options.plot_style}')")
+        
+        # Configure matplotlib
+        preamble.append("# Configure matplotlib")
+        preamble.append(f"plt.rcParams['font.family'] = '{self.options.font_family}'")
+        preamble.append(f"plt.rcParams['font.size'] = {self.options.font_size}")
+        preamble.append(f"plt.rcParams['axes.titlesize'] = {self.options.title_size}")
+        preamble.append(f"plt.rcParams['axes.labelsize'] = {self.options.label_size}")
+        preamble.append(f"plt.rcParams['lines.linewidth'] = {self.options.line_width}")
+        preamble.append(f"plt.rcParams['lines.markersize'] = {self.options.marker_size}")
+        
+        # Background color
+        if self.options.background_color != "white":
+            preamble.append(f"plt.rcParams['axes.facecolor'] = '{self.options.background_color}'")
+            preamble.append(f"plt.rcParams['figure.facecolor'] = '{self.options.background_color}'")
+        
+        # Grid styling
+        preamble.append(f"plt.rcParams['grid.linestyle'] = '{self.options.grid_style}'")
+        preamble.append(f"plt.rcParams['grid.alpha'] = {self.options.grid_alpha}")
+        
+        # Color cycle
+        if self.options.color_cycle != "default":
+            color_cycles = {
+                "tab10": "plt.rcParams['axes.prop_cycle'] = plt.cycler(color=plt.cm.tab10.colors)",
+                "tab20": "plt.rcParams['axes.prop_cycle'] = plt.cycler(color=plt.cm.tab20.colors)",
+                "set1": "plt.rcParams['axes.prop_cycle'] = plt.cycler(color=plt.cm.Set1.colors)",
+                "set2": "plt.rcParams['axes.prop_cycle'] = plt.cycler(color=plt.cm.Set2.colors)",
+                "paired": "plt.rcParams['axes.prop_cycle'] = plt.cycler(color=plt.cm.Paired.colors)",
+                "dark2": "plt.rcParams['axes.prop_cycle'] = plt.cycler(color=plt.cm.Dark2.colors)",
+            }
+            if self.options.color_cycle in color_cycles:
+                preamble.append(color_cycles[self.options.color_cycle])
+        
+        if self.options.use_latex:
+            preamble.append("plt.rcParams['text.usetex'] = True")
+        
+        preamble.append("")
+        
+        # Provide configuration variables to user scripts
+        preamble.append("# Extension configuration (available to user scripts)")
+        preamble.append(f"_fig_width = {self.options.figure_width}")
+        preamble.append(f"_fig_height = {self.options.figure_height}")
+        preamble.append(f"_dpi = {self.options.dpi}")
+        preamble.append(f"_show_grid = {self.options.grid}")
+        preamble.append(f"_show_legend = {self.options.legend}")
+        preamble.append(f"_legend_position = '{self.options.legend_position}'")
+        preamble.append(f"_colormap = '{self.options.color_map}'")
+        preamble.append(f"_transparent = {self.options.transparent}")
+        preamble.append(f"_subplot_rows = {self.options.subplot_rows}")
+        preamble.append(f"_subplot_cols = {self.options.subplot_cols}")
+        preamble.append("")
+        
+        # Helper functions
+        preamble.append("# Helper functions")
+        preamble.append("def apply_style(ax=None):")
+        preamble.append("    '''Apply common styling to axis.'''")
+        preamble.append("    if ax is None:")
+        preamble.append("        ax = plt.gca()")
+        preamble.append(f"    if {self.options.grid}:")
+        preamble.append(f"        ax.grid(True, alpha={self.options.grid_alpha}, linestyle='{self.options.grid_style}')")
+        if self.options.auto_despine:
+            preamble.append("    ax.spines['top'].set_visible(False)")
+            preamble.append("    ax.spines['right'].set_visible(False)")
+        preamble.append("")
+        
+        preamble.append("def get_cmap(name=None):")
+        preamble.append("    '''Get colormap by name or default.'''")
+        preamble.append(f"    return plt.cm.get_cmap(name or '{self.options.color_map}')")
+        preamble.append("")
+        
+        # Create figure if user code doesn't and auto_create_figure is enabled
+        if self.options.auto_create_figure:
+            if 'plt.figure' not in user_code and 'plt.subplots' not in user_code:
+                self.log("Creating figure (user code doesn't create figure)")
+                preamble.append("# Create figure")
+                if self.options.subplot_rows > 1 or self.options.subplot_cols > 1:
+                    share_x = "True" if self.options.share_x else "False"
+                    share_y = "True" if self.options.share_y else "False"
+                    layout = "'constrained'" if self.options.constrained_layout else "None"
+                    preamble.append(
+                        f"fig, axes = plt.subplots({self.options.subplot_rows}, {self.options.subplot_cols}, "
+                        f"figsize=({self.options.figure_width}, {self.options.figure_height}), "
+                        f"sharex={share_x}, sharey={share_y}, layout={layout})"
+                    )
+                    preamble.append("# Make 'ax' point to first axis for convenience")
+                    preamble.append("ax = axes.flat[0] if hasattr(axes, 'flat') else axes")
+                else:
+                    layout_arg = ", layout='constrained'" if self.options.constrained_layout else ""
+                    preamble.append(f"fig, ax = plt.subplots(figsize=({self.options.figure_width}, {self.options.figure_height}){layout_arg})")
+                preamble.append("")
+        
+        return preamble
+    
+    def generate_postamble(self):
+        """Generate the postamble (tight layout, save, etc.)."""
+        postamble = []
+        
+        # Auto despine if enabled (apply to all axes)
+        if self.options.auto_despine:
+            postamble.append("# Apply despine to all axes")
+            postamble.append("for ax in plt.gcf().get_axes():")
+            postamble.append("    ax.spines['top'].set_visible(False)")
+            postamble.append("    ax.spines['right'].set_visible(False)")
+            postamble.append("")
+        
+        # Apply grid to all axes if enabled
+        if self.options.grid:
+            postamble.append("# Apply grid to all axes")
+            postamble.append("for ax in plt.gcf().get_axes():")
+            postamble.append(f"    ax.grid(True, alpha={self.options.grid_alpha}, linestyle='{self.options.grid_style}')")
+            postamble.append("")
+        
+        # Layout adjustment
+        if self.options.tight_layout and not self.options.constrained_layout:
+            postamble.append("try:")
+            postamble.append("    plt.tight_layout()")
+            postamble.append("except Exception:")
+            postamble.append("    pass  # tight_layout may fail with some configurations")
         
         # Save figure
-        script_parts.append("")
-        script_parts.append("# Save figure")
+        postamble.append("")
+        postamble.append("# Save figure")
         output_path = self.get_temp_output_path()
         self.log(f"Output path: {output_path}")
         
@@ -390,59 +598,143 @@ class MatplotlibGenerator(inkex.EffectExtension):
         save_params.append(f"format='{self.options.output_format}'")
         save_params.append(f"dpi={self.options.dpi}")
         save_params.append(f"transparent={self.options.transparent}")
-        if self.options.tight_layout:
+        if self.options.tight_layout and not self.options.constrained_layout:
             save_params.append("bbox_inches='tight'")
         
         save_params_str = ', '.join(save_params)
         self.debug_var("save_params", save_params_str)
         
-        script_parts.append(f"output_file = r'{output_path}'")
-        script_parts.append(f"plt.savefig(output_file, {save_params_str})")
-        script_parts.append("plt.close()")
-        script_parts.append("print(f'SUCCESS:{output_file}')")
+        postamble.append(f"output_file = r'{output_path}'")
+        postamble.append(f"plt.savefig(output_file, {save_params_str})")
+        postamble.append("plt.close()")
+        postamble.append("print(f'SUCCESS:{output_file}')")
         
-        return '\n'.join(script_parts)
+        return postamble
 
     def generate_data_loading_code(self):
-        """Generate code to load data from file."""
+        """Generate code to load data from file with multi-column support."""
         data_path = self.options.data_file_path.replace('\\', '/')
         self.debug_var("data_file_path", data_path)
         self.debug_var("data_format", self.options.data_format)
         
+        code_lines = []
+        
+        # Parse column indices
+        x_indices = self.parse_column_indices(self.options.x_columns)
+        y_indices = self.parse_column_indices(self.options.y_columns)
+        date_indices = self.parse_column_indices(self.options.date_columns)
+        column_names = [n.strip() for n in self.options.column_names.split(',') if n.strip()]
+        
+        self.debug_var("x_indices", x_indices)
+        self.debug_var("y_indices", y_indices)
+        self.debug_var("date_indices", date_indices)
+        self.debug_var("column_names", column_names)
+        
         if self.options.data_format == "csv":
-            code = f"df = pd.read_csv(r'{data_path}', delimiter='{self.options.csv_delimiter}')\n"
-            code += "# Access columns by name or index\n"
-            code += f"x_data = df.iloc[:, {self.options.x_column}].values\n"
-            code += f"y_data = df.iloc[:, {self.options.y_column}].values\n"
-            code += "# Also make the dataframe available\n"
-            code += "data = df"
-            return code
+            # Build read_csv parameters
+            csv_params = [f"r'{data_path}'"]
+            csv_params.append(f"delimiter='{self.options.csv_delimiter}'")
+            
+            if self.options.skip_header:
+                csv_params.append(f"header={self.options.header_row}")
+            else:
+                csv_params.append("header=None")
+            
+            # Parse dates if specified
+            if date_indices:
+                csv_params.append(f"parse_dates={date_indices}")
+                if self.options.date_format:
+                    code_lines.append(f"_date_parser = lambda x: pd.to_datetime(x, format='{self.options.date_format}')")
+                    csv_params.append("date_parser=_date_parser")
+            
+            # Load specific columns by name if provided
+            if column_names and not self.options.load_all_columns:
+                csv_params.append(f"usecols={column_names}")
+            
+            code_lines.append(f"df = pd.read_csv({', '.join(csv_params)})")
         
         elif self.options.data_format == "excel":
-            code = f"df = pd.read_excel(r'{data_path}')\n"
-            code += f"x_data = df.iloc[:, {self.options.x_column}].values\n"
-            code += f"y_data = df.iloc[:, {self.options.y_column}].values\n"
-            code += "data = df"
-            return code
+            excel_params = [f"r'{data_path}'"]
+            if self.options.skip_header:
+                excel_params.append(f"header={self.options.header_row}")
+            else:
+                excel_params.append("header=None")
+            
+            if date_indices:
+                excel_params.append(f"parse_dates={date_indices}")
+            
+            code_lines.append(f"df = pd.read_excel({', '.join(excel_params)})")
         
         elif self.options.data_format == "json":
-            code = f"with open(r'{data_path}', 'r') as f:\n"
-            code += "    _json_data = json.load(f)\n"
-            code += "if isinstance(_json_data, list):\n"
-            code += "    df = pd.DataFrame(_json_data)\n"
-            code += "else:\n"
-            code += "    df = pd.DataFrame(_json_data)\n"
-            code += f"x_data = df.iloc[:, {self.options.x_column}].values\n"
-            code += f"y_data = df.iloc[:, {self.options.y_column}].values\n"
-            code += "data = df"
-            return code
+            code_lines.append(f"with open(r'{data_path}', 'r') as f:")
+            code_lines.append("    _json_data = json.load(f)")
+            code_lines.append("if isinstance(_json_data, list):")
+            code_lines.append("    df = pd.DataFrame(_json_data)")
+            code_lines.append("elif isinstance(_json_data, dict):")
+            code_lines.append("    df = pd.DataFrame(_json_data)")
+            code_lines.append("else:")
+            code_lines.append("    df = pd.DataFrame([_json_data])")
         
         else:
             # Text format (space/tab separated)
-            code = f"data = np.loadtxt(r'{data_path}', skiprows={1 if self.options.skip_header else 0})\n"
-            code += f"x_data = data[:, {self.options.x_column}]\n"
-            code += f"y_data = data[:, {self.options.y_column}]"
-            return code
+            skip_rows = self.options.header_row + 1 if self.options.skip_header else 0
+            code_lines.append(f"_raw_data = np.loadtxt(r'{data_path}', skiprows={skip_rows})")
+            code_lines.append("df = pd.DataFrame(_raw_data)")
+        
+        code_lines.append("")
+        code_lines.append("# Make dataframe available as 'data'")
+        code_lines.append("data = df")
+        code_lines.append("")
+        
+        # Extract columns
+        code_lines.append("# Column data extraction")
+        code_lines.append("columns = {}")
+        
+        if self.options.load_all_columns:
+            code_lines.append("# All columns loaded into dictionary")
+            code_lines.append("for i, col in enumerate(df.columns):")
+            code_lines.append("    columns[f'col_{i}'] = df.iloc[:, i].values")
+            code_lines.append("    columns[str(col)] = df.iloc[:, i].values")
+        else:
+            # Extract X columns
+            if x_indices:
+                if len(x_indices) == 1:
+                    code_lines.append(f"x_data = df.iloc[:, {x_indices[0]}].values")
+                else:
+                    code_lines.append(f"x_data = [df.iloc[:, i].values for i in {x_indices}]")
+                    code_lines.append("x_columns = x_data  # List of X column arrays")
+            
+            # Extract Y columns
+            if y_indices:
+                if len(y_indices) == 1:
+                    code_lines.append(f"y_data = df.iloc[:, {y_indices[0]}].values")
+                else:
+                    code_lines.append(f"y_data = [df.iloc[:, i].values for i in {y_indices}]")
+                    code_lines.append("y_columns = y_data  # List of Y column arrays")
+            
+            # Store in columns dict
+            for i, idx in enumerate(x_indices):
+                code_lines.append(f"columns['x{i}'] = df.iloc[:, {idx}].values")
+            for i, idx in enumerate(y_indices):
+                code_lines.append(f"columns['y{i}'] = df.iloc[:, {idx}].values")
+        
+        # Named column access
+        if column_names:
+            code_lines.append("")
+            code_lines.append("# Named column access")
+            for name in column_names:
+                safe_name = re.sub(r'[^a-zA-Z0-9_]', '_', name)
+                code_lines.append(f"try:")
+                code_lines.append(f"    {safe_name} = df['{name}'].values")
+                code_lines.append(f"except KeyError:")
+                code_lines.append(f"    pass  # Column '{name}' not found")
+        
+        code_lines.append("")
+        code_lines.append("# Data info for debugging")
+        code_lines.append("print(f'Loaded data shape: {df.shape}')")
+        code_lines.append("print(f'Columns: {list(df.columns)}')")
+        
+        return '\n'.join(code_lines)
         
     def get_temp_output_path(self):
         """Get temporary output file path."""
@@ -488,7 +780,11 @@ class MatplotlibGenerator(inkex.EffectExtension):
                 error_msg = result.stderr if result.stderr else result.stdout
                 self.log(f"Script execution failed with code {result.returncode}", "ERROR")
                 self.log(f"Error message: {error_msg}", "ERROR")
-                inkex.errormsg(f"Script execution failed:\n{error_msg}")
+                
+                if self.options.error_handling == "warn":
+                    inkex.errormsg(f"Warning: Script had errors:\n{error_msg}")
+                else:
+                    inkex.errormsg(f"Script execution failed:\n{error_msg}")
                 return None
         
         except subprocess.TimeoutExpired:
@@ -574,9 +870,14 @@ class MatplotlibGenerator(inkex.EffectExtension):
             group.set('id', self.svg.get_unique_id('matplotlib-svg'))
             
             position = self.calculate_position()
+            scale = self.options.scale_factor
             self.debug_var("svg_import_position", position)
+            self.debug_var("scale_factor", scale)
             
-            group.set('transform', f'translate({position["x"]}, {position["y"]})')
+            if scale != 1.0:
+                group.set('transform', f'translate({position["x"]}, {position["y"]}) scale({scale})')
+            else:
+                group.set('transform', f'translate({position["x"]}, {position["y"]})')
             
             elem_count = 0
             for elem in root:
@@ -602,6 +903,13 @@ class MatplotlibGenerator(inkex.EffectExtension):
         self.debug_var("doc_height", doc_height)
         
         size = self.calculate_size()
+        
+        # Handle custom position
+        if self.options.position_mode == 'custom':
+            return {
+                'x': self.options.custom_x,
+                'y': self.options.custom_y
+            }
         
         positions = {
             'center': {
@@ -652,13 +960,13 @@ class MatplotlibGenerator(inkex.EffectExtension):
     
     def calculate_size(self):
         """Calculate image size in document units."""
-        width_px = self.options.figure_width * self.options.dpi
-        height_px = self.options.figure_height * self.options.dpi
+        width_px = self.options.figure_width * self.options.dpi * self.options.scale_factor
+        height_px = self.options.figure_height * self.options.dpi * self.options.scale_factor
         
         width = self.svg.unittouu(f'{width_px}px')
         height = self.svg.unittouu(f'{height_px}px')
         
-        self.log(f"Figure size: {self.options.figure_width}\" x {self.options.figure_height}\" @ {self.options.dpi} DPI")
+        self.log(f"Figure size: {self.options.figure_width}\" x {self.options.figure_height}\" @ {self.options.dpi} DPI (scale: {self.options.scale_factor})")
         self.log(f"Pixel size: {width_px} x {height_px} px")
         self.log(f"Document units: {width} x {height}")
         
