@@ -1,3 +1,6 @@
+
+<div align="center">
+
 # Matplotlib Figure Generator for Inkscape
 
 [![Inkscape](https://img.shields.io/badge/Inkscape-1.0+-blue.svg)](https://inkscape.org/)
@@ -8,6 +11,21 @@
 > **Generate and embed matplotlib figures directly in Inkscape**
 
 A powerful Inkscape extension that allows you to create matplotlib visualizations and insert them seamlessly into your SVG documents. Perfect for scientific illustrations, data visualization in design projects, and publication-ready graphics.
+
+</div>
+
+## 📺 Demo
+
+<div align="center">
+
+<!-- Replace VIDEO_ID with your actual YouTube video ID -->
+[![Watch the Demo](https://img.youtube.com/vi/lmj0Jzv106A/maxresdefault.jpg)](https://www.youtube.com/watch?v=lmj0Jzv106A)
+
+*Click to watch the full tutorial on YouTube*
+
+</div>
+
+
 
 ---
 
