@@ -747,7 +747,22 @@ class MatplotlibGenerator(inkex.EffectExtension):
         # Apply style
         if self.options.plot_style != "default":
             self.log(f"Applying plot style: {self.options.plot_style}")
-            preamble.append(f"plt.style.use('{self.options.plot_style}')")
+            # Academic presets (ieee / nature / apa) are stored as .mplstyle files
+            # in the plt_ink_styles/ sub-directory alongside this extension.
+            _ACADEMIC_STYLES = ('ieee', 'nature', 'apa')
+            if self.options.plot_style in _ACADEMIC_STYLES:
+                _styles_dir = os.path.join(
+                    os.path.dirname(os.path.abspath(__file__)), 'plt_ink_styles'
+                )
+                _style_file = os.path.join(_styles_dir, f'{self.options.plot_style}.mplstyle')
+                preamble.append("import os as _os_pltink")
+                preamble.append(f"_plt_ink_style = r'{_style_file}'")
+                preamble.append("if _os_pltink.path.isfile(_plt_ink_style):")
+                preamble.append("    plt.style.use(_plt_ink_style)")
+                preamble.append("del _os_pltink, _plt_ink_style")
+            else:
+                preamble.append(f"plt.style.use('{self.options.plot_style}')")
+
         
         # Configure matplotlib
         preamble.append("# Configure matplotlib")
@@ -1279,10 +1294,41 @@ class MatplotlibGenerator(inkex.EffectExtension):
             )
         self.log(msg)
 
+    # Maximum raster image size to embed without warning (50 MB of raw image data).
+    _RASTER_WARN_BYTES = 50 * 1_000_000
+    # Above this threshold (100 MB) we refuse to embed to prevent Inkscape OOM crash.
+    _RASTER_LIMIT_BYTES = 100 * 1_000_000
+
     def insert_figure(self, figure_path):
         """Insert the generated figure — replaces an existing plt_ink element if selected."""
         self.log(f"Inserting figure from: {figure_path}")
-        
+
+        # ── File-size guard ───────────────────────────────────────────────────────
+        try:
+            file_size = os.path.getsize(figure_path)
+        except OSError:
+            file_size = 0
+
+        if file_size > self._RASTER_LIMIT_BYTES:
+            msg = (
+                f"The generated figure is very large ({file_size / 1e6:.1f} MB) and "
+                "cannot be safely embedded — Inkscape may crash.\n\n"
+                "Suggestions:\n"
+                "  • Reduce figure size or data point count\n"
+                "  • Lower DPI (current: {self.options.dpi}) to something like 96\n"
+                "  • Use SVG format for vector output (usually much smaller)\n"
+                "  • Disable 'Embed image' and use a linked file instead"
+            )
+            self.log(msg, "ERROR")
+            self._show_result("error", "Figure too large to embed safely", detail=msg)
+            return
+        elif file_size > self._RASTER_WARN_BYTES:
+            self.log(
+                f"Figure file is large ({file_size / 1e6:.1f} MB). "
+                "Embedding may be slow — consider reducing size or using SVG format.",
+                "WARNING"
+            )
+
         try:
             with open(figure_path, 'rb') as f:
                 image_data = f.read()
@@ -1291,7 +1337,7 @@ class MatplotlibGenerator(inkex.EffectExtension):
             self.log(f"Failed to read figure file: {str(e)}", "ERROR")
             inkex.errormsg(f"Failed to read figure file: {str(e)}")
             return
-        
+
         label = self._get_figure_label()
         existing = self._find_existing_plt_ink()
 
@@ -1300,6 +1346,14 @@ class MatplotlibGenerator(inkex.EffectExtension):
                 svg_content = image_data.decode('utf-8')
                 self.log("Importing SVG content directly")
                 self.import_svg_content(svg_content, label=label, replace=existing)
+                return
+            except MemoryError:
+                msg = (
+                    f"Not enough memory to parse the SVG figure ({file_size / 1e6:.1f} MB).  "
+                    "Try reducing figure complexity or switching to PNG format."
+                )
+                self.log(msg, "ERROR")
+                self._show_result("error", "Out of memory parsing SVG", detail=msg)
                 return
             except Exception as e:
                 self.log(f"Failed to import SVG directly: {str(e)}", "WARNING")
@@ -1350,11 +1404,87 @@ class MatplotlibGenerator(inkex.EffectExtension):
             self.svg.get_current_layer().append(image_elem)
         self.log("Image element added to document")
     
+    def _parse_svg_viewport(self, root):
+        """Return (vb_x, vb_y, vb_w, vb_h) from the SVG root's viewBox, or None if absent.
+
+        Falls back to parsing the width/height attributes (handling pt/in/px/mm units)
+        so we can compute the correct coordinate-space-to-display-size scale factor.
+        """
+        SVG_NS = 'http://www.w3.org/2000/svg'
+
+        # Try viewBox first
+        vb = root.get('viewBox') or root.get(f'{{{SVG_NS}}}viewBox')
+        if vb:
+            try:
+                parts = [float(v) for v in vb.replace(',', ' ').split()]
+                if len(parts) == 4:
+                    return tuple(parts)  # (x, y, w, h)
+            except ValueError:
+                pass
+
+        # Fall back to width/height attributes
+        def _to_px(val_str):
+            """Convert a CSS-unit dimension string to pixels (96 dpi)."""
+            if not val_str:
+                return None
+            val_str = val_str.strip()
+            units_map = {
+                'pt': 96 / 72,
+                'in': 96.0,
+                'mm': 96 / 25.4,
+                'cm': 96 / 2.54,
+                'px': 1.0,
+                'em': 16.0,  # assume 16px default
+            }
+            for unit, factor in units_map.items():
+                if val_str.endswith(unit):
+                    try:
+                        return float(val_str[:-len(unit)]) * factor
+                    except ValueError:
+                        return None
+            try:
+                return float(val_str)  # bare number → pixels
+            except ValueError:
+                return None
+
+        w = _to_px(root.get('width'))
+        h = _to_px(root.get('height'))
+        if w and h:
+            return (0.0, 0.0, w, h)
+        return None
+
     def import_svg_content(self, svg_content, label='plt_ink', replace=None):
-        """Import SVG content directly into the document, optionally replacing an existing element."""
+        """Import SVG content directly into the document, optionally replacing an existing element.
+
+        Position fix: matplotlib's SVG uses an internal coordinate space derived from
+        72 pt/in (e.g. a 8×6 in figure has a viewBox of 0 0 576 432).  When we strip
+        the SVG root and embed the children in a <g>, those coordinates are interpreted
+        in the document's user-unit space (96 px/in).  We therefore compute a scale
+        factor  sx = display_width / vb_w  (and sy = display_height / vb_h) so that
+        the imported content is rendered at exactly the size Inkscape expects.
+        """
         try:
             self.log("Parsing SVG content")
-            root = etree.fromstring(svg_content.encode('utf-8'))
+
+            # ── Size guard: very large SVG files can exhaust lxml's memory ─────────
+            svg_bytes = len(svg_content.encode('utf-8'))
+            SVG_SIZE_WARN_MB = 25
+            if svg_bytes > SVG_SIZE_WARN_MB * 1_000_000:
+                self.log(
+                    f"SVG content is large ({svg_bytes / 1e6:.1f} MB). "
+                    "Consider using PNG format for complex figures to avoid performance issues.",
+                    "WARNING"
+                )
+
+            try:
+                root = etree.fromstring(svg_content.encode('utf-8'))
+            except MemoryError:
+                raise RuntimeError(
+                    f"Not enough memory to parse the SVG figure "
+                    f"({svg_bytes / 1e6:.1f} MB).  "
+                    "Try reducing figure complexity, lowering the figure dimensions, "
+                    "or switching to PNG output format."
+                )
 
             SVG_NS = 'http://www.w3.org/2000/svg'
             defs_tag = f'{{{SVG_NS}}}defs'
@@ -1378,14 +1508,43 @@ class MatplotlibGenerator(inkex.EffectExtension):
             group.set(INKSCAPE_LABEL, label)
 
             position = self.calculate_position()
-            scale = self.options.scale_factor
+            user_scale = self.options.scale_factor
             self.debug_var("svg_import_position", position)
-            self.debug_var("scale_factor", scale)
+            self.debug_var("scale_factor", user_scale)
 
-            if scale != 1.0:
-                group.set('transform', f'translate({position["x"]}, {position["y"]}) scale({scale})')
+            # ── Coordinate-system scale fix ───────────────────────────────────────
+            # Determine scale factors that map from the SVG's internal coordinate
+            # space (viewBox) to the desired display size in Inkscape's user units.
+            viewport = self._parse_svg_viewport(root)
+            self.debug_var("svg_viewport", viewport)
+
+            if viewport and viewport[2] > 0 and viewport[3] > 0:
+                vb_x, vb_y, vb_w, vb_h = viewport
+                display = self.calculate_size()
+                # display['width'] / display['height'] are in Inkscape user units (px).
+                sx = display['width']  / vb_w * user_scale
+                sy = display['height'] / vb_h * user_scale
+                tx = position['x'] - vb_x * sx
+                ty = position['y'] - vb_y * sy
+                self.log(
+                    f"SVG viewport {vb_w:.1f}×{vb_h:.1f} → "
+                    f"display {display['width']:.1f}×{display['height']:.1f} px  "
+                    f"(scale {sx:.4f}, {sy:.4f})"
+                )
+                if abs(sx - sy) < 1e-6:
+                    # Uniform scale: simpler transform
+                    transform = f'translate({tx:.4f}, {ty:.4f}) scale({sx:.6f})'
+                else:
+                    transform = f'translate({tx:.4f}, {ty:.4f}) scale({sx:.6f}, {sy:.6f})'
             else:
-                group.set('transform', f'translate({position["x"]}, {position["y"]})')
+                # No viewBox — fall back to translate + user scale only
+                tx, ty = position['x'], position['y']
+                if user_scale != 1.0:
+                    transform = f'translate({tx}, {ty}) scale({user_scale})'
+                else:
+                    transform = f'translate({tx}, {ty})'
+
+            group.set('transform', transform)
 
             # Merge <defs> into document defs; skip <metadata>; append drawing elements.
             doc_defs = self.svg.find(defs_tag)
@@ -1416,7 +1575,15 @@ class MatplotlibGenerator(inkex.EffectExtension):
             else:
                 self.svg.get_current_layer().append(group)
             self.log("SVG group added to document")
-        
+
+        except MemoryError as e:
+            msg = (
+                "Not enough memory to import the SVG figure.  "
+                "Try reducing figure size/complexity or using PNG format."
+            )
+            self.log(msg, "ERROR")
+            inkex.errormsg(msg)
+            raise RuntimeError(msg) from e
         except Exception as e:
             self.log(f"Failed to import SVG content: {str(e)}", "ERROR")
             inkex.errormsg(f"Failed to import SVG content: {str(e)}")

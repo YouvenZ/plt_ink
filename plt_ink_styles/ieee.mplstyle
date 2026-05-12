@@ -1,0 +1,58 @@
+# plt_ink — IEEE Journal Style
+# Follows IEEE Transactions formatting guidelines:
+#   - Single column: 3.5 in wide  |  Double column: 7.16 in wide
+#   - Times New Roman serif typeface, 8–10 pt body text
+#   - Tick marks inward, minimal chrome
+
+# --- Typography ---
+font.family         : serif
+font.serif          : Times New Roman, Times, DejaVu Serif, serif
+font.size           : 9
+axes.titlesize      : 10
+axes.labelsize      : 9
+xtick.labelsize     : 8
+ytick.labelsize     : 8
+legend.fontsize     : 8
+
+# --- Axes ---
+axes.linewidth      : 0.8
+axes.edgecolor      : black
+axes.facecolor      : white
+axes.grid           : True
+axes.spines.top     : False
+axes.spines.right   : False
+
+# --- Ticks ---
+xtick.direction     : in
+ytick.direction     : in
+xtick.major.size    : 4
+ytick.major.size    : 4
+xtick.minor.size    : 2
+ytick.minor.size    : 2
+xtick.major.width   : 0.8
+ytick.major.width   : 0.8
+
+# --- Lines & Markers ---
+lines.linewidth     : 1.0
+lines.markersize    : 4
+lines.markeredgewidth : 0.5
+
+# --- Grid ---
+grid.color          : #cccccc
+grid.linestyle      : --
+grid.linewidth      : 0.5
+grid.alpha          : 0.7
+
+# --- Legend ---
+legend.frameon      : True
+legend.framealpha   : 0.9
+legend.edgecolor    : #cccccc
+legend.borderpad    : 0.4
+
+# --- Figure ---
+figure.facecolor    : white
+savefig.facecolor   : white
+savefig.dpi         : 300
+
+# --- Color cycle (IEEE-friendly, print-safe) ---
+axes.prop_cycle : cycler('color', ['#000000', '#1f77b4', '#d62728', '#2ca02c', '#ff7f0e', '#9467bd', '#8c564b', '#e377c2'])

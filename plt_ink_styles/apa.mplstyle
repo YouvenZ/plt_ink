@@ -1,0 +1,60 @@
+# plt_ink — APA / General Academic Style
+# Follows APA 7th edition figure guidelines and general social-science
+# journal conventions (e.g., Psychological Science, JASA, PLOS ONE):
+#   - Sans-serif (Arial / Calibri) preferred for screen readability
+#   - Moderate font sizes (10 pt body), clear axis labels
+#   - Subtle grid, clean spines, muted accessible colour palette
+
+# --- Typography ---
+font.family         : sans-serif
+font.sans-serif     : Arial, Calibri, DejaVu Sans, sans-serif
+font.size           : 10
+axes.titlesize      : 11
+axes.labelsize      : 10
+xtick.labelsize     : 9
+ytick.labelsize     : 9
+legend.fontsize     : 9
+legend.title_fontsize : 10
+
+# --- Axes ---
+axes.linewidth      : 1.0
+axes.edgecolor      : #333333
+axes.facecolor      : white
+axes.grid           : True
+axes.spines.top     : False
+axes.spines.right   : False
+
+# --- Ticks ---
+xtick.direction     : out
+ytick.direction     : out
+xtick.major.size    : 4
+ytick.major.size    : 4
+xtick.minor.size    : 2
+ytick.minor.size    : 2
+xtick.major.width   : 1.0
+ytick.major.width   : 1.0
+
+# --- Lines & Markers ---
+lines.linewidth     : 1.5
+lines.markersize    : 5
+lines.markeredgewidth : 0.8
+
+# --- Grid ---
+grid.color          : #dddddd
+grid.linestyle      : --
+grid.linewidth      : 0.6
+grid.alpha          : 0.8
+
+# --- Legend ---
+legend.frameon      : True
+legend.framealpha   : 0.95
+legend.edgecolor    : #cccccc
+legend.borderpad    : 0.5
+
+# --- Figure ---
+figure.facecolor    : white
+savefig.facecolor   : white
+savefig.dpi         : 300
+
+# --- Color cycle: muted, accessible palette (Tableau 10-muted variant) ---
+axes.prop_cycle : cycler('color', ['#4878CF', '#D65F5F', '#6ACC65', '#B47CC7', '#C4AD66', '#77BEDB', '#F7910D', '#44B284'])
