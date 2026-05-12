@@ -147,6 +147,10 @@ class MatplotlibDialog(Gtk.Window):
         ("fivethirtyeight",           "FiveThirtyEight"),
         ("tableau-colorblind10",      "Tableau Colorblind"),
         ("classic",                   "Classic Matplotlib"),
+        # ── Academic / journal presets (plt_ink built-in) ──────────────────────
+        ("ieee",                      "★ IEEE Journal (serif, 300 dpi)"),
+        ("nature",                    "★ Nature / Science (colourblind-safe)"),
+        ("apa",                       "★ APA / General Academic (sans-serif)"),
     ]
 
     COLORMAPS = [

@@ -1,0 +1,57 @@
+# plt_ink — Nature / Science Journal Style
+# Inspired by Nature Publishing Group and Cell Press figure guidelines:
+#   - Helvetica / Arial sans-serif typeface
+#   - 7 pt minimum for all text; axes labels 8–9 pt
+#   - Clean white background, minimal grid, spines on left+bottom only
+#   - Colourblind-friendly palette (Wong 2011)
+
+# --- Typography ---
+font.family         : sans-serif
+font.sans-serif     : Helvetica, Arial, DejaVu Sans, sans-serif
+font.size           : 8
+axes.titlesize      : 9
+axes.labelsize      : 8
+xtick.labelsize     : 7
+ytick.labelsize     : 7
+legend.fontsize     : 7
+
+# --- Axes ---
+axes.linewidth      : 0.8
+axes.edgecolor      : black
+axes.facecolor      : white
+axes.grid           : False
+axes.spines.top     : False
+axes.spines.right   : False
+
+# --- Ticks ---
+xtick.direction     : out
+ytick.direction     : out
+xtick.major.size    : 3.5
+ytick.major.size    : 3.5
+xtick.minor.size    : 2
+ytick.minor.size    : 2
+xtick.major.width   : 0.8
+ytick.major.width   : 0.8
+
+# --- Lines & Markers ---
+lines.linewidth     : 1.2
+lines.markersize    : 4
+lines.markeredgewidth : 0.5
+
+# --- Grid (off by default; toggled at plot level) ---
+grid.color          : #e0e0e0
+grid.linestyle      : -
+grid.linewidth      : 0.5
+grid.alpha          : 1.0
+
+# --- Legend ---
+legend.frameon      : False
+legend.borderpad    : 0.3
+
+# --- Figure ---
+figure.facecolor    : white
+savefig.facecolor   : white
+savefig.dpi         : 300
+
+# --- Color cycle: Wong (2011) colourblind-safe palette ---
+axes.prop_cycle : cycler('color', ['#0072B2', '#E69F00', '#009E73', '#D55E00', '#CC79A7', '#56B4E9', '#F0E442', '#000000'])
