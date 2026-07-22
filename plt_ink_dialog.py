@@ -2,16 +2,18 @@
 GTK3 dynamic dialog for plt_ink Matplotlib Figure Generator.
 
 Replaces the static .inx parameter UI with a fully dynamic dialog:
-  - Script bank scripts are populated from the filesystem (only existing files shown)
-  - Fields show/hide based on selections (source mode, position mode, data format …)
-  - File pickers for script, data, and save paths
+  - One always-visible code editor; templates (script bank), opened files and
+    recent files all load INTO it. An opened file can optionally be "linked"
+    (re-read at Apply time; editor becomes read-only).
+  - Fields show/hide based on selections (position mode, data format …)
+  - Settings persist across sessions (see settings_path())
   - Debug mode and execution timeout are user-configurable
 """
 
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('GdkPixbuf', '2.0')
-from gi.repository import Gtk, GdkPixbuf, GLib
+from gi.repository import Gtk, GdkPixbuf, GLib, Pango
 
 import glob
 import json
@@ -205,6 +207,43 @@ def save_options(opts):
         pass  # never block figure generation on settings I/O
 
 
+def load_recent_files():
+    """Return the persisted recent-script-files list (may be empty)."""
+    try:
+        with open(settings_path(), encoding='utf-8') as fh:
+            saved = json.load(fh)
+        if isinstance(saved, dict):
+            return [p for p in saved.get('_recent_script_files', [])
+                    if isinstance(p, str)]
+    except Exception:
+        pass
+    return []
+
+
+def add_recent_file(path):
+    """Promote a script path to the front of the recent list, on disk now."""
+    try:
+        sp = settings_path()
+        os.makedirs(os.path.dirname(sp), exist_ok=True)
+        try:
+            with open(sp, encoding='utf-8') as fh:
+                saved = json.load(fh)
+            if not isinstance(saved, dict):
+                saved = {}
+        except Exception:
+            saved = {}
+        recent = [p for p in saved.get('_recent_script_files', [])
+                  if isinstance(p, str) and p != path]
+        saved['_recent_script_files'] = [path] + recent[:9]
+        saved.setdefault('_schema', SETTINGS_SCHEMA)
+        tmp = sp + '.tmp'
+        with open(tmp, 'w', encoding='utf-8') as fh:
+            json.dump(saved, fh, indent=2)
+        os.replace(tmp, sp)
+    except Exception:
+        pass
+
+
 # ---------------------------------------------------------------------------
 # Python interpreter probing (shared by the Detect… button and first-run setup)
 # ---------------------------------------------------------------------------
@@ -390,12 +429,17 @@ class MatplotlibDialog(Gtk.Window):
         self._accepted = False  # True when user clicks Apply
         self.opts = opts or get_default_options()
 
+        # Unified-editor state
+        self._script_file_path = ""    # last opened file ("" = none)
+        self._loaded_template = None   # (category, name) of last loaded template
+        self._editor_baseline = ""     # last programmatically loaded content
+
         self._build_ui()
         self._load_values()
         self.show_all()
 
         # Trigger visibility logic after show_all so widgets are realised
-        self._on_source_changed(self.source_combo)
+        self._update_link_row()
         self._on_position_changed(self.position_combo)
         self._on_data_toggle(self.use_data_check)
         self._on_data_format_changed(self.data_format_combo)
@@ -438,7 +482,7 @@ class MatplotlibDialog(Gtk.Window):
 
     def _make_section(self, text):
         lbl = Gtk.Label()
-        lbl.set_markup(f"<b>{text}</b>")
+        lbl.set_markup(f"<b>{GLib.markup_escape_text(text)}</b>")
         lbl.set_xalign(0.0)
         lbl.set_margin_top(10)
         lbl.set_margin_bottom(2)
@@ -582,17 +626,54 @@ class MatplotlibDialog(Gtk.Window):
             "Use Detect… to find conda/venv environments"
         ), False, False, 0)
 
-        box.pack_start(self._make_section("Script Source"), False, False, 0)
-        self.source_combo = self._make_combo([
-            ("inline", "Inline code"),
-            ("file",   "External file"),
-            ("bank",   "Script Bank"),
-        ])
-        self.source_combo.connect("changed", self._on_source_changed)
-        box.pack_start(self.source_combo, False, False, 0)
+        box.pack_start(self._make_section("Script"), False, False, 0)
 
-        # ── inline ──
-        self.inline_frame = Gtk.Frame(label="Inline Python Code")
+        # ── source toolbar — every source loads INTO the one editor below ──
+        tb = self._hbox()
+        templates_btn = Gtk.Button(label="Templates…")
+        templates_btn.set_tooltip_text(
+            "Browse the script bank and load a template into the editor")
+        templates_btn.connect("clicked", self._on_open_template_browser)
+        tb.pack_start(templates_btn, False, False, 0)
+
+        open_file_btn = Gtk.Button(label="Open File…")
+        open_file_btn.set_tooltip_text("Load a .py script from disk into the editor")
+        open_file_btn.connect("clicked", self._on_open_script_file)
+        tb.pack_start(open_file_btn, False, False, 0)
+
+        self.recent_btn = Gtk.MenuButton(label="Recent")
+        self.recent_btn.set_tooltip_text("Recently opened script files")
+        self._rebuild_recent_menu()
+        tb.pack_start(self.recent_btn, False, False, 0)
+
+        self.script_origin_lbl = Gtk.Label(label="")
+        self.script_origin_lbl.set_xalign(1.0)
+        self.script_origin_lbl.set_ellipsize(Pango.EllipsizeMode.START)
+        tb.pack_start(self.script_origin_lbl, True, True, 0)
+        box.pack_start(tb, False, False, 0)
+
+        # ── linked-file row (visible only after a file has been opened) ──
+        self.link_row = self._hbox()
+        self.link_check = Gtk.CheckButton(
+            label="Link to file — re-read on Apply; editor is read-only")
+        self.link_check.set_tooltip_text(
+            "Keep editing the file in your own editor; plt_ink re-reads it "
+            "every time you Apply")
+        self.link_check.connect("toggled", self._on_link_toggled)
+        self.link_row.pack_start(self.link_check, False, False, 0)
+        reload_btn = Gtk.Button(label="Reload")
+        reload_btn.set_tooltip_text("Re-read the file into the editor now")
+        reload_btn.connect("clicked", self._on_reload_linked)
+        self.link_row.pack_start(reload_btn, False, False, 0)
+        self.linked_path_lbl = Gtk.Label(label="")
+        self.linked_path_lbl.set_xalign(0.0)
+        self.linked_path_lbl.set_ellipsize(Pango.EllipsizeMode.START)
+        self.linked_path_lbl.get_style_context().add_class("dim-label")
+        self.link_row.pack_start(self.linked_path_lbl, True, True, 4)
+        box.pack_start(self.link_row, False, False, 0)
+
+        # ── the editor ──
+        self.editor_frame = Gtk.Frame(label="Python Code")
         ib = self._vbox(spacing=4, margin=8)
         self.code_view = Gtk.TextView()
         self.code_view.set_monospace(True)
@@ -614,7 +695,7 @@ class MatplotlibDialog(Gtk.Window):
         # syntax check row
         syntax_row = self._hbox(spacing=6)
         check_syntax_btn = Gtk.Button(label="Check Syntax")
-        check_syntax_btn.set_tooltip_text("Validate inline code for Python syntax errors")
+        check_syntax_btn.set_tooltip_text("Validate the code for Python syntax errors")
         check_syntax_btn.connect("clicked", self._on_check_syntax)
         syntax_row.pack_start(check_syntax_btn, False, False, 0)
         self.syntax_status_lbl = Gtk.Label(label="")
@@ -622,76 +703,8 @@ class MatplotlibDialog(Gtk.Window):
         syntax_row.pack_start(self.syntax_status_lbl, True, True, 0)
         ib.pack_start(syntax_row, False, False, 0)
 
-        self.inline_frame.add(ib)
-        box.pack_start(self.inline_frame, True, True, 0)
-
-        # ── file ──
-        self.file_frame = Gtk.Frame(label="External Script File")
-        fb = self._vbox(spacing=4, margin=8)
-        fh = self._hbox()
-        fh.pack_start(Gtk.Label(label="File:"), False, False, 0)
-        self.script_file_entry = Gtk.Entry()
-        self.script_file_entry.set_hexpand(True)
-        fh.pack_start(self.script_file_entry, True, True, 4)
-        browse_btn = Gtk.Button(label="Browse…")
-        browse_btn.connect("clicked", self._on_browse_script)
-        fh.pack_start(browse_btn, False, False, 0)
-        fb.pack_start(fh, False, False, 0)
-        self.file_frame.add(fb)
-        box.pack_start(self.file_frame, False, False, 0)
-
-        # ── bank ──
-        self.bank_frame = Gtk.Frame(label="Script Bank")
-        bb = self._vbox(spacing=6, margin=8)
-
-        ch = self._hbox()
-        ch.pack_start(Gtk.Label(label="Category:"), False, False, 0)
-        self.bank_category_combo = self._make_combo(
-            list(self.CATEGORY_LABELS.items())
-        )
-        self.bank_category_combo.connect("changed", self._on_category_changed)
-        self.bank_category_combo.set_hexpand(True)
-        ch.pack_start(self.bank_category_combo, True, True, 4)
-        bb.pack_start(ch, False, False, 0)
-
-        sh = self._hbox()
-        sh.pack_start(Gtk.Label(label="Script:"), False, False, 0)
-        self.bank_script_combo = Gtk.ComboBoxText()
-        self.bank_script_combo.set_hexpand(True)
-        self.bank_script_combo.connect("changed", self._on_bank_script_changed)
-        sh.pack_start(self.bank_script_combo, True, True, 4)
-        bb.pack_start(sh, False, False, 0)
-
-        self.bank_status_label = Gtk.Label(label="")
-        self.bank_status_label.set_xalign(0.0)
-        bb.pack_start(self.bank_status_label, False, False, 0)
-
-        # ── bank preview ──
-        self.bank_preview_buf = Gtk.TextBuffer()
-        bank_preview_view = Gtk.TextView(buffer=self.bank_preview_buf)
-        bank_preview_view.set_monospace(True)
-        bank_preview_view.set_editable(False)
-        bank_preview_view.set_wrap_mode(Gtk.WrapMode.NONE)
-        bank_preview_sw = Gtk.ScrolledWindow()
-        bank_preview_sw.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        bank_preview_sw.set_min_content_height(160)
-        bank_preview_sw.add(bank_preview_view)
-        bb.pack_start(bank_preview_sw, True, True, 0)
-
-        # ── bank action buttons ──
-        action_row = self._hbox(spacing=6)
-        load_btn = Gtk.Button(label="Load into Editor")
-        load_btn.set_tooltip_text("Copy this script to the inline code editor and switch to Inline mode")
-        load_btn.connect("clicked", self._on_load_bank_to_editor)
-        open_btn = Gtk.Button(label="Open File")
-        open_btn.set_tooltip_text("Open the script file in the system default editor")
-        open_btn.connect("clicked", self._on_open_bank_file)
-        action_row.pack_start(load_btn, False, False, 0)
-        action_row.pack_start(open_btn, False, False, 0)
-        bb.pack_start(action_row, False, False, 0)
-
-        self.bank_frame.add(bb)
-        box.pack_start(self.bank_frame, True, True, 0)
+        self.editor_frame.add(ib)
+        box.pack_start(self.editor_frame, True, True, 0)
 
         # ── preview button ──
         preview_row = self._hbox(spacing=6)
@@ -1322,114 +1335,222 @@ QUICK EXAMPLES
 
     # ------------------------------------------------------------------ signals
 
-    def _on_source_changed(self, combo):
-        source = self._get_combo_value(combo)
-        self.inline_frame.set_visible(source == "inline")
-        self.file_frame.set_visible(source == "file")
-        self.bank_frame.set_visible(source == "bank")
-        if source == "bank":
-            self._refresh_bank_scripts()
+    # ── unified script editor: templates / files / recent all load here ──
 
-    def _on_category_changed(self, _combo):
-        self._refresh_bank_scripts()
+    def _on_open_template_browser(self, _btn):
+        """Searchable template browser; loads the chosen script into the editor."""
+        dlg = Gtk.Dialog(title="Script Templates", transient_for=self, modal=True)
+        dlg.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                        "Load into Editor", Gtk.ResponseType.OK)
+        dlg.set_default_size(780, 540)
+        content = dlg.get_content_area()
+        content.set_spacing(6)
+        content.set_margin_start(10)
+        content.set_margin_end(10)
+        content.set_margin_top(10)
 
-    def _refresh_bank_scripts(self):
-        """Populate bank script combo from plt_ink_bank metadata."""
-        category = self._get_combo_value(self.bank_category_combo)
+        # filter row: search + category
+        frow = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        search = Gtk.SearchEntry()
+        search.set_placeholder_text("Search templates…")
+        frow.pack_start(search, True, True, 0)
+        cat_combo = Gtk.ComboBoxText()
+        cat_combo.append("", "All Categories")
+        for cid, label in plt_ink_bank.CATEGORIES.items():
+            cat_combo.append(cid, label)
+        cat_combo.set_active(0)
+        frow.pack_start(cat_combo, False, False, 0)
+        content.pack_start(frow, False, False, 0)
 
-        prev = self._get_combo_value(self.bank_script_combo)
-        self.bank_script_combo.remove_all()
-        self._bank_meta = {}
+        # collect all metadata once
+        metas = []
+        for cid in plt_ink_bank.CATEGORIES:
+            for m in plt_ink_bank.list_scripts(cid):
+                m['category'] = cid
+                metas.append(m)
 
-        if not os.path.isdir(os.path.join(self.SCRIPT_BANK_DIR, category)):
-            self.bank_status_label.set_markup(
-                f"<span foreground='red'>⚠ Folder not found: {category}</span>"
-            )
-            return
+        # list + code preview side by side
+        store = Gtk.ListStore(str, str, str, int)   # title, category, data?, meta idx
+        tv = Gtk.TreeView(model=store)
+        tv.append_column(Gtk.TreeViewColumn("Template", Gtk.CellRendererText(), text=0))
+        tv.append_column(Gtk.TreeViewColumn("Category", Gtk.CellRendererText(), text=1))
+        tv.append_column(Gtk.TreeViewColumn("Data",     Gtk.CellRendererText(), text=2))
+        list_sw = Gtk.ScrolledWindow()
+        list_sw.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        list_sw.add(tv)
 
-        scripts = plt_ink_bank.list_scripts(category)
+        preview_buf = Gtk.TextBuffer()
+        preview_view = Gtk.TextView(buffer=preview_buf)
+        preview_view.set_monospace(True)
+        preview_view.set_editable(False)
+        prev_sw = Gtk.ScrolledWindow()
+        prev_sw.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        prev_sw.add(preview_view)
 
-        if not scripts:
-            self.bank_status_label.set_markup(
-                "<span foreground='orange'>⚠ No scripts in this category yet</span>"
-            )
-            return
+        paned = Gtk.Paned(orientation=Gtk.Orientation.HORIZONTAL)
+        paned.pack1(list_sw, resize=True, shrink=False)
+        paned.pack2(prev_sw, resize=True, shrink=False)
+        paned.set_position(340)
+        content.pack_start(paned, True, True, 0)
 
-        for meta in scripts:
-            self._bank_meta[meta['name']] = meta
-            title = meta['title']
-            if meta['requires_data']:
-                title += "  [needs data]"
-            self.bank_script_combo.append(meta['name'], title)
+        desc_lbl = Gtk.Label(label="")
+        desc_lbl.set_xalign(0.0)
+        desc_lbl.set_line_wrap(True)
+        content.pack_start(desc_lbl, False, False, 0)
 
-        # Restore previous selection when possible
-        for i, row in enumerate(self.bank_script_combo.get_model()):
-            if row[0] == prev:
-                self.bank_script_combo.set_active(i)
-                break
-        else:
-            self.bank_script_combo.set_active(0)
+        def repopulate(*_a):
+            store.clear()
+            q = search.get_text().lower().strip()
+            cat = cat_combo.get_active_id()
+            for i, m in enumerate(metas):
+                if cat and m['category'] != cat:
+                    continue
+                if q:
+                    haystack = ' '.join(
+                        [m['title'], m['name'], m['description']] + m['tags']
+                    ).lower()
+                    if q not in haystack:
+                        continue
+                store.append([
+                    m['title'],
+                    plt_ink_bank.CATEGORIES[m['category']],
+                    "needs data" if m['requires_data'] else "",
+                    i,
+                ])
+            if len(store):
+                tv.get_selection().select_path(Gtk.TreePath.new_first())
 
-        self.bank_status_label.set_markup(
-            f"<span foreground='green'>✓ {len(scripts)} script(s) available</span>"
-        )
-        # Refresh preview for the newly active selection
-        self._on_bank_script_changed(self.bank_script_combo)
-
-    def _get_current_bank_script_path(self):
-        """Return the absolute path of the currently selected bank script, or None."""
-        return plt_ink_bank.script_path(
-            self._get_combo_value(self.bank_category_combo),
-            self._get_combo_value(self.bank_script_combo),
-        )
-
-    def _on_bank_script_changed(self, _combo):
-        """Load selected bank script content into the preview pane."""
-        path = self._get_current_bank_script_path()
-        if path:
+        def on_select(sel):
+            model, it = sel.get_selected()
+            if not it:
+                return
+            m = metas[model[it][3]]
+            desc_lbl.set_markup(
+                f"<i>{GLib.markup_escape_text(m['description'])}</i>")
             try:
-                with open(path, encoding='utf-8', errors='replace') as fh:
-                    self.bank_preview_buf.set_text(fh.read())
+                with open(m['path'], encoding='utf-8', errors='replace') as fh:
+                    preview_buf.set_text(fh.read())
             except Exception as exc:
-                self.bank_preview_buf.set_text(f"# Could not read file:\n# {exc}")
-            # Show the script's description under the pickers
-            name = self._get_combo_value(self.bank_script_combo)
-            meta = getattr(self, '_bank_meta', {}).get(name)
-            if meta and meta['description']:
-                desc = GLib.markup_escape_text(meta['description'])
-                self.bank_status_label.set_markup(f"<i>{desc}</i>")
-        else:
-            self.bank_preview_buf.set_text("")
+                preview_buf.set_text(f"# Could not read file:\n# {exc}")
 
-    def _on_load_bank_to_editor(self, _btn):
-        """Copy bank script content to the inline editor and switch source mode."""
-        path = self._get_current_bank_script_path()
-        if not path:
-            return
+        search.connect("search-changed", repopulate)
+        cat_combo.connect("changed", repopulate)
+        tv.get_selection().connect("changed", on_select)
+        tv.connect("row-activated",
+                   lambda *_a: dlg.response(Gtk.ResponseType.OK))
+        repopulate()
+
+        dlg.show_all()
+        chosen = None
+        if dlg.run() == Gtk.ResponseType.OK:
+            model, it = tv.get_selection().get_selected()
+            if it:
+                chosen = metas[model[it][3]]
+        dlg.destroy()
+
+        if chosen:
+            try:
+                with open(chosen['path'], encoding='utf-8', errors='replace') as fh:
+                    code = fh.read()
+            except Exception as exc:
+                self._alert(f"Could not read template:\n{exc}")
+                return
+            self._load_script_into_editor(code, template=chosen)
+
+    def _load_script_into_editor(self, code, template=None, file_path=None):
+        """Put code into the editor, tracking its origin.
+
+        Asks before overwriting edits the user has made since the last load.
+        Returns True when the editor content was replaced.
+        """
+        current = self._get_tv(self.code_view)
+        if current.strip() and current != self._editor_baseline:
+            if not self._confirm("Replace the current code in the editor?"):
+                return False
+        if template is not None:
+            self._loaded_template = (template['category'], template['name'])
+            self._script_file_path = ""
+            self.link_check.set_active(False)
+            self.script_origin_lbl.set_markup(
+                f"<i>Template: {GLib.markup_escape_text(template['title'])}</i>")
+        elif file_path:
+            self._loaded_template = None
+            self._script_file_path = file_path
+            add_recent_file(file_path)
+            self._rebuild_recent_menu()
+            self.script_origin_lbl.set_markup(
+                f"<i>{GLib.markup_escape_text(os.path.basename(file_path))}</i>")
+        self._set_tv(self.code_view, code)
+        self._editor_baseline = code
+        self._update_link_row()
+        return True
+
+    def _confirm(self, text):
+        dlg = Gtk.MessageDialog(
+            parent=self, modal=True,
+            message_type=Gtk.MessageType.QUESTION,
+            buttons=Gtk.ButtonsType.YES_NO,
+            text=text,
+        )
+        response = dlg.run()
+        dlg.destroy()
+        return response == Gtk.ResponseType.YES
+
+    def _update_link_row(self):
+        has_file = bool(self._script_file_path)
+        self.link_row.set_visible(has_file)
+        if has_file:
+            self.linked_path_lbl.set_text(self._script_file_path)
+
+    def _on_open_script_file(self, _btn):
+        path = self._open_dialog("Open Python Script",
+                                 [("Python files", "*.py"), ("All files", "*")])
+        if path:
+            self._open_script_path(path)
+
+    def _open_script_path(self, path):
         try:
             with open(path, encoding='utf-8', errors='replace') as fh:
                 code = fh.read()
         except Exception as exc:
             self._alert(f"Could not read script:\n{exc}")
             return
-        self._set_tv(self.code_view, code)
-        self._set_combo(self.source_combo, "inline")
-        self._on_source_changed(self.source_combo)
+        self._load_script_into_editor(code, file_path=path)
 
-    def _on_open_bank_file(self, _btn):
-        """Open the selected bank script in the OS default editor."""
-        path = self._get_current_bank_script_path()
-        if not path:
+    def _rebuild_recent_menu(self):
+        menu = Gtk.Menu()
+        recents = [p for p in load_recent_files() if os.path.isfile(p)]
+        if not recents:
+            item = Gtk.MenuItem(label="(no recent files)")
+            item.set_sensitive(False)
+            menu.append(item)
+        for p in recents:
+            item = Gtk.MenuItem(label=p)
+            item.connect("activate",
+                         lambda _i, pp=p: self._open_script_path(pp))
+            menu.append(item)
+        menu.show_all()
+        self.recent_btn.set_popup(menu)
+
+    def _on_link_toggled(self, check):
+        linked = check.get_active() and bool(self._script_file_path)
+        self.code_view.set_editable(not linked)
+        self.code_view.set_cursor_visible(not linked)
+        if linked:
+            self._on_reload_linked(None)
+
+    def _on_reload_linked(self, _btn):
+        if not self._script_file_path:
             return
         try:
-            if sys.platform == "win32":
-                os.startfile(path)
-            elif sys.platform == "darwin":
-                subprocess.Popen(["open", path], creationflags=0)
-            else:
-                subprocess.Popen(["xdg-open", path])
+            with open(self._script_file_path,
+                      encoding='utf-8', errors='replace') as fh:
+                code = fh.read()
         except Exception as exc:
-            self._alert(f"Could not open file:\n{exc}")
+            self._alert(f"Could not read file:\n{exc}")
+            return
+        self._set_tv(self.code_view, code)
+        self._editor_baseline = code
 
     def _on_check_syntax(self, _btn):
         """Validate the inline code buffer for Python syntax errors."""
@@ -1466,15 +1587,11 @@ QUICK EXAMPLES
         while Gtk.events_pending():
             Gtk.main_iteration_do(False)
 
-        # Build the script snippet to preview
-        source = self._get_combo_value(self.source_combo)
-        if source == "inline":
-            buf = self.code_view.get_buffer()
-            code = buf.get_text(buf.get_start_iter(), buf.get_end_iter(), True)
-        elif source == "file":
-            fp = self.script_file_entry.get_text().strip()
-            if not fp or not os.path.isfile(fp):
-                self._show_preview_error("No valid script file selected.")
+        # Resolve the code to preview: linked file, else editor content
+        if self.link_check.get_active() and self._script_file_path:
+            fp = self._script_file_path
+            if not os.path.isfile(fp):
+                self._show_preview_error("Linked script file not found.")
                 return
             try:
                 with open(fp, encoding='utf-8', errors='replace') as fh:
@@ -1482,28 +1599,45 @@ QUICK EXAMPLES
             except Exception as exc:
                 self._show_preview_error(str(exc))
                 return
-        else:  # bank
-            path = self._get_current_bank_script_path()
-            if not path:
-                self._show_preview_error("No bank script selected.")
-                return
-            try:
-                with open(path, encoding='utf-8', errors='replace') as fh:
-                    code = fh.read()
-            except Exception as exc:
-                self._show_preview_error(str(exc))
+        else:
+            code = self._get_tv(self.code_view)
+            if not code.strip():
+                self._show_preview_error("The editor is empty.")
                 return
 
-        # Wrap code in a headless runner that saves a PNG
+        # Wrap code in a headless runner that saves a PNG. Inject the same
+        # helper variables the real preamble provides so templates preview
+        # correctly (values taken live from the dialog widgets).
         tmp_png = tempfile.mktemp(suffix=".png")
-        runner = (
+        preamble = (
             "import matplotlib\nmatplotlib.use('Agg')\n"
             "import matplotlib.pyplot as plt\n"
             "import numpy as np\n"
-            f"{code}\n"
-            "fig = plt.gcf()\n"
-            f"fig.savefig({tmp_png!r}, dpi=72, bbox_inches='tight')\n"
-            "plt.close('all')\n"
+            f"_fig_width = {self.fig_width_spin.get_value()!r}\n"
+            f"_fig_height = {self.fig_height_spin.get_value()!r}\n"
+            "_dpi = 96\n"
+            f"_show_grid = {self.grid_check.get_active()!r}\n"
+            f"_show_legend = {self.legend_check.get_active()!r}\n"
+            f"_legend_position = {self._get_combo_value(self.legend_pos_combo) or 'best'!r}\n"
+            f"_colormap = {self._get_combo_value(self.colormap_combo) or 'viridis'!r}\n"
+            "def get_cmap(name=None):\n"
+            "    return matplotlib.colormaps[name or _colormap]\n"
+            "def apply_style(ax=None):\n"
+            "    pass\n"
+            "try:\n"
+            "    import seaborn as sns\n"
+            "    seaborn_available = True\n"
+            "except Exception:\n"
+            "    seaborn_available = False\n"
+        )
+        if 'plt.subplots' not in code and 'plt.figure' not in code:
+            preamble += "fig, ax = plt.subplots(figsize=(_fig_width, _fig_height))\n"
+        runner = (
+            preamble
+            + f"{code}\n"
+            + "fig = plt.gcf()\n"
+            + f"fig.savefig({tmp_png!r}, dpi=72, bbox_inches='tight')\n"
+            + "plt.close('all')\n"
         )
 
         python = self.python_path_entry.get_text().strip() or "python"
@@ -1618,30 +1752,21 @@ QUICK EXAMPLES
         self.batch_controls_frame.set_sensitive(check.get_active())
 
     def _on_batch_add_current(self, _btn):
-        """Add the currently active script source to the batch queue."""
-        source = self._get_combo_value(self.source_combo)
-        if source == "inline":
-            code = self._get_tv(self.code_view).strip()
-            if not code:
-                self._alert("Inline code is empty.")
-                return
+        """Add the current editor script (or linked file) to the batch queue."""
+        if self.link_check.get_active() and self._script_file_path:
+            self._batch_store.append(
+                ["file", self._script_file_path,
+                 os.path.basename(self._script_file_path)])
+            return
+        code = self._get_tv(self.code_view).strip()
+        if not code:
+            self._alert("The editor is empty.")
+            return
+        if self._loaded_template:
+            label = "/".join(self._loaded_template)
+        else:
             label = code.splitlines()[0][:60] or "<inline>"
-            self._batch_store.append(["inline", code, label])
-        elif source == "file":
-            path = self.script_file_entry.get_text().strip()
-            if not path:
-                self._alert("No script file selected.")
-                return
-            self._batch_store.append(["file", path, os.path.basename(path)])
-        elif source == "bank":
-            bp = self._get_current_bank_script_path()
-            if not bp:
-                self._alert("No bank script selected.")
-                return
-            cat  = self._get_combo_value(self.bank_category_combo)
-            scrp = self._get_combo_value(self.bank_script_combo)
-            label = f"{cat}/{scrp}"
-            self._batch_store.append(["bank", bp, label])
+        self._batch_store.append(["inline", code, label])
 
     def _on_batch_remove(self, _btn):
         sel = self._batch_tv.get_selection()
@@ -1651,12 +1776,6 @@ QUICK EXAMPLES
 
     def _on_batch_clear(self, _btn):
         self._batch_store.clear()
-
-    def _on_browse_script(self, _btn):
-        path = self._open_dialog("Select Python Script",
-                                 [("Python files", "*.py"), ("All files", "*")])
-        if path:
-            self.script_file_entry.set_text(path)
 
     def _on_detect_python(self, _btn):
         """Probe common locations for Python interpreters and offer a pick list."""
@@ -1765,11 +1884,31 @@ QUICK EXAMPLES
         o = self.opts
 
         self.python_path_entry.set_text(o.python_path)
-        self._set_combo(self.source_combo, o.script_source)
-        self._set_tv(self.code_view, o.script_code)
-        self.script_file_entry.set_text(o.script_file)
-        self._set_combo(self.bank_category_combo, o.bank_category)
-        # bank scripts are populated via _on_source_changed / _refresh_bank_scripts
+
+        # Unified editor: restore content + origin from the legacy three-source
+        # options (inline / file / bank all map onto the one editor).
+        src = getattr(o, 'script_source', 'inline')
+        code = o.script_code
+        self._script_file_path = o.script_file or ""
+        if src == 'bank':
+            # migrate old bank mode: load the template into the editor
+            path = plt_ink_bank.script_path(o.bank_category, o.bank_script)
+            if path:
+                try:
+                    with open(path, encoding='utf-8', errors='replace') as fh:
+                        code = fh.read()
+                    self._loaded_template = (o.bank_category, o.bank_script)
+                    self.script_origin_lbl.set_markup(
+                        f"<i>Template: {GLib.markup_escape_text(o.bank_script)}</i>")
+                except Exception:
+                    pass
+        self._set_tv(self.code_view, code)
+        self._editor_baseline = code
+        if src == 'file' and self._script_file_path:
+            self.script_origin_lbl.set_markup(
+                f"<i>{GLib.markup_escape_text(os.path.basename(self._script_file_path))}</i>")
+            # triggers read-only mode + reload of the file into the editor
+            self.link_check.set_active(True)
 
         self._set_combo(self.backend_combo, getattr(o, 'plot_backend', 'matplotlib'))
         self._set_combo(self.output_format_combo, o.output_format)
@@ -1857,11 +1996,14 @@ QUICK EXAMPLES
 
         o.python_path   = self.python_path_entry.get_text().strip() or "python"
         o.plot_backend  = self._get_combo_value(self.backend_combo)
-        o.script_source = self._get_combo_value(self.source_combo)
+        # Unified editor: "file" only when linked (re-read at Apply), else the
+        # editor content is the script. Bank identity kept for figure labels.
+        linked = self.link_check.get_active() and bool(self._script_file_path)
+        o.script_source = "file" if linked else "inline"
         o.script_code   = self._get_tv(self.code_view)
-        o.script_file   = self.script_file_entry.get_text().strip()
-        o.bank_category = self._get_combo_value(self.bank_category_combo)
-        o.bank_script   = self._get_combo_value(self.bank_script_combo) or ""
+        o.script_file   = self._script_file_path
+        tpl = self._loaded_template or ("line_plots", "basic_line")
+        o.bank_category, o.bank_script = tpl
 
         o.output_format       = self._get_combo_value(self.output_format_combo)
         o.figure_width        = self.fig_width_spin.get_value()
