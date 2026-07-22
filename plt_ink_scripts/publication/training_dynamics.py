@@ -1,6 +1,9 @@
 """
-Research Figure: Neural Network Training Dynamics
-A publication-quality matplotlib illustration with outstanding annotations.
+Training Dynamics (Research Figure)
+Four-panel publication-quality figure: accuracy, LR schedule, loss curves,
+generalisation gap — with journal-style annotations and caption.
+Note: requires scipy (gaussian_filter1d) in the selected Python environment.
+tags: publication, multi-panel, deep-learning
 """
 
 import numpy as np

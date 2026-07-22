@@ -1,5 +1,9 @@
-# Plotly Scatter Plot with Color Scale
-# Backend: Plotly + Kaleido
+"""
+Plotly Scatter with Color Scale
+Color- and size-mapped scatter rendered statically via Kaleido.
+note: Plotly backend — assign your figure to 'fig'
+tags: plotly, scatter
+"""
 
 rng = np.random.default_rng(42)
 n = 120

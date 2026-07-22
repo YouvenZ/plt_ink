@@ -1,6 +1,9 @@
-# Basic Plotly Line Chart
-# Backend: Plotly + Kaleido
-# Assign your figure to 'fig'
+"""
+Plotly Line Chart
+Basic interactive-style line chart rendered statically via Kaleido.
+note: Plotly backend — assign your figure to 'fig'
+tags: plotly, line
+"""
 
 x = np.linspace(0, 2 * np.pi, 200)
 y_sin = np.sin(x)

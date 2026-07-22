@@ -1,7 +1,8 @@
 """
-Seaborn heatmap with annotation.
-Requires: pip install seaborn
-Available variables: sns (if installed), seaborn_available
+Seaborn Annotated Heatmap
+Heatmap with in-cell value annotations using seaborn.
+note: requires seaborn (pip install seaborn)
+tags: seaborn, heatmap
 """
 if not seaborn_available:
     raise ImportError("seaborn is not installed. Run: pip install seaborn")

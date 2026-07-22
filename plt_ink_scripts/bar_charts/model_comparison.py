@@ -1,7 +1,9 @@
 """
-ML Model Comparison - Two Clear Histograms
-Clean side-by-side comparison of Accuracy and F1 Score
-Requires: load_all_columns=True
+ML Model Comparison
+Side-by-side bar charts of mean Accuracy and F1 Score per model.
+Demo usecase: sample_data/data_model.csv with "Load all columns" enabled.
+requires_data: true
+tags: bars, comparison, machine-learning
 """
 
 # Calculate mean metrics per model, sorted by accuracy

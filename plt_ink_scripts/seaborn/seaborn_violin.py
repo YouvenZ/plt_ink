@@ -1,7 +1,8 @@
 """
-Seaborn violin + strip plot (distribution comparison across categories).
-Requires: pip install seaborn
-Available variables: sns (if installed), seaborn_available
+Seaborn Violin + Strip Plot
+Distribution comparison across categories with overlaid observations.
+note: requires seaborn (pip install seaborn)
+tags: seaborn, violin, distribution
 """
 if not seaborn_available:
     raise ImportError("seaborn is not installed. Run: pip install seaborn")

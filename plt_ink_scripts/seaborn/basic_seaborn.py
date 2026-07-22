@@ -1,7 +1,8 @@
 """
-Basic Seaborn scatter plot with regression line.
-Requires: pip install seaborn
-Available variables: sns (if installed), seaborn_available, df/data (if data file loaded)
+Seaborn Scatter + Regression
+Scatter plot with fitted regression line using seaborn.
+note: requires seaborn (pip install seaborn)
+tags: seaborn, scatter, regression
 """
 if not seaborn_available:
     raise ImportError("seaborn is not installed. Run: pip install seaborn")

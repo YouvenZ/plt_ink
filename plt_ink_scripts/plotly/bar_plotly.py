@@ -1,5 +1,9 @@
-# Plotly Grouped Bar Chart
-# Backend: Plotly + Kaleido
+"""
+Plotly Grouped Bar Chart
+Grouped bars rendered statically via Kaleido.
+note: Plotly backend — assign your figure to 'fig'
+tags: plotly, bars
+"""
 
 categories = ['Category A', 'Category B', 'Category C', 'Category D']
 group1 = [23, 45, 30, 50]

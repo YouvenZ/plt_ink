@@ -11,12 +11,16 @@ Replaces the static .inx parameter UI with a fully dynamic dialog:
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('GdkPixbuf', '2.0')
-from gi.repository import Gtk, GdkPixbuf
+from gi.repository import Gtk, GdkPixbuf, GLib
 
+import glob
+import json
 import os
 import subprocess
 import sys
 from types import SimpleNamespace
+
+import plt_ink_bank
 
 # Suppress Windows console window for all subprocesses.
 _WIN_FLAGS = subprocess.CREATE_NO_WINDOW if sys.platform == 'win32' else 0
@@ -125,15 +129,187 @@ def get_default_options():
 
 
 # ---------------------------------------------------------------------------
+# Settings persistence
+#
+# All dialog options are saved to <user-config>/plt_ink/settings.json on Apply
+# and restored at the next launch, so nothing has to be re-entered per session.
+# Persistence is best-effort: any I/O error falls back to defaults silently.
+# ---------------------------------------------------------------------------
+
+SETTINGS_SCHEMA = 1
+
+# Flags that must never survive a session — re-enabling them silently would
+# change what Apply does in surprising ways.
+_TRANSIENT_RESET = {
+    "export_script_only": False,
+    "batch_mode": False,
+}
+
+
+def settings_path():
+    """Per-user settings file (e.g. %APPDATA%/plt_ink or ~/.config/plt_ink)."""
+    return os.path.join(GLib.get_user_config_dir(), 'plt_ink', 'settings.json')
+
+
+def load_saved_options():
+    """Return (options, had_settings).
+
+    Starts from defaults and overlays any saved values whose keys still exist,
+    so renamed/removed options degrade gracefully across versions.
+    """
+    opts = get_default_options()
+    try:
+        with open(settings_path(), encoding='utf-8') as fh:
+            saved = json.load(fh)
+    except Exception:
+        return opts, False
+    if not isinstance(saved, dict):
+        return opts, False
+    for key, value in saved.items():
+        if not key.startswith('_') and hasattr(opts, key):
+            setattr(opts, key, value)
+    for key, value in _TRANSIENT_RESET.items():
+        setattr(opts, key, value)
+    return opts, True
+
+
+def save_options(opts):
+    """Persist options atomically; also maintain the recent-files list."""
+    path = settings_path()
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+
+        # Carry the recent-files list forward, promoting the current file.
+        recent = []
+        try:
+            with open(path, encoding='utf-8') as fh:
+                prev = json.load(fh)
+            if isinstance(prev, dict):
+                recent = [p for p in prev.get('_recent_script_files', [])
+                          if isinstance(p, str)]
+        except Exception:
+            pass
+        current = getattr(opts, 'script_file', '')
+        if current:
+            recent = [current] + [p for p in recent if p != current]
+
+        payload = {'_schema': SETTINGS_SCHEMA,
+                   '_recent_script_files': recent[:10]}
+        payload.update(vars(opts))
+
+        tmp = path + '.tmp'
+        with open(tmp, 'w', encoding='utf-8') as fh:
+            json.dump(payload, fh, indent=2)
+        os.replace(tmp, path)
+    except Exception:
+        pass  # never block figure generation on settings I/O
+
+
+# ---------------------------------------------------------------------------
+# Python interpreter probing (shared by the Detect… button and first-run setup)
+# ---------------------------------------------------------------------------
+
+def probe_python_candidates():
+    """Probe PATH + common venv/conda/installer locations.
+
+    Returns a list of (path, version_string) tuples, PATH interpreters first.
+    """
+    candidates = []
+
+    for name in ("python3", "python"):
+        try:
+            result = subprocess.run(
+                [name, "--version"], capture_output=True, text=True, timeout=5,
+                creationflags=_WIN_FLAGS,
+            )
+            if result.returncode == 0:
+                ver = (result.stdout or result.stderr).strip()
+                candidates.append((name, ver))
+        except Exception:
+            pass
+
+    home = os.path.expanduser("~")
+    search_patterns = [
+        # Unix venv
+        os.path.join(home, ".venv", "bin", "python"),
+        os.path.join(home, "venv", "bin", "python"),
+        os.path.join(home, ".virtualenvs", "*", "bin", "python"),
+        # conda
+        os.path.join(home, "miniconda3", "bin", "python"),
+        os.path.join(home, "anaconda3", "bin", "python"),
+        os.path.join(home, "miniconda3", "envs", "*", "bin", "python"),
+        os.path.join(home, "anaconda3", "envs", "*", "bin", "python"),
+        os.path.join(home, ".conda", "envs", "*", "bin", "python"),
+        # Windows conda / venv (Scripts\ layout)
+        os.path.join(home, "miniconda3", "python.exe"),
+        os.path.join(home, "anaconda3", "python.exe"),
+        os.path.join(home, "miniconda3", "envs", "*", "python.exe"),
+        os.path.join(home, "anaconda3", "envs", "*", "python.exe"),
+        os.path.join(home, ".conda", "envs", "*", "python.exe"),
+        os.path.join(home, "venv", "Scripts", "python.exe"),
+        os.path.join(home, ".venv", "Scripts", "python.exe"),
+        os.path.join(home, ".virtualenvs", "*", "Scripts", "python.exe"),
+    ]
+
+    local_app = os.environ.get("LOCALAPPDATA", "")
+    app_data = os.environ.get("APPDATA", "")
+    if local_app:
+        search_patterns += [
+            os.path.join(local_app, "Programs", "Python", "Python*", "python.exe"),
+            os.path.join(local_app, "Programs", "Python", "Python*", "Scripts", "python.exe"),
+        ]
+    if app_data:
+        search_patterns += [
+            os.path.join(app_data, "Python", "Python*", "Scripts", "python.exe"),
+        ]
+    for drive in ("C:\\", "D:\\"):
+        search_patterns.append(os.path.join(drive, "Python*", "python.exe"))
+
+    for pattern in search_patterns:
+        for exe in glob.glob(pattern):
+            try:
+                result = subprocess.run(
+                    [exe, "--version"], capture_output=True, text=True, timeout=5,
+                    creationflags=_WIN_FLAGS,
+                )
+                if result.returncode == 0:
+                    ver = (result.stdout or result.stderr).strip()
+                    if not any(c[0] == exe for c in candidates):
+                        candidates.append((exe, ver))
+            except Exception:
+                pass
+
+    return candidates
+
+
+def autodetect_python(max_checks=5):
+    """First-run helper: pick the best interpreter without user interaction.
+
+    Prefers the first candidate that can import matplotlib; falls back to the
+    first candidate found, then to plain "python".
+    """
+    candidates = probe_python_candidates()
+    for exe, _ver in candidates[:max_checks]:
+        try:
+            result = subprocess.run(
+                [exe, "-c", "import matplotlib"],
+                capture_output=True, timeout=10, creationflags=_WIN_FLAGS,
+            )
+            if result.returncode == 0:
+                return exe
+        except Exception:
+            pass
+    return candidates[0][0] if candidates else "python"
+
+
+# ---------------------------------------------------------------------------
 # Dialog
 # ---------------------------------------------------------------------------
 
 class MatplotlibDialog(Gtk.Window):
     """Dynamic GTK3 window — all UI state is self-contained."""
 
-    SCRIPT_BANK_DIR = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), 'plt_ink_scripts'
-    )
+    SCRIPT_BANK_DIR = plt_ink_bank.BANK_DIR
 
     PLOT_STYLES = [
         ("default",                   "Default"),
@@ -201,20 +377,8 @@ class MatplotlibDialog(Gtk.Window):
         ("bottom_right",  "Bottom right"),
     ]
 
-    CATEGORY_LABELS = {
-        "line_plots":    "Line Plots",
-        "scatter_plots": "Scatter Plots",
-        "bar_charts":    "Bar Charts",
-        "statistical":   "Statistical Plots",
-        "scientific":    "Scientific Plots",
-        "heatmaps":      "Heatmaps & Matrices",
-        "time_series":   "Time Series",
-        "distributions": "Distributions",
-        "multi_panel":   "Multi-Panel",
-        "publication":   "Publication Ready",
-        "seaborn":       "Seaborn Plots",
-        "plotly":        "Plotly Charts",
-    }
+    # Single source of truth — shared with plt_ink.py via plt_ink_bank.
+    CATEGORY_LABELS = plt_ink_bank.CATEGORIES
 
     # ------------------------------------------------------------------ init
 
@@ -1170,23 +1334,20 @@ QUICK EXAMPLES
         self._refresh_bank_scripts()
 
     def _refresh_bank_scripts(self):
-        """Populate bank script combo from filesystem — only existing .py files."""
+        """Populate bank script combo from plt_ink_bank metadata."""
         category = self._get_combo_value(self.bank_category_combo)
-        category_dir = os.path.join(self.SCRIPT_BANK_DIR, category)
 
         prev = self._get_combo_value(self.bank_script_combo)
         self.bank_script_combo.remove_all()
+        self._bank_meta = {}
 
-        if not os.path.isdir(category_dir):
+        if not os.path.isdir(os.path.join(self.SCRIPT_BANK_DIR, category)):
             self.bank_status_label.set_markup(
-                f"<span foreground='red'>⚠ Folder not found: {category_dir}</span>"
+                f"<span foreground='red'>⚠ Folder not found: {category}</span>"
             )
             return
 
-        scripts = sorted(
-            f[:-3] for f in os.listdir(category_dir)
-            if f.endswith('.py') and not f.startswith('_')
-        )
+        scripts = plt_ink_bank.list_scripts(category)
 
         if not scripts:
             self.bank_status_label.set_markup(
@@ -1194,8 +1355,12 @@ QUICK EXAMPLES
             )
             return
 
-        for s in scripts:
-            self.bank_script_combo.append(s, s.replace('_', ' ').title())
+        for meta in scripts:
+            self._bank_meta[meta['name']] = meta
+            title = meta['title']
+            if meta['requires_data']:
+                title += "  [needs data]"
+            self.bank_script_combo.append(meta['name'], title)
 
         # Restore previous selection when possible
         for i, row in enumerate(self.bank_script_combo.get_model()):
@@ -1213,12 +1378,10 @@ QUICK EXAMPLES
 
     def _get_current_bank_script_path(self):
         """Return the absolute path of the currently selected bank script, or None."""
-        category = self._get_combo_value(self.bank_category_combo)
-        script   = self._get_combo_value(self.bank_script_combo)
-        if not category or not script:
-            return None
-        path = os.path.join(self.SCRIPT_BANK_DIR, category, script + ".py")
-        return path if os.path.isfile(path) else None
+        return plt_ink_bank.script_path(
+            self._get_combo_value(self.bank_category_combo),
+            self._get_combo_value(self.bank_script_combo),
+        )
 
     def _on_bank_script_changed(self, _combo):
         """Load selected bank script content into the preview pane."""
@@ -1229,6 +1392,12 @@ QUICK EXAMPLES
                     self.bank_preview_buf.set_text(fh.read())
             except Exception as exc:
                 self.bank_preview_buf.set_text(f"# Could not read file:\n# {exc}")
+            # Show the script's description under the pickers
+            name = self._get_combo_value(self.bank_script_combo)
+            meta = getattr(self, '_bank_meta', {}).get(name)
+            if meta and meta['description']:
+                desc = GLib.markup_escape_text(meta['description'])
+                self.bank_status_label.set_markup(f"<i>{desc}</i>")
         else:
             self.bank_preview_buf.set_text("")
 
@@ -1491,74 +1660,7 @@ QUICK EXAMPLES
 
     def _on_detect_python(self, _btn):
         """Probe common locations for Python interpreters and offer a pick list."""
-        import glob
-        candidates = []
-
-        # System interpreters
-        for name in ("python3", "python"):
-            try:
-                result = subprocess.run(
-                    [name, "--version"], capture_output=True, text=True, timeout=5,
-                    creationflags=_WIN_FLAGS,
-                )
-                if result.returncode == 0:
-                    ver = (result.stdout or result.stderr).strip()
-                    candidates.append((name, ver))
-            except Exception:
-                pass
-
-        # Common venv/conda locations relative to home
-        home = os.path.expanduser("~")
-        search_patterns = [
-            # Unix venv
-            os.path.join(home, ".venv", "bin", "python"),
-            os.path.join(home, "venv", "bin", "python"),
-            os.path.join(home, ".virtualenvs", "*", "bin", "python"),
-            # conda
-            os.path.join(home, "miniconda3", "bin", "python"),
-            os.path.join(home, "anaconda3", "bin", "python"),
-            os.path.join(home, "miniconda3", "envs", "*", "bin", "python"),
-            os.path.join(home, "anaconda3", "envs", "*", "bin", "python"),
-            os.path.join(home, ".conda", "envs", "*", "bin", "python"),
-            # Windows conda / venv (Scripts\ layout)
-            os.path.join(home, "miniconda3", "python.exe"),
-            os.path.join(home, "anaconda3", "python.exe"),
-            os.path.join(home, "miniconda3", "envs", "*", "python.exe"),
-            os.path.join(home, "anaconda3", "envs", "*", "python.exe"),
-            os.path.join(home, ".conda", "envs", "*", "python.exe"),
-            os.path.join(home, "venv", "Scripts", "python.exe"),
-            os.path.join(home, ".venv", "Scripts", "python.exe"),
-            os.path.join(home, ".virtualenvs", "*", "Scripts", "python.exe"),
-        ]
-
-        # Windows standard installer locations
-        local_app = os.environ.get("LOCALAPPDATA", "")
-        app_data   = os.environ.get("APPDATA", "")
-        if local_app:
-            search_patterns += [
-                os.path.join(local_app, "Programs", "Python", "Python*", "python.exe"),
-                os.path.join(local_app, "Programs", "Python", "Python*", "Scripts", "python.exe"),
-            ]
-        if app_data:
-            search_patterns += [
-                os.path.join(app_data, "Python", "Python*", "Scripts", "python.exe"),
-            ]
-        # Legacy C:\Python* installs
-        for drive in ("C:\\", "D:\\"):
-            search_patterns.append(os.path.join(drive, "Python*", "python.exe"))
-        for pattern in search_patterns:
-            for exe in glob.glob(pattern):
-                try:
-                    result = subprocess.run(
-                        [exe, "--version"], capture_output=True, text=True, timeout=5,
-                        creationflags=_WIN_FLAGS,
-                    )
-                    if result.returncode == 0:
-                        ver = (result.stdout or result.stderr).strip()
-                        if not any(c[0] == exe for c in candidates):
-                            candidates.append((exe, ver))
-                except Exception:
-                    pass
+        candidates = probe_python_candidates()
 
         if not candidates:
             dlg = Gtk.MessageDialog(
@@ -1601,9 +1703,15 @@ QUICK EXAMPLES
         dlg.destroy()
 
     def _on_browse_data(self, _btn):
+        # Start in the bundled sample_data folder when nothing is set yet.
+        folder = None
+        if not self.data_file_entry.get_text().strip() \
+                and os.path.isdir(plt_ink_bank.SAMPLE_DATA_DIR):
+            folder = plt_ink_bank.SAMPLE_DATA_DIR
         path = self._open_dialog("Select Data File",
                                  [("Data files", "*.csv *.txt *.xlsx *.json"),
-                                  ("All files", "*")])
+                                  ("All files", "*")],
+                                 folder=folder)
         if path:
             self.data_file_entry.set_text(path)
 
@@ -1614,13 +1722,15 @@ QUICK EXAMPLES
 
     # ------------------------------------------------------------------ file dialogs
 
-    def _open_dialog(self, title, filters=None):
+    def _open_dialog(self, title, filters=None, folder=None):
         dlg = Gtk.FileChooserDialog(
             title=title, parent=self,
             action=Gtk.FileChooserAction.OPEN
         )
         dlg.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                         Gtk.STOCK_OPEN,   Gtk.ResponseType.OK)
+        if folder:
+            dlg.set_current_folder(folder)
         self._add_filters(dlg, filters)
         result = dlg.get_filename() if dlg.run() == Gtk.ResponseType.OK else None
         dlg.destroy()
@@ -1839,7 +1949,6 @@ QUICK EXAMPLES
 # ---------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    import json
     import io
 
     # Force UTF-8 on stdout so the JSON payload is never re-encoded by the
@@ -1847,15 +1956,26 @@ if __name__ == '__main__':
     # UnicodeDecodeError in the parent process.
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
+    # Restore last-used settings; on true first run, auto-detect a Python
+    # interpreter (preferring one with matplotlib) so the extension works
+    # without manual setup.
+    opts, had_settings = load_saved_options()
+    if not had_settings and opts.python_path in ("", "python"):
+        try:
+            opts.python_path = autodetect_python()
+        except Exception:
+            pass
+
     # Use Gtk.Window + Gtk.main() / Gtk.main_quit() (TexText pattern).
     # Gtk.Dialog.run() creates a hidden transient parent window on GTK when no
     # parent is given, which appears as a visible empty rectangle on Windows.
-    window = MatplotlibDialog(get_default_options())
+    window = MatplotlibDialog(opts)
     window.show()
     Gtk.main()
 
     if window._accepted:
         opts = window.get_options()
+        save_options(opts)  # persist for the next session
         # Print options as JSON to stdout for the parent process to read.
         print(json.dumps(vars(opts)), flush=True)
         window.destroy()

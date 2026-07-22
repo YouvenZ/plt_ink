@@ -24,20 +24,12 @@ import re
 _WIN_FLAGS = subprocess.CREATE_NO_WINDOW if sys.platform == 'win32' else 0
 
 
-SCRIPT_CATEGORIES = {
-    'line_plots':    'Line Plots',
-    'scatter_plots': 'Scatter Plots',
-    'bar_charts':    'Bar Charts',
-    'statistical':   'Statistical Plots',
-    'scientific':    'Scientific Plots',
-    'heatmaps':      'Heatmaps & Matrices',
-    'time_series':   'Time Series',
-    'distributions': 'Distributions',
-    'multi_panel':   'Multi-Panel Figures',
-    'publication':   'Publication Ready',
-    'seaborn':       'Seaborn Plots',
-    'plotly':        'Plotly Charts',
-}
+# Categories live in plt_ink_bank.py — single source of truth shared with the
+# dialog. Fallback keeps the extension alive if the module is missing.
+try:
+    from plt_ink_bank import CATEGORIES as SCRIPT_CATEGORIES
+except ImportError:
+    SCRIPT_CATEGORIES = {'line_plots': 'Line Plots'}
 
 # Namespace and attribute used to tag plt_ink-inserted elements for later update detection.
 # Must use Clark notation {uri}local so lxml accepts it as a valid attribute name.
