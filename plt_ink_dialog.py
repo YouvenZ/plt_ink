@@ -20,6 +20,7 @@ import json
 import os
 import subprocess
 import sys
+import threading
 from types import SimpleNamespace
 
 import plt_ink_bank
@@ -1580,29 +1581,32 @@ QUICK EXAMPLES
                 pass
 
     def _on_preview_figure(self, _btn):
-        """Run current script headlessly, save PNG to temp, show in a popup."""
+        """Run current script headlessly, save PNG to temp, show in a popup.
+
+        The subprocess runs on a worker thread so the dialog stays responsive
+        (the run can take up to 30 s); the result is marshalled back to the
+        GTK main thread with GLib.idle_add.
+        """
         import tempfile
         self.preview_status_lbl.set_markup("<i>Generating preview…</i>")
-        # Flush GTK events so the label updates immediately
-        while Gtk.events_pending():
-            Gtk.main_iteration_do(False)
+        self.preview_btn.set_sensitive(False)
 
         # Resolve the code to preview: linked file, else editor content
         if self.link_check.get_active() and self._script_file_path:
             fp = self._script_file_path
             if not os.path.isfile(fp):
-                self._show_preview_error("Linked script file not found.")
+                self._preview_done(None, "Linked script file not found.")
                 return
             try:
                 with open(fp, encoding='utf-8', errors='replace') as fh:
                     code = fh.read()
             except Exception as exc:
-                self._show_preview_error(str(exc))
+                self._preview_done(None, str(exc))
                 return
         else:
             code = self._get_tv(self.code_view)
             if not code.strip():
-                self._show_preview_error("The editor is empty.")
+                self._preview_done(None, "The editor is empty.")
                 return
 
         # Wrap code in a headless runner that saves a PNG. Inject the same
@@ -1642,6 +1646,15 @@ QUICK EXAMPLES
 
         python = self.python_path_entry.get_text().strip() or "python"
         tmp_script = tempfile.mktemp(suffix=".py")
+        threading.Thread(
+            target=self._preview_worker,
+            args=(python, runner, tmp_script, tmp_png),
+            daemon=True,
+        ).start()
+
+    def _preview_worker(self, python, runner, tmp_script, tmp_png):
+        """Background thread: run the preview subprocess. No GTK calls here."""
+        error = None
         try:
             with open(tmp_script, "w", encoding='utf-8') as fh:
                 fh.write(runner)
@@ -1650,21 +1663,23 @@ QUICK EXAMPLES
                 capture_output=True, text=True, timeout=30,
                 creationflags=_WIN_FLAGS,
             )
+            if result.returncode != 0 or not os.path.isfile(tmp_png):
+                error = (result.stderr or result.stdout or "Unknown error").strip()[:400]
         except Exception as exc:
-            self._show_preview_error(str(exc))
-            return
+            error = str(exc)
         finally:
             try:
                 os.remove(tmp_script)
             except OSError:
                 pass
+        GLib.idle_add(self._preview_done, tmp_png if error is None else None, error)
 
-        if result.returncode != 0 or not os.path.isfile(tmp_png):
-            err = (result.stderr or result.stdout or "Unknown error").strip()
-            self._show_preview_error(err[:400])
-            return
-
-        # Display the PNG in a popup dialog
+    def _preview_done(self, tmp_png, error):
+        """Main thread: show the result and re-enable the button."""
+        self.preview_btn.set_sensitive(True)
+        if error is not None:
+            self._show_preview_error(error)
+            return False
         try:
             self._show_preview_image(tmp_png)
             self.preview_status_lbl.set_markup(
@@ -1675,6 +1690,7 @@ QUICK EXAMPLES
                 os.remove(tmp_png)
             except OSError:
                 pass
+        return False
 
     def _show_preview_error(self, message):
         self.preview_status_lbl.set_markup(
@@ -1777,9 +1793,30 @@ QUICK EXAMPLES
     def _on_batch_clear(self, _btn):
         self._batch_store.clear()
 
-    def _on_detect_python(self, _btn):
-        """Probe common locations for Python interpreters and offer a pick list."""
-        candidates = probe_python_candidates()
+    def _on_detect_python(self, btn):
+        """Probe common locations for Python interpreters and offer a pick list.
+
+        Probing runs several ``python --version`` subprocesses (5 s timeout
+        each), so it happens on a worker thread; the picker dialog is shown
+        back on the GTK main thread.
+        """
+        btn.set_sensitive(False)
+        old_label = btn.get_label()
+        btn.set_label("Detecting…")
+
+        def worker():
+            try:
+                candidates = probe_python_candidates()
+            except Exception:
+                candidates = []
+            GLib.idle_add(self._detect_python_done, btn, old_label, candidates)
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _detect_python_done(self, btn, old_label, candidates):
+        """Main thread: restore the button and show the interpreter picker."""
+        btn.set_label(old_label)
+        btn.set_sensitive(True)
 
         if not candidates:
             dlg = Gtk.MessageDialog(
@@ -2098,21 +2135,37 @@ if __name__ == '__main__':
     # UnicodeDecodeError in the parent process.
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-    # Restore last-used settings; on true first run, auto-detect a Python
-    # interpreter (preferring one with matplotlib) so the extension works
-    # without manual setup.
     opts, had_settings = load_saved_options()
-    if not had_settings and opts.python_path in ("", "python"):
-        try:
-            opts.python_path = autodetect_python()
-        except Exception:
-            pass
 
     # Use Gtk.Window + Gtk.main() / Gtk.main_quit() (TexText pattern).
     # Gtk.Dialog.run() creates a hidden transient parent window on GTK when no
     # parent is given, which appears as a visible empty rectangle on Windows.
     window = MatplotlibDialog(opts)
     window.show()
+
+    # On true first run, auto-detect a Python interpreter (preferring one with
+    # matplotlib) so the extension works without manual setup. Detection runs
+    # many subprocesses and can take tens of seconds, so it happens on a
+    # background thread AFTER the window is visible; the result is applied
+    # only if the user hasn't already typed a path themselves.
+    if not had_settings and opts.python_path in ("", "python"):
+        def _first_run_detect():
+            try:
+                found = autodetect_python()
+            except Exception:
+                found = ""
+
+            def _apply():
+                if found and found != "python":
+                    current = window.python_path_entry.get_text().strip()
+                    if current in ("", "python"):
+                        window.python_path_entry.set_text(found)
+                return False
+
+            GLib.idle_add(_apply)
+
+        threading.Thread(target=_first_run_detect, daemon=True).start()
+
     Gtk.main()
 
     if window._accepted:
