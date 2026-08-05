@@ -642,6 +642,7 @@ class MatplotlibGenerator(inkex.EffectExtension):
         p.append(f"_show_legend = {self.options.legend}")
         p.append(f"_subplot_rows = {self.options.subplot_rows}")
         p.append(f"_subplot_cols = {self.options.subplot_cols}")
+        p.append(f"_sample_data_dir = r'{self.get_sample_data_dir()}'")
         p.append("")
         return p
 
@@ -810,6 +811,7 @@ class MatplotlibGenerator(inkex.EffectExtension):
         preamble.append(f"_transparent = {self.options.transparent}")
         preamble.append(f"_subplot_rows = {self.options.subplot_rows}")
         preamble.append(f"_subplot_cols = {self.options.subplot_cols}")
+        preamble.append(f"_sample_data_dir = r'{self.get_sample_data_dir()}'")
         preamble.append("")
         
         # Helper functions
@@ -877,10 +879,14 @@ class MatplotlibGenerator(inkex.EffectExtension):
             postamble.append(f"    ax.grid(True, alpha={self.options.grid_alpha}, linestyle='{self.options.grid_style}')")
             postamble.append("")
         
-        # Layout adjustment
+        # Layout adjustment. Skip it when the script installed its own layout
+        # engine (layout='constrained'): tight_layout would replace it, which
+        # wrecks figures with equal-aspect panels, colorbars or nested grids.
         if self.options.tight_layout and not self.options.constrained_layout:
             postamble.append("try:")
-            postamble.append("    plt.tight_layout()")
+            postamble.append("    _engine = getattr(plt.gcf(), 'get_layout_engine', lambda: None)()")
+            postamble.append("    if _engine is None:")
+            postamble.append("        plt.tight_layout()")
             postamble.append("except Exception:")
             postamble.append("    pass  # tight_layout may fail with some configurations")
         
@@ -1037,6 +1043,15 @@ class MatplotlibGenerator(inkex.EffectExtension):
         
         return '\n'.join(code_lines)
         
+    def get_sample_data_dir(self):
+        """Directory holding the bundled sample CSVs and imaging assets.
+
+        Injected as ``_sample_data_dir`` so bank templates can fall back to
+        their bundled example data when no data file is selected.
+        """
+        return os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            'sample_data').replace('\\', '/')
+
     def get_temp_output_path(self):
         """Get temporary output file path."""
         temp_dir = tempfile.gettempdir()

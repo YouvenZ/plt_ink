@@ -1,0 +1,2701 @@
+model,sample_id,y_true,y_score
+Logistic Regression,0,1,0.527471
+Logistic Regression,1,1,0.152653
+Logistic Regression,2,0,0.313199
+Logistic Regression,3,0,0.204587
+Logistic Regression,4,0,0.227172
+Logistic Regression,5,0,0.072597
+Logistic Regression,6,1,0.317762
+Logistic Regression,7,1,0.186412
+Logistic Regression,8,0,0.022132
+Logistic Regression,9,0,0.20191
+Logistic Regression,10,0,0.106343
+Logistic Regression,11,0,0.279676
+Logistic Regression,12,0,0.141407
+Logistic Regression,13,1,0.195443
+Logistic Regression,14,0,0.183831
+Logistic Regression,15,0,0.170962
+Logistic Regression,16,0,0.077112
+Logistic Regression,17,0,0.10295
+Logistic Regression,18,0,0.251603
+Logistic Regression,19,0,0.158201
+Logistic Regression,20,1,0.432751
+Logistic Regression,21,0,0.182136
+Logistic Regression,22,0,0.060176
+Logistic Regression,23,1,0.777115
+Logistic Regression,24,1,0.325223
+Logistic Regression,25,0,0.003371
+Logistic Regression,26,0,0.164053
+Logistic Regression,27,0,0.062927
+Logistic Regression,28,0,0.032973
+Logistic Regression,29,0,0.172388
+Logistic Regression,30,0,0.147809
+Logistic Regression,31,0,0.369128
+Logistic Regression,32,0,0.093224
+Logistic Regression,33,1,0.719674
+Logistic Regression,34,1,0.451914
+Logistic Regression,35,0,0.18226
+Logistic Regression,36,0,0.361392
+Logistic Regression,37,0,0.082317
+Logistic Regression,38,1,0.643257
+Logistic Regression,39,0,0.116275
+Logistic Regression,40,0,0.041683
+Logistic Regression,41,0,0.027261
+Logistic Regression,42,0,0.096324
+Logistic Regression,43,1,0.33717
+Logistic Regression,44,0,0.039258
+Logistic Regression,45,0,0.377037
+Logistic Regression,46,0,0.105706
+Logistic Regression,47,0,0.125271
+Logistic Regression,48,0,0.090648
+Logistic Regression,49,0,0.057114
+Logistic Regression,50,0,0.15163
+Logistic Regression,51,0,0.065293
+Logistic Regression,52,1,0.553078
+Logistic Regression,53,0,0.021574
+Logistic Regression,54,0,0.046492
+Logistic Regression,55,0,0.232585
+Logistic Regression,56,0,0.04585
+Logistic Regression,57,0,0.101528
+Logistic Regression,58,0,0.380603
+Logistic Regression,59,0,0.043711
+Logistic Regression,60,0,0.110253
+Logistic Regression,61,0,0.083149
+Logistic Regression,62,0,0.184753
+Logistic Regression,63,1,0.495072
+Logistic Regression,64,0,0.019471
+Logistic Regression,65,1,0.415983
+Logistic Regression,66,0,0.064021
+Logistic Regression,67,0,0.676521
+Logistic Regression,68,0,0.174762
+Logistic Regression,69,0,0.039636
+Logistic Regression,70,0,0.039056
+Logistic Regression,71,0,0.039006
+Logistic Regression,72,0,0.174777
+Logistic Regression,73,0,0.012003
+Logistic Regression,74,0,0.15089
+Logistic Regression,75,0,0.084705
+Logistic Regression,76,0,0.545902
+Logistic Regression,77,0,0.457291
+Logistic Regression,78,0,0.196442
+Logistic Regression,79,1,0.591925
+Logistic Regression,80,1,0.402943
+Logistic Regression,81,0,0.334506
+Logistic Regression,82,0,0.352188
+Logistic Regression,83,0,0.538691
+Logistic Regression,84,0,0.112021
+Logistic Regression,85,0,0.073162
+Logistic Regression,86,0,0.239054
+Logistic Regression,87,0,0.124109
+Logistic Regression,88,1,0.296692
+Logistic Regression,89,0,0.033439
+Logistic Regression,90,0,0.070221
+Logistic Regression,91,0,0.269045
+Logistic Regression,92,0,0.161465
+Logistic Regression,93,0,0.26486
+Logistic Regression,94,0,0.413783
+Logistic Regression,95,0,0.16837
+Logistic Regression,96,1,0.126125
+Logistic Regression,97,0,0.30446
+Logistic Regression,98,0,0.095936
+Logistic Regression,99,0,0.249988
+Logistic Regression,100,0,0.153611
+Logistic Regression,101,1,0.231699
+Logistic Regression,102,0,0.039302
+Logistic Regression,103,0,0.499599
+Logistic Regression,104,0,0.456177
+Logistic Regression,105,1,0.137829
+Logistic Regression,106,1,0.251435
+Logistic Regression,107,0,0.241248
+Logistic Regression,108,1,0.227548
+Logistic Regression,109,0,0.209639
+Logistic Regression,110,0,0.056582
+Logistic Regression,111,0,0.113179
+Logistic Regression,112,0,0.054276
+Logistic Regression,113,0,0.089146
+Logistic Regression,114,0,0.21447
+Logistic Regression,115,0,0.199877
+Logistic Regression,116,0,0.250931
+Logistic Regression,117,0,0.061344
+Logistic Regression,118,0,0.139061
+Logistic Regression,119,0,0.149895
+Logistic Regression,120,0,0.120877
+Logistic Regression,121,0,0.211122
+Logistic Regression,122,0,0.14865
+Logistic Regression,123,1,0.916396
+Logistic Regression,124,0,0.064909
+Logistic Regression,125,0,0.11057
+Logistic Regression,126,0,0.033672
+Logistic Regression,127,0,0.035828
+Logistic Regression,128,0,0.130588
+Logistic Regression,129,0,0.094591
+Logistic Regression,130,0,0.088581
+Logistic Regression,131,0,0.251821
+Logistic Regression,132,1,0.261257
+Logistic Regression,133,0,0.04433
+Logistic Regression,134,0,0.202041
+Logistic Regression,135,0,0.048663
+Logistic Regression,136,0,0.108732
+Logistic Regression,137,0,0.238273
+Logistic Regression,138,1,0.287749
+Logistic Regression,139,0,0.216911
+Logistic Regression,140,0,0.068422
+Logistic Regression,141,1,0.10525
+Logistic Regression,142,0,0.15853
+Logistic Regression,143,0,0.024896
+Logistic Regression,144,0,0.122444
+Logistic Regression,145,0,0.513614
+Logistic Regression,146,0,0.334454
+Logistic Regression,147,0,0.10886
+Logistic Regression,148,0,0.285151
+Logistic Regression,149,0,0.203666
+Logistic Regression,150,0,0.436141
+Logistic Regression,151,0,0.071717
+Logistic Regression,152,0,0.065929
+Logistic Regression,153,0,0.06302
+Logistic Regression,154,0,0.263757
+Logistic Regression,155,1,0.459496
+Logistic Regression,156,0,0.510971
+Logistic Regression,157,0,0.017632
+Logistic Regression,158,0,0.059541
+Logistic Regression,159,0,0.272056
+Logistic Regression,160,1,0.455262
+Logistic Regression,161,1,0.560629
+Logistic Regression,162,0,0.249875
+Logistic Regression,163,0,0.126977
+Logistic Regression,164,0,0.07215
+Logistic Regression,165,0,0.075309
+Logistic Regression,166,0,0.088329
+Logistic Regression,167,0,0.471368
+Logistic Regression,168,0,0.701577
+Logistic Regression,169,1,0.529229
+Logistic Regression,170,0,0.061617
+Logistic Regression,171,0,0.143172
+Logistic Regression,172,0,0.037395
+Logistic Regression,173,0,0.044633
+Logistic Regression,174,1,0.256371
+Logistic Regression,175,0,0.054265
+Logistic Regression,176,0,0.018208
+Logistic Regression,177,0,0.144192
+Logistic Regression,178,1,0.482721
+Logistic Regression,179,1,0.107913
+Logistic Regression,180,1,0.412861
+Logistic Regression,181,0,0.244648
+Logistic Regression,182,0,0.108446
+Logistic Regression,183,0,0.268294
+Logistic Regression,184,1,0.453491
+Logistic Regression,185,1,0.37487
+Logistic Regression,186,0,0.13244
+Logistic Regression,187,0,0.084787
+Logistic Regression,188,1,0.322456
+Logistic Regression,189,0,0.076911
+Logistic Regression,190,0,0.073837
+Logistic Regression,191,0,0.369632
+Logistic Regression,192,0,0.241773
+Logistic Regression,193,0,0.097921
+Logistic Regression,194,1,0.631311
+Logistic Regression,195,0,0.263419
+Logistic Regression,196,0,0.135033
+Logistic Regression,197,1,0.377786
+Logistic Regression,198,1,0.39324
+Logistic Regression,199,0,0.165452
+Logistic Regression,200,0,0.288576
+Logistic Regression,201,0,0.326163
+Logistic Regression,202,0,0.162664
+Logistic Regression,203,0,0.131048
+Logistic Regression,204,0,0.544498
+Logistic Regression,205,1,0.250656
+Logistic Regression,206,0,0.064963
+Logistic Regression,207,1,0.551381
+Logistic Regression,208,1,0.111878
+Logistic Regression,209,0,0.311503
+Logistic Regression,210,1,0.235392
+Logistic Regression,211,0,0.256802
+Logistic Regression,212,1,0.18114
+Logistic Regression,213,0,0.196566
+Logistic Regression,214,1,0.319325
+Logistic Regression,215,0,0.029067
+Logistic Regression,216,1,0.336598
+Logistic Regression,217,0,0.102632
+Logistic Regression,218,0,0.102608
+Logistic Regression,219,1,0.19991
+Logistic Regression,220,1,0.38307
+Logistic Regression,221,0,0.073155
+Logistic Regression,222,0,0.175939
+Logistic Regression,223,0,0.103448
+Logistic Regression,224,0,0.097387
+Logistic Regression,225,0,0.03184
+Logistic Regression,226,0,0.063145
+Logistic Regression,227,0,0.337524
+Logistic Regression,228,0,0.100479
+Logistic Regression,229,0,0.16751
+Logistic Regression,230,1,0.229794
+Logistic Regression,231,1,0.612368
+Logistic Regression,232,0,0.298538
+Logistic Regression,233,0,0.55709
+Logistic Regression,234,1,0.26405
+Logistic Regression,235,1,0.072154
+Logistic Regression,236,0,0.274371
+Logistic Regression,237,1,0.340672
+Logistic Regression,238,0,0.544993
+Logistic Regression,239,0,0.030357
+Logistic Regression,240,0,0.255672
+Logistic Regression,241,0,0.169092
+Logistic Regression,242,0,0.281394
+Logistic Regression,243,0,0.331917
+Logistic Regression,244,1,0.275172
+Logistic Regression,245,0,0.195088
+Logistic Regression,246,0,0.031531
+Logistic Regression,247,0,0.104176
+Logistic Regression,248,0,0.11241
+Logistic Regression,249,0,0.10154
+Logistic Regression,250,0,0.175297
+Logistic Regression,251,0,0.423562
+Logistic Regression,252,0,0.061606
+Logistic Regression,253,0,0.067237
+Logistic Regression,254,0,0.214521
+Logistic Regression,255,1,0.502176
+Logistic Regression,256,0,0.096882
+Logistic Regression,257,1,0.143576
+Logistic Regression,258,0,0.111486
+Logistic Regression,259,0,0.04709
+Logistic Regression,260,0,0.009071
+Logistic Regression,261,0,0.038492
+Logistic Regression,262,0,0.236158
+Logistic Regression,263,0,0.119375
+Logistic Regression,264,1,0.182679
+Logistic Regression,265,0,0.180709
+Logistic Regression,266,0,0.172867
+Logistic Regression,267,1,0.22985
+Logistic Regression,268,1,0.260957
+Logistic Regression,269,0,0.016889
+Logistic Regression,270,0,0.112942
+Logistic Regression,271,0,0.222925
+Logistic Regression,272,0,0.087733
+Logistic Regression,273,1,0.240696
+Logistic Regression,274,1,0.417095
+Logistic Regression,275,0,0.042293
+Logistic Regression,276,0,0.137922
+Logistic Regression,277,0,0.245487
+Logistic Regression,278,0,0.085831
+Logistic Regression,279,0,0.040676
+Logistic Regression,280,1,0.108576
+Logistic Regression,281,0,0.074935
+Logistic Regression,282,1,0.666931
+Logistic Regression,283,0,0.296397
+Logistic Regression,284,0,0.316221
+Logistic Regression,285,0,0.091902
+Logistic Regression,286,1,0.708386
+Logistic Regression,287,0,0.288881
+Logistic Regression,288,0,0.203583
+Logistic Regression,289,0,0.040651
+Logistic Regression,290,0,0.028057
+Logistic Regression,291,0,0.031003
+Logistic Regression,292,0,0.424937
+Logistic Regression,293,0,0.068685
+Logistic Regression,294,0,0.057268
+Logistic Regression,295,0,0.462294
+Logistic Regression,296,0,0.271576
+Logistic Regression,297,0,0.204997
+Logistic Regression,298,0,0.244764
+Logistic Regression,299,1,0.745456
+Logistic Regression,300,0,0.099485
+Logistic Regression,301,0,0.101381
+Logistic Regression,302,1,0.728731
+Logistic Regression,303,0,0.450246
+Logistic Regression,304,0,0.136629
+Logistic Regression,305,0,0.050738
+Logistic Regression,306,0,0.020353
+Logistic Regression,307,0,0.471323
+Logistic Regression,308,0,0.04431
+Logistic Regression,309,0,0.150244
+Logistic Regression,310,0,0.093979
+Logistic Regression,311,0,0.130195
+Logistic Regression,312,0,0.343731
+Logistic Regression,313,0,0.148479
+Logistic Regression,314,1,0.087405
+Logistic Regression,315,0,0.190686
+Logistic Regression,316,0,0.023459
+Logistic Regression,317,0,0.081231
+Logistic Regression,318,0,0.247173
+Logistic Regression,319,0,0.27701
+Logistic Regression,320,0,0.093148
+Logistic Regression,321,0,0.213121
+Logistic Regression,322,1,0.716816
+Logistic Regression,323,1,0.298263
+Logistic Regression,324,1,0.327892
+Logistic Regression,325,1,0.050688
+Logistic Regression,326,1,0.403658
+Logistic Regression,327,0,0.07002
+Logistic Regression,328,0,0.261656
+Logistic Regression,329,0,0.089957
+Logistic Regression,330,1,0.377358
+Logistic Regression,331,0,0.085272
+Logistic Regression,332,0,0.178101
+Logistic Regression,333,0,0.498337
+Logistic Regression,334,0,0.258761
+Logistic Regression,335,0,0.037904
+Logistic Regression,336,0,0.063371
+Logistic Regression,337,0,0.030998
+Logistic Regression,338,0,0.146743
+Logistic Regression,339,0,0.38538
+Logistic Regression,340,0,0.26104
+Logistic Regression,341,0,0.208559
+Logistic Regression,342,0,0.014487
+Logistic Regression,343,0,0.275012
+Logistic Regression,344,0,0.157234
+Logistic Regression,345,0,0.244608
+Logistic Regression,346,1,0.578281
+Logistic Regression,347,0,0.037357
+Logistic Regression,348,0,0.084044
+Logistic Regression,349,0,0.142899
+Logistic Regression,350,0,0.10282
+Logistic Regression,351,0,0.154867
+Logistic Regression,352,0,0.314928
+Logistic Regression,353,0,0.270081
+Logistic Regression,354,0,0.050914
+Logistic Regression,355,0,0.038976
+Logistic Regression,356,0,0.151587
+Logistic Regression,357,0,0.036071
+Logistic Regression,358,0,0.137815
+Logistic Regression,359,0,0.272846
+Logistic Regression,360,0,0.202664
+Logistic Regression,361,0,0.047737
+Logistic Regression,362,0,0.173243
+Logistic Regression,363,1,0.44466
+Logistic Regression,364,0,0.059861
+Logistic Regression,365,1,0.277188
+Logistic Regression,366,0,0.258917
+Logistic Regression,367,1,0.294671
+Logistic Regression,368,0,0.07371
+Logistic Regression,369,0,0.322408
+Logistic Regression,370,0,0.43455
+Logistic Regression,371,0,0.105669
+Logistic Regression,372,1,0.246308
+Logistic Regression,373,0,0.181194
+Logistic Regression,374,0,0.363388
+Logistic Regression,375,0,0.253372
+Logistic Regression,376,0,0.034581
+Logistic Regression,377,0,0.426867
+Logistic Regression,378,1,0.438886
+Logistic Regression,379,0,0.556996
+Logistic Regression,380,0,0.028905
+Logistic Regression,381,0,0.063715
+Logistic Regression,382,0,0.21585
+Logistic Regression,383,0,0.131955
+Logistic Regression,384,1,0.557832
+Logistic Regression,385,0,0.245982
+Logistic Regression,386,0,0.073236
+Logistic Regression,387,0,0.053627
+Logistic Regression,388,0,0.22612
+Logistic Regression,389,0,0.365221
+Logistic Regression,390,0,0.228864
+Logistic Regression,391,0,0.09668
+Logistic Regression,392,0,0.057078
+Logistic Regression,393,1,0.062595
+Logistic Regression,394,0,0.013671
+Logistic Regression,395,1,0.054933
+Logistic Regression,396,0,0.169164
+Logistic Regression,397,0,0.167762
+Logistic Regression,398,0,0.125557
+Logistic Regression,399,0,0.074308
+Logistic Regression,400,1,0.743013
+Logistic Regression,401,0,0.060673
+Logistic Regression,402,1,0.633864
+Logistic Regression,403,0,0.093828
+Logistic Regression,404,0,0.027503
+Logistic Regression,405,1,0.273956
+Logistic Regression,406,0,0.011807
+Logistic Regression,407,0,0.121492
+Logistic Regression,408,0,0.25545
+Logistic Regression,409,0,0.023214
+Logistic Regression,410,0,0.336218
+Logistic Regression,411,1,0.424576
+Logistic Regression,412,0,0.14336
+Logistic Regression,413,1,0.284419
+Logistic Regression,414,0,0.062153
+Logistic Regression,415,0,0.038528
+Logistic Regression,416,0,0.154383
+Logistic Regression,417,0,0.169489
+Logistic Regression,418,0,0.207434
+Logistic Regression,419,1,0.362369
+Logistic Regression,420,1,0.586077
+Logistic Regression,421,0,0.152484
+Logistic Regression,422,0,0.24073
+Logistic Regression,423,1,0.66342
+Logistic Regression,424,0,0.029106
+Logistic Regression,425,0,0.059689
+Logistic Regression,426,0,0.044018
+Logistic Regression,427,0,0.119041
+Logistic Regression,428,0,0.235568
+Logistic Regression,429,0,0.138062
+Logistic Regression,430,0,0.129764
+Logistic Regression,431,0,0.060671
+Logistic Regression,432,0,0.099995
+Logistic Regression,433,0,0.1068
+Logistic Regression,434,0,0.062494
+Logistic Regression,435,0,0.105683
+Logistic Regression,436,1,0.636225
+Logistic Regression,437,0,0.501473
+Logistic Regression,438,0,0.209835
+Logistic Regression,439,0,0.183216
+Logistic Regression,440,0,0.185652
+Logistic Regression,441,0,0.146036
+Logistic Regression,442,0,0.215184
+Logistic Regression,443,0,0.172035
+Logistic Regression,444,0,0.022669
+Logistic Regression,445,0,0.063159
+Logistic Regression,446,0,0.288453
+Logistic Regression,447,0,0.103139
+Logistic Regression,448,0,0.086029
+Logistic Regression,449,0,0.136748
+Logistic Regression,450,1,0.040647
+Logistic Regression,451,1,0.559872
+Logistic Regression,452,1,0.79167
+Logistic Regression,453,1,0.471693
+Logistic Regression,454,0,0.065255
+Logistic Regression,455,0,0.292856
+Logistic Regression,456,1,0.522932
+Logistic Regression,457,0,0.011884
+Logistic Regression,458,0,0.065269
+Logistic Regression,459,0,0.047861
+Logistic Regression,460,0,0.422684
+Logistic Regression,461,0,0.028836
+Logistic Regression,462,0,0.27825
+Logistic Regression,463,1,0.622845
+Logistic Regression,464,0,0.249263
+Logistic Regression,465,0,0.121528
+Logistic Regression,466,0,0.384442
+Logistic Regression,467,0,0.122656
+Logistic Regression,468,0,0.008698
+Logistic Regression,469,0,0.023371
+Logistic Regression,470,1,0.152569
+Logistic Regression,471,1,0.372781
+Logistic Regression,472,0,0.009482
+Logistic Regression,473,0,0.097438
+Logistic Regression,474,1,0.292901
+Logistic Regression,475,0,0.168867
+Logistic Regression,476,0,0.210858
+Logistic Regression,477,0,0.539887
+Logistic Regression,478,0,0.101805
+Logistic Regression,479,0,0.102492
+Logistic Regression,480,0,0.041557
+Logistic Regression,481,1,0.140444
+Logistic Regression,482,0,0.175054
+Logistic Regression,483,0,0.043292
+Logistic Regression,484,1,0.233083
+Logistic Regression,485,0,0.204162
+Logistic Regression,486,0,0.104544
+Logistic Regression,487,1,0.043107
+Logistic Regression,488,0,0.379363
+Logistic Regression,489,1,0.355719
+Logistic Regression,490,0,0.028782
+Logistic Regression,491,0,0.12227
+Logistic Regression,492,0,0.051386
+Logistic Regression,493,0,0.090134
+Logistic Regression,494,0,0.168854
+Logistic Regression,495,0,0.178339
+Logistic Regression,496,0,0.133863
+Logistic Regression,497,0,0.282852
+Logistic Regression,498,0,0.314848
+Logistic Regression,499,0,0.060501
+Logistic Regression,500,0,0.591431
+Logistic Regression,501,0,0.369682
+Logistic Regression,502,0,0.053074
+Logistic Regression,503,1,0.214975
+Logistic Regression,504,0,0.023543
+Logistic Regression,505,0,0.024309
+Logistic Regression,506,1,0.060247
+Logistic Regression,507,0,0.195269
+Logistic Regression,508,0,0.275858
+Logistic Regression,509,0,0.139533
+Logistic Regression,510,0,0.025827
+Logistic Regression,511,0,0.127858
+Logistic Regression,512,0,0.38157
+Logistic Regression,513,0,0.080621
+Logistic Regression,514,0,0.065425
+Logistic Regression,515,0,0.442082
+Logistic Regression,516,0,0.283522
+Logistic Regression,517,0,0.150986
+Logistic Regression,518,0,0.548022
+Logistic Regression,519,1,0.738193
+Logistic Regression,520,0,0.345456
+Logistic Regression,521,0,0.119338
+Logistic Regression,522,0,0.028667
+Logistic Regression,523,0,0.154258
+Logistic Regression,524,0,0.03301
+Logistic Regression,525,0,0.390672
+Logistic Regression,526,1,0.342788
+Logistic Regression,527,0,0.027343
+Logistic Regression,528,0,0.224196
+Logistic Regression,529,0,0.04091
+Logistic Regression,530,1,0.488512
+Logistic Regression,531,0,0.384679
+Logistic Regression,532,0,0.393462
+Logistic Regression,533,0,0.226263
+Logistic Regression,534,0,0.16833
+Logistic Regression,535,0,0.030304
+Logistic Regression,536,0,0.299248
+Logistic Regression,537,0,0.118948
+Logistic Regression,538,0,0.100922
+Logistic Regression,539,0,0.039052
+Logistic Regression,540,0,0.020481
+Logistic Regression,541,0,0.348894
+Logistic Regression,542,0,0.050306
+Logistic Regression,543,0,0.132197
+Logistic Regression,544,1,0.047197
+Logistic Regression,545,1,0.04992
+Logistic Regression,546,0,0.143466
+Logistic Regression,547,0,0.020136
+Logistic Regression,548,1,0.510673
+Logistic Regression,549,1,0.489865
+Logistic Regression,550,0,0.505412
+Logistic Regression,551,1,0.176272
+Logistic Regression,552,0,0.073417
+Logistic Regression,553,1,0.139433
+Logistic Regression,554,0,0.071063
+Logistic Regression,555,0,0.230102
+Logistic Regression,556,1,0.503608
+Logistic Regression,557,1,0.250592
+Logistic Regression,558,0,0.123028
+Logistic Regression,559,0,0.169142
+Logistic Regression,560,1,0.707717
+Logistic Regression,561,0,0.222676
+Logistic Regression,562,0,0.11754
+Logistic Regression,563,0,0.013005
+Logistic Regression,564,1,0.741895
+Logistic Regression,565,0,0.129308
+Logistic Regression,566,0,0.141045
+Logistic Regression,567,0,0.095776
+Logistic Regression,568,0,0.08047
+Logistic Regression,569,0,0.045497
+Logistic Regression,570,0,0.067255
+Logistic Regression,571,1,0.100707
+Logistic Regression,572,0,0.38349
+Logistic Regression,573,0,0.125267
+Logistic Regression,574,0,0.083224
+Logistic Regression,575,0,0.120452
+Logistic Regression,576,0,0.226698
+Logistic Regression,577,0,0.016106
+Logistic Regression,578,0,0.079651
+Logistic Regression,579,1,0.399308
+Logistic Regression,580,0,0.051697
+Logistic Regression,581,0,0.265739
+Logistic Regression,582,0,0.405969
+Logistic Regression,583,0,0.185803
+Logistic Regression,584,0,0.105317
+Logistic Regression,585,0,0.153449
+Logistic Regression,586,0,0.23424
+Logistic Regression,587,0,0.510534
+Logistic Regression,588,0,0.265159
+Logistic Regression,589,0,0.020379
+Logistic Regression,590,1,0.854979
+Logistic Regression,591,1,0.305654
+Logistic Regression,592,0,0.080674
+Logistic Regression,593,0,0.325014
+Logistic Regression,594,1,0.249115
+Logistic Regression,595,0,0.228087
+Logistic Regression,596,0,0.096363
+Logistic Regression,597,0,0.139769
+Logistic Regression,598,0,0.045675
+Logistic Regression,599,1,0.495219
+Logistic Regression,600,0,0.04642
+Logistic Regression,601,0,0.077746
+Logistic Regression,602,0,0.079894
+Logistic Regression,603,1,0.45889
+Logistic Regression,604,0,0.07794
+Logistic Regression,605,0,0.137711
+Logistic Regression,606,1,0.403227
+Logistic Regression,607,1,0.219653
+Logistic Regression,608,1,0.640165
+Logistic Regression,609,1,0.206919
+Logistic Regression,610,0,0.061517
+Logistic Regression,611,0,0.012407
+Logistic Regression,612,0,0.018862
+Logistic Regression,613,1,0.340251
+Logistic Regression,614,0,0.065495
+Logistic Regression,615,0,0.088065
+Logistic Regression,616,0,0.0226
+Logistic Regression,617,1,0.168556
+Logistic Regression,618,1,0.691791
+Logistic Regression,619,0,0.130759
+Logistic Regression,620,1,0.127099
+Logistic Regression,621,0,0.084788
+Logistic Regression,622,0,0.307047
+Logistic Regression,623,0,0.520836
+Logistic Regression,624,0,0.183707
+Logistic Regression,625,1,0.419308
+Logistic Regression,626,0,0.007401
+Logistic Regression,627,1,0.223115
+Logistic Regression,628,1,0.074712
+Logistic Regression,629,0,0.107548
+Logistic Regression,630,1,0.417664
+Logistic Regression,631,0,0.111696
+Logistic Regression,632,0,0.155743
+Logistic Regression,633,0,0.03949
+Logistic Regression,634,0,0.178489
+Logistic Regression,635,0,0.355793
+Logistic Regression,636,0,0.200178
+Logistic Regression,637,1,0.178435
+Logistic Regression,638,0,0.330613
+Logistic Regression,639,0,0.183147
+Logistic Regression,640,1,0.258862
+Logistic Regression,641,0,0.132216
+Logistic Regression,642,1,0.154451
+Logistic Regression,643,0,0.288373
+Logistic Regression,644,0,0.054311
+Logistic Regression,645,0,0.182647
+Logistic Regression,646,0,0.3027
+Logistic Regression,647,0,0.142166
+Logistic Regression,648,0,0.060814
+Logistic Regression,649,0,0.068393
+Logistic Regression,650,0,0.157773
+Logistic Regression,651,1,0.342347
+Logistic Regression,652,1,0.447992
+Logistic Regression,653,1,0.78556
+Logistic Regression,654,0,0.185698
+Logistic Regression,655,0,0.107363
+Logistic Regression,656,1,0.607423
+Logistic Regression,657,0,0.352698
+Logistic Regression,658,0,0.356301
+Logistic Regression,659,0,0.079081
+Logistic Regression,660,0,0.336178
+Logistic Regression,661,1,0.725281
+Logistic Regression,662,1,0.360204
+Logistic Regression,663,0,0.023559
+Logistic Regression,664,0,0.379871
+Logistic Regression,665,1,0.293778
+Logistic Regression,666,0,0.184575
+Logistic Regression,667,1,0.129545
+Logistic Regression,668,0,0.018124
+Logistic Regression,669,1,0.416201
+Logistic Regression,670,0,0.055068
+Logistic Regression,671,1,0.060203
+Logistic Regression,672,0,0.155579
+Logistic Regression,673,1,0.125251
+Logistic Regression,674,0,0.153042
+Logistic Regression,675,0,0.056729
+Logistic Regression,676,0,0.324612
+Logistic Regression,677,0,0.18566
+Logistic Regression,678,0,0.14627
+Logistic Regression,679,0,0.101951
+Logistic Regression,680,0,0.120397
+Logistic Regression,681,1,0.12285
+Logistic Regression,682,1,0.155085
+Logistic Regression,683,0,0.176824
+Logistic Regression,684,0,0.178475
+Logistic Regression,685,0,0.24299
+Logistic Regression,686,0,0.155755
+Logistic Regression,687,0,0.154466
+Logistic Regression,688,1,0.198679
+Logistic Regression,689,0,0.259372
+Logistic Regression,690,0,0.114428
+Logistic Regression,691,0,0.052407
+Logistic Regression,692,0,0.105219
+Logistic Regression,693,1,0.168199
+Logistic Regression,694,0,0.355798
+Logistic Regression,695,1,0.60929
+Logistic Regression,696,0,0.080321
+Logistic Regression,697,1,0.42635
+Logistic Regression,698,0,0.37377
+Logistic Regression,699,0,0.043339
+Logistic Regression,700,0,0.029907
+Logistic Regression,701,0,0.055091
+Logistic Regression,702,0,0.048345
+Logistic Regression,703,0,0.484511
+Logistic Regression,704,1,0.318979
+Logistic Regression,705,0,0.17285
+Logistic Regression,706,0,0.259466
+Logistic Regression,707,0,0.106644
+Logistic Regression,708,0,0.201423
+Logistic Regression,709,0,0.531467
+Logistic Regression,710,0,0.040949
+Logistic Regression,711,1,0.482182
+Logistic Regression,712,0,0.411991
+Logistic Regression,713,0,0.172098
+Logistic Regression,714,0,0.110314
+Logistic Regression,715,0,0.058494
+Logistic Regression,716,0,0.06256
+Logistic Regression,717,0,0.12189
+Logistic Regression,718,0,0.033349
+Logistic Regression,719,1,0.695177
+Logistic Regression,720,1,0.441834
+Logistic Regression,721,0,0.412649
+Logistic Regression,722,0,0.402299
+Logistic Regression,723,0,0.244598
+Logistic Regression,724,1,0.309986
+Logistic Regression,725,0,0.053948
+Logistic Regression,726,1,0.317766
+Logistic Regression,727,1,0.432646
+Logistic Regression,728,0,0.150265
+Logistic Regression,729,1,0.412589
+Logistic Regression,730,0,0.030554
+Logistic Regression,731,1,0.22034
+Logistic Regression,732,0,0.297294
+Logistic Regression,733,0,0.037885
+Logistic Regression,734,1,0.225308
+Logistic Regression,735,0,0.379921
+Logistic Regression,736,0,0.028172
+Logistic Regression,737,0,0.097669
+Logistic Regression,738,0,0.418464
+Logistic Regression,739,0,0.230413
+Logistic Regression,740,0,0.20414
+Logistic Regression,741,1,0.4263
+Logistic Regression,742,0,0.176123
+Logistic Regression,743,0,0.04032
+Logistic Regression,744,1,0.413633
+Logistic Regression,745,0,0.206677
+Logistic Regression,746,0,0.050472
+Logistic Regression,747,0,0.236408
+Logistic Regression,748,0,0.016197
+Logistic Regression,749,0,0.051732
+Logistic Regression,750,0,0.360907
+Logistic Regression,751,0,0.154028
+Logistic Regression,752,0,0.011101
+Logistic Regression,753,1,0.08654
+Logistic Regression,754,0,0.088496
+Logistic Regression,755,0,0.433861
+Logistic Regression,756,0,0.026982
+Logistic Regression,757,0,0.130227
+Logistic Regression,758,0,0.18881
+Logistic Regression,759,0,0.458905
+Logistic Regression,760,0,0.53269
+Logistic Regression,761,0,0.381985
+Logistic Regression,762,1,0.62518
+Logistic Regression,763,1,0.207501
+Logistic Regression,764,0,0.46148
+Logistic Regression,765,0,0.073838
+Logistic Regression,766,0,0.099733
+Logistic Regression,767,0,0.028957
+Logistic Regression,768,0,0.012017
+Logistic Regression,769,0,0.307804
+Logistic Regression,770,1,0.298428
+Logistic Regression,771,0,0.145775
+Logistic Regression,772,1,0.282666
+Logistic Regression,773,0,0.092085
+Logistic Regression,774,0,0.192872
+Logistic Regression,775,0,0.244537
+Logistic Regression,776,0,0.020256
+Logistic Regression,777,0,0.026119
+Logistic Regression,778,0,0.094544
+Logistic Regression,779,0,0.066331
+Logistic Regression,780,0,0.008625
+Logistic Regression,781,0,0.223366
+Logistic Regression,782,0,0.051998
+Logistic Regression,783,0,0.176843
+Logistic Regression,784,0,0.066709
+Logistic Regression,785,1,0.459298
+Logistic Regression,786,0,0.125567
+Logistic Regression,787,0,0.38435
+Logistic Regression,788,0,0.170686
+Logistic Regression,789,1,0.137023
+Logistic Regression,790,0,0.175478
+Logistic Regression,791,1,0.818717
+Logistic Regression,792,0,0.061431
+Logistic Regression,793,0,0.088088
+Logistic Regression,794,0,0.412184
+Logistic Regression,795,0,0.080627
+Logistic Regression,796,0,0.079297
+Logistic Regression,797,0,0.088529
+Logistic Regression,798,1,0.518684
+Logistic Regression,799,0,0.059735
+Logistic Regression,800,0,0.08631
+Logistic Regression,801,0,0.248303
+Logistic Regression,802,1,0.036397
+Logistic Regression,803,0,0.182808
+Logistic Regression,804,1,0.520542
+Logistic Regression,805,1,0.58991
+Logistic Regression,806,0,0.022966
+Logistic Regression,807,0,0.121293
+Logistic Regression,808,0,0.105906
+Logistic Regression,809,1,0.085784
+Logistic Regression,810,0,0.11752
+Logistic Regression,811,1,0.208041
+Logistic Regression,812,0,0.350813
+Logistic Regression,813,0,0.092561
+Logistic Regression,814,0,0.035774
+Logistic Regression,815,0,0.136318
+Logistic Regression,816,0,0.114205
+Logistic Regression,817,1,0.094886
+Logistic Regression,818,0,0.348083
+Logistic Regression,819,0,0.087011
+Logistic Regression,820,0,0.53345
+Logistic Regression,821,1,0.306597
+Logistic Regression,822,0,0.099895
+Logistic Regression,823,0,0.272852
+Logistic Regression,824,0,0.107658
+Logistic Regression,825,0,0.264466
+Logistic Regression,826,1,0.241931
+Logistic Regression,827,0,0.306975
+Logistic Regression,828,1,0.173384
+Logistic Regression,829,0,0.023293
+Logistic Regression,830,0,0.113204
+Logistic Regression,831,0,0.045439
+Logistic Regression,832,0,0.021793
+Logistic Regression,833,1,0.538154
+Logistic Regression,834,0,0.06843
+Logistic Regression,835,0,0.040215
+Logistic Regression,836,0,0.442654
+Logistic Regression,837,0,0.008471
+Logistic Regression,838,0,0.147006
+Logistic Regression,839,0,0.050675
+Logistic Regression,840,0,0.26066
+Logistic Regression,841,0,0.119261
+Logistic Regression,842,1,0.37795
+Logistic Regression,843,0,0.276972
+Logistic Regression,844,0,0.13631
+Logistic Regression,845,1,0.173714
+Logistic Regression,846,0,0.038388
+Logistic Regression,847,0,0.378008
+Logistic Regression,848,0,0.228403
+Logistic Regression,849,0,0.307983
+Logistic Regression,850,0,0.039052
+Logistic Regression,851,0,0.046967
+Logistic Regression,852,1,0.177213
+Logistic Regression,853,1,0.123851
+Logistic Regression,854,0,0.034023
+Logistic Regression,855,0,0.463415
+Logistic Regression,856,1,0.431494
+Logistic Regression,857,0,0.117509
+Logistic Regression,858,0,0.05771
+Logistic Regression,859,0,0.14015
+Logistic Regression,860,0,0.11976
+Logistic Regression,861,0,0.192753
+Logistic Regression,862,0,0.257569
+Logistic Regression,863,0,0.849741
+Logistic Regression,864,0,0.170352
+Logistic Regression,865,0,0.582874
+Logistic Regression,866,0,0.289007
+Logistic Regression,867,1,0.228848
+Logistic Regression,868,0,0.103617
+Logistic Regression,869,0,0.5156
+Logistic Regression,870,0,0.190463
+Logistic Regression,871,1,0.594914
+Logistic Regression,872,1,0.726647
+Logistic Regression,873,0,0.321997
+Logistic Regression,874,0,0.023268
+Logistic Regression,875,1,0.184554
+Logistic Regression,876,1,0.250153
+Logistic Regression,877,0,0.088548
+Logistic Regression,878,1,0.329799
+Logistic Regression,879,0,0.01641
+Logistic Regression,880,0,0.378384
+Logistic Regression,881,0,0.054829
+Logistic Regression,882,0,0.199403
+Logistic Regression,883,0,0.053345
+Logistic Regression,884,0,0.208983
+Logistic Regression,885,0,0.202691
+Logistic Regression,886,0,0.196441
+Logistic Regression,887,1,0.193119
+Logistic Regression,888,0,0.329773
+Logistic Regression,889,0,0.229978
+Logistic Regression,890,1,0.354154
+Logistic Regression,891,0,0.437716
+Logistic Regression,892,0,0.418111
+Logistic Regression,893,0,0.253432
+Logistic Regression,894,0,0.197332
+Logistic Regression,895,0,0.102721
+Logistic Regression,896,0,0.081134
+Logistic Regression,897,1,0.398727
+Logistic Regression,898,0,0.010503
+Logistic Regression,899,0,0.201016
+Gradient Boosting,0,1,0.248566
+Gradient Boosting,1,1,0.062801
+Gradient Boosting,2,0,0.255549
+Gradient Boosting,3,0,0.072354
+Gradient Boosting,4,0,0.002694
+Gradient Boosting,5,0,0.257115
+Gradient Boosting,6,1,0.316962
+Gradient Boosting,7,1,0.183909
+Gradient Boosting,8,0,0.02119
+Gradient Boosting,9,0,0.310519
+Gradient Boosting,10,0,0.088179
+Gradient Boosting,11,0,0.057689
+Gradient Boosting,12,0,0.037852
+Gradient Boosting,13,1,0.802534
+Gradient Boosting,14,0,0.111167
+Gradient Boosting,15,0,0.021391
+Gradient Boosting,16,0,0.01156
+Gradient Boosting,17,0,0.042086
+Gradient Boosting,18,0,0.05143
+Gradient Boosting,19,0,0.053186
+Gradient Boosting,20,1,0.044388
+Gradient Boosting,21,0,0.588541
+Gradient Boosting,22,0,0.066966
+Gradient Boosting,23,1,0.329038
+Gradient Boosting,24,1,0.34304
+Gradient Boosting,25,0,0.056838
+Gradient Boosting,26,0,0.191109
+Gradient Boosting,27,0,0.505763
+Gradient Boosting,28,0,0.034421
+Gradient Boosting,29,0,0.035047
+Gradient Boosting,30,0,0.226944
+Gradient Boosting,31,0,0.017479
+Gradient Boosting,32,0,0.052482
+Gradient Boosting,33,1,0.216525
+Gradient Boosting,34,1,0.340137
+Gradient Boosting,35,0,0.031644
+Gradient Boosting,36,0,0.073076
+Gradient Boosting,37,0,0.002608
+Gradient Boosting,38,1,0.941255
+Gradient Boosting,39,0,0.039182
+Gradient Boosting,40,0,0.001267
+Gradient Boosting,41,0,0.572982
+Gradient Boosting,42,0,0.194457
+Gradient Boosting,43,1,0.805843
+Gradient Boosting,44,0,0.005583
+Gradient Boosting,45,0,0.051229
+Gradient Boosting,46,0,0.208567
+Gradient Boosting,47,0,0.305178
+Gradient Boosting,48,0,0.04642
+Gradient Boosting,49,0,0.016839
+Gradient Boosting,50,0,0.046583
+Gradient Boosting,51,0,0.589719
+Gradient Boosting,52,1,0.42464
+Gradient Boosting,53,0,0.130557
+Gradient Boosting,54,0,0.006679
+Gradient Boosting,55,0,0.181548
+Gradient Boosting,56,0,0.032738
+Gradient Boosting,57,0,0.017869
+Gradient Boosting,58,0,0.006559
+Gradient Boosting,59,0,0.033879
+Gradient Boosting,60,0,0.068267
+Gradient Boosting,61,0,0.366277
+Gradient Boosting,62,0,0.128227
+Gradient Boosting,63,1,0.133869
+Gradient Boosting,64,0,0.121589
+Gradient Boosting,65,1,0.226929
+Gradient Boosting,66,0,0.146828
+Gradient Boosting,67,0,0.024046
+Gradient Boosting,68,0,0.243352
+Gradient Boosting,69,0,0.017798
+Gradient Boosting,70,0,0.015506
+Gradient Boosting,71,0,0.002955
+Gradient Boosting,72,0,0.046961
+Gradient Boosting,73,0,0.500228
+Gradient Boosting,74,0,0.216379
+Gradient Boosting,75,0,0.025362
+Gradient Boosting,76,0,0.210257
+Gradient Boosting,77,0,0.004271
+Gradient Boosting,78,0,0.191535
+Gradient Boosting,79,1,0.578881
+Gradient Boosting,80,1,0.120249
+Gradient Boosting,81,0,0.109014
+Gradient Boosting,82,0,0.011559
+Gradient Boosting,83,0,0.007276
+Gradient Boosting,84,0,0.209964
+Gradient Boosting,85,0,0.064205
+Gradient Boosting,86,0,0.002652
+Gradient Boosting,87,0,0.123033
+Gradient Boosting,88,1,0.237959
+Gradient Boosting,89,0,0.072138
+Gradient Boosting,90,0,0.077451
+Gradient Boosting,91,0,0.168491
+Gradient Boosting,92,0,0.124406
+Gradient Boosting,93,0,0.015372
+Gradient Boosting,94,0,0.038034
+Gradient Boosting,95,0,0.499148
+Gradient Boosting,96,1,0.029195
+Gradient Boosting,97,0,0.001237
+Gradient Boosting,98,0,0.386531
+Gradient Boosting,99,0,0.022133
+Gradient Boosting,100,0,0.136004
+Gradient Boosting,101,1,0.903521
+Gradient Boosting,102,0,0.019928
+Gradient Boosting,103,0,0.00149
+Gradient Boosting,104,0,0.002501
+Gradient Boosting,105,1,0.188974
+Gradient Boosting,106,1,0.062365
+Gradient Boosting,107,0,0.114253
+Gradient Boosting,108,1,0.134187
+Gradient Boosting,109,0,0.023931
+Gradient Boosting,110,0,0.006336
+Gradient Boosting,111,0,0.031843
+Gradient Boosting,112,0,0.124815
+Gradient Boosting,113,0,0.043143
+Gradient Boosting,114,0,0.142099
+Gradient Boosting,115,0,0.058555
+Gradient Boosting,116,0,0.258245
+Gradient Boosting,117,0,0.158951
+Gradient Boosting,118,0,0.029681
+Gradient Boosting,119,0,0.019923
+Gradient Boosting,120,0,0.043724
+Gradient Boosting,121,0,0.377519
+Gradient Boosting,122,0,0.082896
+Gradient Boosting,123,1,0.502406
+Gradient Boosting,124,0,0.328621
+Gradient Boosting,125,0,0.203808
+Gradient Boosting,126,0,0.030775
+Gradient Boosting,127,0,0.013496
+Gradient Boosting,128,0,0.079122
+Gradient Boosting,129,0,0.105422
+Gradient Boosting,130,0,0.151311
+Gradient Boosting,131,0,0.186379
+Gradient Boosting,132,1,0.664864
+Gradient Boosting,133,0,0.033253
+Gradient Boosting,134,0,0.027975
+Gradient Boosting,135,0,0.001923
+Gradient Boosting,136,0,0.61726
+Gradient Boosting,137,0,0.111759
+Gradient Boosting,138,1,0.506252
+Gradient Boosting,139,0,0.019506
+Gradient Boosting,140,0,0.815611
+Gradient Boosting,141,1,0.371499
+Gradient Boosting,142,0,0.02244
+Gradient Boosting,143,0,0.083103
+Gradient Boosting,144,0,0.009777
+Gradient Boosting,145,0,0.092188
+Gradient Boosting,146,0,0.081919
+Gradient Boosting,147,0,0.017833
+Gradient Boosting,148,0,0.206892
+Gradient Boosting,149,0,0.000662
+Gradient Boosting,150,0,0.000762
+Gradient Boosting,151,0,0.345583
+Gradient Boosting,152,0,0.494186
+Gradient Boosting,153,0,0.084668
+Gradient Boosting,154,0,0.27926
+Gradient Boosting,155,1,0.629407
+Gradient Boosting,156,0,0.018827
+Gradient Boosting,157,0,0.021578
+Gradient Boosting,158,0,0.083856
+Gradient Boosting,159,0,0.141227
+Gradient Boosting,160,1,0.70863
+Gradient Boosting,161,1,0.69727
+Gradient Boosting,162,0,0.076914
+Gradient Boosting,163,0,0.003533
+Gradient Boosting,164,0,0.0085
+Gradient Boosting,165,0,0.043655
+Gradient Boosting,166,0,0.015759
+Gradient Boosting,167,0,0.004652
+Gradient Boosting,168,0,0.010797
+Gradient Boosting,169,1,0.630072
+Gradient Boosting,170,0,0.2766
+Gradient Boosting,171,0,0.041929
+Gradient Boosting,172,0,0.020151
+Gradient Boosting,173,0,0.310567
+Gradient Boosting,174,1,0.29441
+Gradient Boosting,175,0,0.010224
+Gradient Boosting,176,0,0.002208
+Gradient Boosting,177,0,0.452741
+Gradient Boosting,178,1,0.706644
+Gradient Boosting,179,1,0.020504
+Gradient Boosting,180,1,0.247548
+Gradient Boosting,181,0,0.080379
+Gradient Boosting,182,0,0.029245
+Gradient Boosting,183,0,0.021723
+Gradient Boosting,184,1,0.138542
+Gradient Boosting,185,1,0.620328
+Gradient Boosting,186,0,0.672467
+Gradient Boosting,187,0,0.013852
+Gradient Boosting,188,1,0.496913
+Gradient Boosting,189,0,0.064326
+Gradient Boosting,190,0,0.035312
+Gradient Boosting,191,0,0.067359
+Gradient Boosting,192,0,0.267548
+Gradient Boosting,193,0,0.042042
+Gradient Boosting,194,1,0.019678
+Gradient Boosting,195,0,0.082366
+Gradient Boosting,196,0,0.052196
+Gradient Boosting,197,1,0.429539
+Gradient Boosting,198,1,0.067991
+Gradient Boosting,199,0,0.249072
+Gradient Boosting,200,0,0.030077
+Gradient Boosting,201,0,0.06941
+Gradient Boosting,202,0,0.215866
+Gradient Boosting,203,0,0.046845
+Gradient Boosting,204,0,0.196915
+Gradient Boosting,205,1,0.46884
+Gradient Boosting,206,0,0.239673
+Gradient Boosting,207,1,0.831076
+Gradient Boosting,208,1,0.7656
+Gradient Boosting,209,0,0.080204
+Gradient Boosting,210,1,0.136721
+Gradient Boosting,211,0,0.348398
+Gradient Boosting,212,1,0.015277
+Gradient Boosting,213,0,0.475313
+Gradient Boosting,214,1,0.284962
+Gradient Boosting,215,0,0.047986
+Gradient Boosting,216,1,0.103322
+Gradient Boosting,217,0,0.01774
+Gradient Boosting,218,0,0.050563
+Gradient Boosting,219,1,0.116942
+Gradient Boosting,220,1,0.728191
+Gradient Boosting,221,0,0.076483
+Gradient Boosting,222,0,0.004478
+Gradient Boosting,223,0,0.01551
+Gradient Boosting,224,0,0.042995
+Gradient Boosting,225,0,0.085773
+Gradient Boosting,226,0,0.003761
+Gradient Boosting,227,0,0.12185
+Gradient Boosting,228,0,0.042741
+Gradient Boosting,229,0,0.075468
+Gradient Boosting,230,1,0.985157
+Gradient Boosting,231,1,0.143241
+Gradient Boosting,232,0,0.00591
+Gradient Boosting,233,0,0.218482
+Gradient Boosting,234,1,0.889008
+Gradient Boosting,235,1,0.745205
+Gradient Boosting,236,0,0.025596
+Gradient Boosting,237,1,0.991217
+Gradient Boosting,238,0,0.088914
+Gradient Boosting,239,0,0.011035
+Gradient Boosting,240,0,0.008719
+Gradient Boosting,241,0,0.002847
+Gradient Boosting,242,0,0.063083
+Gradient Boosting,243,0,0.040298
+Gradient Boosting,244,1,0.973835
+Gradient Boosting,245,0,0.408343
+Gradient Boosting,246,0,0.037742
+Gradient Boosting,247,0,0.013238
+Gradient Boosting,248,0,0.059868
+Gradient Boosting,249,0,0.054455
+Gradient Boosting,250,0,0.331407
+Gradient Boosting,251,0,0.078869
+Gradient Boosting,252,0,0.064847
+Gradient Boosting,253,0,0.028657
+Gradient Boosting,254,0,0.012731
+Gradient Boosting,255,1,0.309686
+Gradient Boosting,256,0,0.047778
+Gradient Boosting,257,1,0.102015
+Gradient Boosting,258,0,0.227663
+Gradient Boosting,259,0,0.405537
+Gradient Boosting,260,0,0.259201
+Gradient Boosting,261,0,0.48052
+Gradient Boosting,262,0,0.06235
+Gradient Boosting,263,0,0.22949
+Gradient Boosting,264,1,0.869305
+Gradient Boosting,265,0,0.072107
+Gradient Boosting,266,0,0.233509
+Gradient Boosting,267,1,0.161627
+Gradient Boosting,268,1,0.240329
+Gradient Boosting,269,0,0.117818
+Gradient Boosting,270,0,0.137638
+Gradient Boosting,271,0,0.807841
+Gradient Boosting,272,0,0.302894
+Gradient Boosting,273,1,0.812891
+Gradient Boosting,274,1,0.30823
+Gradient Boosting,275,0,0.130918
+Gradient Boosting,276,0,0.716627
+Gradient Boosting,277,0,0.180037
+Gradient Boosting,278,0,0.053732
+Gradient Boosting,279,0,0.005967
+Gradient Boosting,280,1,0.82289
+Gradient Boosting,281,0,0.029144
+Gradient Boosting,282,1,0.338813
+Gradient Boosting,283,0,0.012328
+Gradient Boosting,284,0,0.14527
+Gradient Boosting,285,0,0.007804
+Gradient Boosting,286,1,0.482859
+Gradient Boosting,287,0,0.189999
+Gradient Boosting,288,0,0.002535
+Gradient Boosting,289,0,0.46682
+Gradient Boosting,290,0,0.012571
+Gradient Boosting,291,0,0.004137
+Gradient Boosting,292,0,0.277252
+Gradient Boosting,293,0,0.838375
+Gradient Boosting,294,0,0.389208
+Gradient Boosting,295,0,0.003456
+Gradient Boosting,296,0,0.12165
+Gradient Boosting,297,0,0.025688
+Gradient Boosting,298,0,0.09569
+Gradient Boosting,299,1,0.421394
+Gradient Boosting,300,0,0.200708
+Gradient Boosting,301,0,0.020116
+Gradient Boosting,302,1,0.340259
+Gradient Boosting,303,0,0.013501
+Gradient Boosting,304,0,0.089099
+Gradient Boosting,305,0,0.019785
+Gradient Boosting,306,0,0.168084
+Gradient Boosting,307,0,0.016437
+Gradient Boosting,308,0,0.044435
+Gradient Boosting,309,0,0.079498
+Gradient Boosting,310,0,0.017686
+Gradient Boosting,311,0,0.013103
+Gradient Boosting,312,0,0.058053
+Gradient Boosting,313,0,0.014587
+Gradient Boosting,314,1,0.110548
+Gradient Boosting,315,0,0.030681
+Gradient Boosting,316,0,0.495291
+Gradient Boosting,317,0,0.050609
+Gradient Boosting,318,0,0.514226
+Gradient Boosting,319,0,0.49041
+Gradient Boosting,320,0,0.034837
+Gradient Boosting,321,0,0.021569
+Gradient Boosting,322,1,0.023532
+Gradient Boosting,323,1,0.520177
+Gradient Boosting,324,1,0.163996
+Gradient Boosting,325,1,0.691002
+Gradient Boosting,326,1,0.969495
+Gradient Boosting,327,0,0.076073
+Gradient Boosting,328,0,0.59828
+Gradient Boosting,329,0,0.0937
+Gradient Boosting,330,1,0.324565
+Gradient Boosting,331,0,0.026411
+Gradient Boosting,332,0,0.012241
+Gradient Boosting,333,0,0.172077
+Gradient Boosting,334,0,0.011896
+Gradient Boosting,335,0,0.036083
+Gradient Boosting,336,0,0.010133
+Gradient Boosting,337,0,0.062776
+Gradient Boosting,338,0,0.025951
+Gradient Boosting,339,0,0.02408
+Gradient Boosting,340,0,0.005792
+Gradient Boosting,341,0,0.137038
+Gradient Boosting,342,0,0.40677
+Gradient Boosting,343,0,0.093574
+Gradient Boosting,344,0,0.025737
+Gradient Boosting,345,0,0.088182
+Gradient Boosting,346,1,0.857962
+Gradient Boosting,347,0,0.443734
+Gradient Boosting,348,0,0.173259
+Gradient Boosting,349,0,0.041615
+Gradient Boosting,350,0,0.280198
+Gradient Boosting,351,0,0.016786
+Gradient Boosting,352,0,0.007732
+Gradient Boosting,353,0,0.007217
+Gradient Boosting,354,0,0.08632
+Gradient Boosting,355,0,0.009866
+Gradient Boosting,356,0,0.463951
+Gradient Boosting,357,0,0.018237
+Gradient Boosting,358,0,0.0559
+Gradient Boosting,359,0,0.125923
+Gradient Boosting,360,0,0.019853
+Gradient Boosting,361,0,0.007815
+Gradient Boosting,362,0,0.059954
+Gradient Boosting,363,1,0.921563
+Gradient Boosting,364,0,0.151777
+Gradient Boosting,365,1,0.785234
+Gradient Boosting,366,0,0.017728
+Gradient Boosting,367,1,0.709821
+Gradient Boosting,368,0,0.338371
+Gradient Boosting,369,0,0.007633
+Gradient Boosting,370,0,0.001916
+Gradient Boosting,371,0,0.243924
+Gradient Boosting,372,1,0.828095
+Gradient Boosting,373,0,0.030389
+Gradient Boosting,374,0,0.598652
+Gradient Boosting,375,0,0.030653
+Gradient Boosting,376,0,0.00168
+Gradient Boosting,377,0,0.062859
+Gradient Boosting,378,1,0.242851
+Gradient Boosting,379,0,0.010329
+Gradient Boosting,380,0,0.010524
+Gradient Boosting,381,0,0.008218
+Gradient Boosting,382,0,0.515778
+Gradient Boosting,383,0,0.473861
+Gradient Boosting,384,1,0.296785
+Gradient Boosting,385,0,0.558273
+Gradient Boosting,386,0,0.345251
+Gradient Boosting,387,0,0.891309
+Gradient Boosting,388,0,0.067978
+Gradient Boosting,389,0,0.04827
+Gradient Boosting,390,0,0.914671
+Gradient Boosting,391,0,0.23995
+Gradient Boosting,392,0,0.095847
+Gradient Boosting,393,1,0.259043
+Gradient Boosting,394,0,0.031884
+Gradient Boosting,395,1,0.111364
+Gradient Boosting,396,0,0.070795
+Gradient Boosting,397,0,0.002882
+Gradient Boosting,398,0,0.003698
+Gradient Boosting,399,0,0.00406
+Gradient Boosting,400,1,0.502199
+Gradient Boosting,401,0,0.04399
+Gradient Boosting,402,1,0.572163
+Gradient Boosting,403,0,0.062236
+Gradient Boosting,404,0,0.067618
+Gradient Boosting,405,1,0.247602
+Gradient Boosting,406,0,0.20164
+Gradient Boosting,407,0,0.257309
+Gradient Boosting,408,0,0.000334
+Gradient Boosting,409,0,0.166411
+Gradient Boosting,410,0,0.035704
+Gradient Boosting,411,1,0.327398
+Gradient Boosting,412,0,0.005119
+Gradient Boosting,413,1,0.370867
+Gradient Boosting,414,0,0.001757
+Gradient Boosting,415,0,0.218332
+Gradient Boosting,416,0,0.031677
+Gradient Boosting,417,0,0.012976
+Gradient Boosting,418,0,0.016496
+Gradient Boosting,419,1,0.679423
+Gradient Boosting,420,1,0.358922
+Gradient Boosting,421,0,0.732909
+Gradient Boosting,422,0,0.004908
+Gradient Boosting,423,1,0.007658
+Gradient Boosting,424,0,0.08351
+Gradient Boosting,425,0,0.001547
+Gradient Boosting,426,0,0.123692
+Gradient Boosting,427,0,0.101849
+Gradient Boosting,428,0,0.011716
+Gradient Boosting,429,0,0.020823
+Gradient Boosting,430,0,0.020311
+Gradient Boosting,431,0,0.013928
+Gradient Boosting,432,0,0.072275
+Gradient Boosting,433,0,0.046455
+Gradient Boosting,434,0,0.164339
+Gradient Boosting,435,0,0.542679
+Gradient Boosting,436,1,0.55197
+Gradient Boosting,437,0,0.095746
+Gradient Boosting,438,0,0.027808
+Gradient Boosting,439,0,0.200333
+Gradient Boosting,440,0,0.203818
+Gradient Boosting,441,0,0.062945
+Gradient Boosting,442,0,0.020771
+Gradient Boosting,443,0,0.007623
+Gradient Boosting,444,0,0.519654
+Gradient Boosting,445,0,0.028026
+Gradient Boosting,446,0,0.242089
+Gradient Boosting,447,0,0.473065
+Gradient Boosting,448,0,0.03451
+Gradient Boosting,449,0,0.261744
+Gradient Boosting,450,1,0.643829
+Gradient Boosting,451,1,0.088905
+Gradient Boosting,452,1,0.578453
+Gradient Boosting,453,1,0.749283
+Gradient Boosting,454,0,0.005672
+Gradient Boosting,455,0,0.196485
+Gradient Boosting,456,1,0.38006
+Gradient Boosting,457,0,0.375656
+Gradient Boosting,458,0,0.064786
+Gradient Boosting,459,0,0.03894
+Gradient Boosting,460,0,0.015104
+Gradient Boosting,461,0,0.150676
+Gradient Boosting,462,0,0.651946
+Gradient Boosting,463,1,0.104529
+Gradient Boosting,464,0,0.009537
+Gradient Boosting,465,0,0.000767
+Gradient Boosting,466,0,0.310929
+Gradient Boosting,467,0,0.105758
+Gradient Boosting,468,0,0.1791
+Gradient Boosting,469,0,0.153635
+Gradient Boosting,470,1,0.03798
+Gradient Boosting,471,1,0.650111
+Gradient Boosting,472,0,0.11803
+Gradient Boosting,473,0,0.080301
+Gradient Boosting,474,1,0.066835
+Gradient Boosting,475,0,0.032748
+Gradient Boosting,476,0,0.0918
+Gradient Boosting,477,0,0.084891
+Gradient Boosting,478,0,0.063283
+Gradient Boosting,479,0,0.048443
+Gradient Boosting,480,0,0.177861
+Gradient Boosting,481,1,0.136364
+Gradient Boosting,482,0,0.159853
+Gradient Boosting,483,0,0.062286
+Gradient Boosting,484,1,0.556862
+Gradient Boosting,485,0,0.162845
+Gradient Boosting,486,0,0.082201
+Gradient Boosting,487,1,0.903527
+Gradient Boosting,488,0,0.058109
+Gradient Boosting,489,1,0.580215
+Gradient Boosting,490,0,0.0666
+Gradient Boosting,491,0,0.089757
+Gradient Boosting,492,0,0.066098
+Gradient Boosting,493,0,0.321806
+Gradient Boosting,494,0,0.451269
+Gradient Boosting,495,0,0.024689
+Gradient Boosting,496,0,0.068785
+Gradient Boosting,497,0,0.147923
+Gradient Boosting,498,0,0.00539
+Gradient Boosting,499,0,0.201956
+Gradient Boosting,500,0,0.003962
+Gradient Boosting,501,0,0.074986
+Gradient Boosting,502,0,0.030138
+Gradient Boosting,503,1,0.59305
+Gradient Boosting,504,0,0.21669
+Gradient Boosting,505,0,0.677078
+Gradient Boosting,506,1,0.179547
+Gradient Boosting,507,0,0.013269
+Gradient Boosting,508,0,0.020941
+Gradient Boosting,509,0,0.022177
+Gradient Boosting,510,0,0.484719
+Gradient Boosting,511,0,0.333564
+Gradient Boosting,512,0,0.019301
+Gradient Boosting,513,0,0.220835
+Gradient Boosting,514,0,0.013391
+Gradient Boosting,515,0,0.263694
+Gradient Boosting,516,0,0.382934
+Gradient Boosting,517,0,0.011796
+Gradient Boosting,518,0,0.066177
+Gradient Boosting,519,1,0.804423
+Gradient Boosting,520,0,0.010215
+Gradient Boosting,521,0,0.048266
+Gradient Boosting,522,0,0.143119
+Gradient Boosting,523,0,0.183774
+Gradient Boosting,524,0,0.014746
+Gradient Boosting,525,0,0.111753
+Gradient Boosting,526,1,0.44651
+Gradient Boosting,527,0,0.004615
+Gradient Boosting,528,0,0.009662
+Gradient Boosting,529,0,0.025735
+Gradient Boosting,530,1,0.41273
+Gradient Boosting,531,0,0.074193
+Gradient Boosting,532,0,0.17748
+Gradient Boosting,533,0,0.007376
+Gradient Boosting,534,0,0.450177
+Gradient Boosting,535,0,0.00128
+Gradient Boosting,536,0,0.026477
+Gradient Boosting,537,0,0.011168
+Gradient Boosting,538,0,0.294878
+Gradient Boosting,539,0,0.266083
+Gradient Boosting,540,0,0.099253
+Gradient Boosting,541,0,0.090355
+Gradient Boosting,542,0,0.073976
+Gradient Boosting,543,0,0.021331
+Gradient Boosting,544,1,0.078378
+Gradient Boosting,545,1,0.039486
+Gradient Boosting,546,0,0.005652
+Gradient Boosting,547,0,0.021149
+Gradient Boosting,548,1,0.271336
+Gradient Boosting,549,1,0.026912
+Gradient Boosting,550,0,0.004649
+Gradient Boosting,551,1,0.41128
+Gradient Boosting,552,0,0.191278
+Gradient Boosting,553,1,0.598932
+Gradient Boosting,554,0,0.210304
+Gradient Boosting,555,0,0.036929
+Gradient Boosting,556,1,0.671901
+Gradient Boosting,557,1,0.020454
+Gradient Boosting,558,0,0.113361
+Gradient Boosting,559,0,0.041778
+Gradient Boosting,560,1,0.127928
+Gradient Boosting,561,0,0.425393
+Gradient Boosting,562,0,0.331732
+Gradient Boosting,563,0,0.743012
+Gradient Boosting,564,1,0.747599
+Gradient Boosting,565,0,0.003718
+Gradient Boosting,566,0,0.027486
+Gradient Boosting,567,0,0.263462
+Gradient Boosting,568,0,0.018328
+Gradient Boosting,569,0,0.06055
+Gradient Boosting,570,0,0.571457
+Gradient Boosting,571,1,0.201527
+Gradient Boosting,572,0,0.162877
+Gradient Boosting,573,0,0.043645
+Gradient Boosting,574,0,0.251532
+Gradient Boosting,575,0,0.213414
+Gradient Boosting,576,0,0.193138
+Gradient Boosting,577,0,0.05297
+Gradient Boosting,578,0,0.019707
+Gradient Boosting,579,1,0.189034
+Gradient Boosting,580,0,0.253253
+Gradient Boosting,581,0,0.548248
+Gradient Boosting,582,0,0.081545
+Gradient Boosting,583,0,0.021581
+Gradient Boosting,584,0,0.058763
+Gradient Boosting,585,0,0.010582
+Gradient Boosting,586,0,0.266929
+Gradient Boosting,587,0,0.028723
+Gradient Boosting,588,0,0.050554
+Gradient Boosting,589,0,0.013801
+Gradient Boosting,590,1,0.157205
+Gradient Boosting,591,1,0.230462
+Gradient Boosting,592,0,0.028176
+Gradient Boosting,593,0,0.456228
+Gradient Boosting,594,1,0.577649
+Gradient Boosting,595,0,0.095918
+Gradient Boosting,596,0,0.012094
+Gradient Boosting,597,0,0.059504
+Gradient Boosting,598,0,0.139457
+Gradient Boosting,599,1,0.83414
+Gradient Boosting,600,0,0.141652
+Gradient Boosting,601,0,0.020188
+Gradient Boosting,602,0,0.036924
+Gradient Boosting,603,1,0.194043
+Gradient Boosting,604,0,0.083472
+Gradient Boosting,605,0,0.401319
+Gradient Boosting,606,1,0.756192
+Gradient Boosting,607,1,0.019081
+Gradient Boosting,608,1,0.526784
+Gradient Boosting,609,1,0.751643
+Gradient Boosting,610,0,0.377156
+Gradient Boosting,611,0,0.076081
+Gradient Boosting,612,0,0.033948
+Gradient Boosting,613,1,0.466803
+Gradient Boosting,614,0,0.366982
+Gradient Boosting,615,0,0.053276
+Gradient Boosting,616,0,0.025623
+Gradient Boosting,617,1,0.221483
+Gradient Boosting,618,1,0.714645
+Gradient Boosting,619,0,0.793864
+Gradient Boosting,620,1,0.656964
+Gradient Boosting,621,0,0.257842
+Gradient Boosting,622,0,0.106229
+Gradient Boosting,623,0,0.022263
+Gradient Boosting,624,0,0.199889
+Gradient Boosting,625,1,0.044856
+Gradient Boosting,626,0,0.033226
+Gradient Boosting,627,1,0.343864
+Gradient Boosting,628,1,0.799535
+Gradient Boosting,629,0,0.379251
+Gradient Boosting,630,1,0.619145
+Gradient Boosting,631,0,0.023983
+Gradient Boosting,632,0,0.00216
+Gradient Boosting,633,0,0.025046
+Gradient Boosting,634,0,0.043518
+Gradient Boosting,635,0,0.282187
+Gradient Boosting,636,0,0.260322
+Gradient Boosting,637,1,0.089972
+Gradient Boosting,638,0,0.003185
+Gradient Boosting,639,0,0.006334
+Gradient Boosting,640,1,0.864659
+Gradient Boosting,641,0,0.111071
+Gradient Boosting,642,1,0.45093
+Gradient Boosting,643,0,0.002693
+Gradient Boosting,644,0,0.101344
+Gradient Boosting,645,0,0.181134
+Gradient Boosting,646,0,0.753996
+Gradient Boosting,647,0,0.044471
+Gradient Boosting,648,0,0.000511
+Gradient Boosting,649,0,0.007607
+Gradient Boosting,650,0,0.013017
+Gradient Boosting,651,1,0.061693
+Gradient Boosting,652,1,0.409094
+Gradient Boosting,653,1,0.279646
+Gradient Boosting,654,0,0.273594
+Gradient Boosting,655,0,0.141977
+Gradient Boosting,656,1,0.697145
+Gradient Boosting,657,0,0.007077
+Gradient Boosting,658,0,0.008256
+Gradient Boosting,659,0,0.067029
+Gradient Boosting,660,0,0.048141
+Gradient Boosting,661,1,0.820191
+Gradient Boosting,662,1,0.845283
+Gradient Boosting,663,0,0.088774
+Gradient Boosting,664,0,0.391747
+Gradient Boosting,665,1,0.975089
+Gradient Boosting,666,0,0.141594
+Gradient Boosting,667,1,0.533723
+Gradient Boosting,668,0,0.51103
+Gradient Boosting,669,1,0.987008
+Gradient Boosting,670,0,0.11622
+Gradient Boosting,671,1,0.863069
+Gradient Boosting,672,0,0.191627
+Gradient Boosting,673,1,0.515769
+Gradient Boosting,674,0,0.013856
+Gradient Boosting,675,0,0.198232
+Gradient Boosting,676,0,0.014723
+Gradient Boosting,677,0,0.180769
+Gradient Boosting,678,0,0.390449
+Gradient Boosting,679,0,0.000793
+Gradient Boosting,680,0,0.049053
+Gradient Boosting,681,1,0.109774
+Gradient Boosting,682,1,0.095704
+Gradient Boosting,683,0,0.199916
+Gradient Boosting,684,0,0.024779
+Gradient Boosting,685,0,0.070224
+Gradient Boosting,686,0,0.054087
+Gradient Boosting,687,0,0.007551
+Gradient Boosting,688,1,0.126726
+Gradient Boosting,689,0,0.002665
+Gradient Boosting,690,0,0.477188
+Gradient Boosting,691,0,0.106524
+Gradient Boosting,692,0,0.015195
+Gradient Boosting,693,1,0.271346
+Gradient Boosting,694,0,0.005508
+Gradient Boosting,695,1,0.069495
+Gradient Boosting,696,0,0.019751
+Gradient Boosting,697,1,0.820801
+Gradient Boosting,698,0,0.022105
+Gradient Boosting,699,0,0.030322
+Gradient Boosting,700,0,0.16006
+Gradient Boosting,701,0,0.050793
+Gradient Boosting,702,0,0.031777
+Gradient Boosting,703,0,0.014046
+Gradient Boosting,704,1,0.756322
+Gradient Boosting,705,0,0.025711
+Gradient Boosting,706,0,0.280997
+Gradient Boosting,707,0,0.004938
+Gradient Boosting,708,0,0.028507
+Gradient Boosting,709,0,0.001945
+Gradient Boosting,710,0,0.12554
+Gradient Boosting,711,1,0.94586
+Gradient Boosting,712,0,0.012395
+Gradient Boosting,713,0,0.002028
+Gradient Boosting,714,0,0.00426
+Gradient Boosting,715,0,0.008666
+Gradient Boosting,716,0,0.033695
+Gradient Boosting,717,0,0.019072
+Gradient Boosting,718,0,0.181843
+Gradient Boosting,719,1,0.887955
+Gradient Boosting,720,1,0.263429
+Gradient Boosting,721,0,0.004252
+Gradient Boosting,722,0,0.014127
+Gradient Boosting,723,0,0.013996
+Gradient Boosting,724,1,0.728552
+Gradient Boosting,725,0,0.281032
+Gradient Boosting,726,1,0.890508
+Gradient Boosting,727,1,0.617207
+Gradient Boosting,728,0,0.620529
+Gradient Boosting,729,1,0.618886
+Gradient Boosting,730,0,0.001719
+Gradient Boosting,731,1,0.331371
+Gradient Boosting,732,0,0.027598
+Gradient Boosting,733,0,0.005552
+Gradient Boosting,734,1,0.068104
+Gradient Boosting,735,0,0.200877
+Gradient Boosting,736,0,0.052743
+Gradient Boosting,737,0,0.006471
+Gradient Boosting,738,0,0.004827
+Gradient Boosting,739,0,0.389292
+Gradient Boosting,740,0,0.078754
+Gradient Boosting,741,1,0.076353
+Gradient Boosting,742,0,0.027042
+Gradient Boosting,743,0,0.15715
+Gradient Boosting,744,1,0.717645
+Gradient Boosting,745,0,0.39458
+Gradient Boosting,746,0,0.484607
+Gradient Boosting,747,0,0.130461
+Gradient Boosting,748,0,0.072501
+Gradient Boosting,749,0,0.059062
+Gradient Boosting,750,0,0.044258
+Gradient Boosting,751,0,0.426342
+Gradient Boosting,752,0,0.227701
+Gradient Boosting,753,1,0.587213
+Gradient Boosting,754,0,0.008979
+Gradient Boosting,755,0,0.148284
+Gradient Boosting,756,0,0.009847
+Gradient Boosting,757,0,0.006415
+Gradient Boosting,758,0,0.003973
+Gradient Boosting,759,0,0.001457
+Gradient Boosting,760,0,0.624746
+Gradient Boosting,761,0,0.034782
+Gradient Boosting,762,1,0.136777
+Gradient Boosting,763,1,0.839459
+Gradient Boosting,764,0,0.036435
+Gradient Boosting,765,0,0.595368
+Gradient Boosting,766,0,0.039751
+Gradient Boosting,767,0,0.004428
+Gradient Boosting,768,0,0.238966
+Gradient Boosting,769,0,0.22341
+Gradient Boosting,770,1,0.241288
+Gradient Boosting,771,0,0.036157
+Gradient Boosting,772,1,0.217246
+Gradient Boosting,773,0,0.001169
+Gradient Boosting,774,0,0.021768
+Gradient Boosting,775,0,0.05972
+Gradient Boosting,776,0,0.640664
+Gradient Boosting,777,0,0.003385
+Gradient Boosting,778,0,0.126449
+Gradient Boosting,779,0,0.19385
+Gradient Boosting,780,0,0.149522
+Gradient Boosting,781,0,0.086742
+Gradient Boosting,782,0,0.014835
+Gradient Boosting,783,0,0.097715
+Gradient Boosting,784,0,0.033634
+Gradient Boosting,785,1,0.160399
+Gradient Boosting,786,0,0.023861
+Gradient Boosting,787,0,0.061469
+Gradient Boosting,788,0,0.034656
+Gradient Boosting,789,1,0.152894
+Gradient Boosting,790,0,0.132597
+Gradient Boosting,791,1,0.146979
+Gradient Boosting,792,0,0.016144
+Gradient Boosting,793,0,0.010726
+Gradient Boosting,794,0,0.019843
+Gradient Boosting,795,0,0.213691
+Gradient Boosting,796,0,0.030835
+Gradient Boosting,797,0,0.117012
+Gradient Boosting,798,1,0.424959
+Gradient Boosting,799,0,0.011083
+Gradient Boosting,800,0,0.168949
+Gradient Boosting,801,0,0.445487
+Gradient Boosting,802,1,0.133913
+Gradient Boosting,803,0,0.14639
+Gradient Boosting,804,1,0.456516
+Gradient Boosting,805,1,0.398335
+Gradient Boosting,806,0,0.02437
+Gradient Boosting,807,0,0.017674
+Gradient Boosting,808,0,0.840706
+Gradient Boosting,809,1,0.87626
+Gradient Boosting,810,0,0.448349
+Gradient Boosting,811,1,0.782615
+Gradient Boosting,812,0,0.092278
+Gradient Boosting,813,0,0.00597
+Gradient Boosting,814,0,0.362602
+Gradient Boosting,815,0,0.080095
+Gradient Boosting,816,0,0.021807
+Gradient Boosting,817,1,0.557408
+Gradient Boosting,818,0,0.019647
+Gradient Boosting,819,0,0.139181
+Gradient Boosting,820,0,0.005169
+Gradient Boosting,821,1,0.71386
+Gradient Boosting,822,0,0.010164
+Gradient Boosting,823,0,0.004255
+Gradient Boosting,824,0,0.065719
+Gradient Boosting,825,0,0.012624
+Gradient Boosting,826,1,0.618505
+Gradient Boosting,827,0,0.045171
+Gradient Boosting,828,1,0.152927
+Gradient Boosting,829,0,0.263812
+Gradient Boosting,830,0,0.006811
+Gradient Boosting,831,0,0.019391
+Gradient Boosting,832,0,0.003139
+Gradient Boosting,833,1,0.161556
+Gradient Boosting,834,0,0.605389
+Gradient Boosting,835,0,0.183895
+Gradient Boosting,836,0,0.015263
+Gradient Boosting,837,0,0.083011
+Gradient Boosting,838,0,0.113984
+Gradient Boosting,839,0,0.153877
+Gradient Boosting,840,0,0.04501
+Gradient Boosting,841,0,0.337165
+Gradient Boosting,842,1,0.75355
+Gradient Boosting,843,0,0.226762
+Gradient Boosting,844,0,0.019102
+Gradient Boosting,845,1,0.576356
+Gradient Boosting,846,0,0.122389
+Gradient Boosting,847,0,0.02823
+Gradient Boosting,848,0,0.032481
+Gradient Boosting,849,0,0.00803
+Gradient Boosting,850,0,0.01066
+Gradient Boosting,851,0,0.022344
+Gradient Boosting,852,1,0.360226
+Gradient Boosting,853,1,0.756641
+Gradient Boosting,854,0,0.25224
+Gradient Boosting,855,0,0.27037
+Gradient Boosting,856,1,0.224004
+Gradient Boosting,857,0,0.019932
+Gradient Boosting,858,0,0.006569
+Gradient Boosting,859,0,0.161461
+Gradient Boosting,860,0,0.01593
+Gradient Boosting,861,0,0.122042
+Gradient Boosting,862,0,0.22451
+Gradient Boosting,863,0,0.024019
+Gradient Boosting,864,0,0.048008
+Gradient Boosting,865,0,0.076154
+Gradient Boosting,866,0,0.08935
+Gradient Boosting,867,1,0.899306
+Gradient Boosting,868,0,0.064556
+Gradient Boosting,869,0,0.828176
+Gradient Boosting,870,0,0.029902
+Gradient Boosting,871,1,0.072108
+Gradient Boosting,872,1,0.146459
+Gradient Boosting,873,0,0.008217
+Gradient Boosting,874,0,0.08192
+Gradient Boosting,875,1,0.494296
+Gradient Boosting,876,1,0.557371
+Gradient Boosting,877,0,0.11136
+Gradient Boosting,878,1,0.451542
+Gradient Boosting,879,0,0.243218
+Gradient Boosting,880,0,0.073171
+Gradient Boosting,881,0,0.047889
+Gradient Boosting,882,0,0.145113
+Gradient Boosting,883,0,0.045397
+Gradient Boosting,884,0,0.007837
+Gradient Boosting,885,0,0.020512
+Gradient Boosting,886,0,0.783349
+Gradient Boosting,887,1,0.16662
+Gradient Boosting,888,0,0.171
+Gradient Boosting,889,0,0.12516
+Gradient Boosting,890,1,0.142518
+Gradient Boosting,891,0,0.003079
+Gradient Boosting,892,0,0.022361
+Gradient Boosting,893,0,0.033587
+Gradient Boosting,894,0,0.030525
+Gradient Boosting,895,0,0.041945
+Gradient Boosting,896,0,0.065482
+Gradient Boosting,897,1,0.529408
+Gradient Boosting,898,0,0.018468
+Gradient Boosting,899,0,0.359376
+ViT-B/16,0,1,0.204675
+ViT-B/16,1,1,0.80416
+ViT-B/16,2,0,0.287838
+ViT-B/16,3,0,9.9e-05
+ViT-B/16,4,0,0.00014
+ViT-B/16,5,0,0.001335
+ViT-B/16,6,1,0.002621
+ViT-B/16,7,1,0.998795
+ViT-B/16,8,0,0.000115
+ViT-B/16,9,0,8.9e-05
+ViT-B/16,10,0,0.054269
+ViT-B/16,11,0,2e-05
+ViT-B/16,12,0,0.000113
+ViT-B/16,13,1,0.025647
+ViT-B/16,14,0,0.000361
+ViT-B/16,15,0,0.053791
+ViT-B/16,16,0,0.016269
+ViT-B/16,17,0,0.281176
+ViT-B/16,18,0,0.068444
+ViT-B/16,19,0,0.01459
+ViT-B/16,20,1,0.988289
+ViT-B/16,21,0,0.000378
+ViT-B/16,22,0,0.00059
+ViT-B/16,23,1,0.656555
+ViT-B/16,24,1,0.853477
+ViT-B/16,25,0,0.002427
+ViT-B/16,26,0,0.054066
+ViT-B/16,27,0,0.006915
+ViT-B/16,28,0,0.000461
+ViT-B/16,29,0,0.011417
+ViT-B/16,30,0,4.8e-05
+ViT-B/16,31,0,0.04442
+ViT-B/16,32,0,0.000232
+ViT-B/16,33,1,0.95142
+ViT-B/16,34,1,0.930658
+ViT-B/16,35,0,0.001415
+ViT-B/16,36,0,0.000911
+ViT-B/16,37,0,0.031882
+ViT-B/16,38,1,0.963644
+ViT-B/16,39,0,5.5e-05
+ViT-B/16,40,0,0.000375
+ViT-B/16,41,0,0.562154
+ViT-B/16,42,0,1.9e-05
+ViT-B/16,43,1,0.014433
+ViT-B/16,44,0,1e-05
+ViT-B/16,45,0,0.027093
+ViT-B/16,46,0,0.00018
+ViT-B/16,47,0,0.030327
+ViT-B/16,48,0,0.001776
+ViT-B/16,49,0,0.008967
+ViT-B/16,50,0,0.013741
+ViT-B/16,51,0,1e-05
+ViT-B/16,52,1,0.472247
+ViT-B/16,53,0,0.01418
+ViT-B/16,54,0,0.040418
+ViT-B/16,55,0,1.9e-05
+ViT-B/16,56,0,0.001911
+ViT-B/16,57,0,1.5e-05
+ViT-B/16,58,0,0.028699
+ViT-B/16,59,0,0.004992
+ViT-B/16,60,0,7e-05
+ViT-B/16,61,0,0.000675
+ViT-B/16,62,0,0.006906
+ViT-B/16,63,1,0.081916
+ViT-B/16,64,0,0.125606
+ViT-B/16,65,1,0.525102
+ViT-B/16,66,0,0.001387
+ViT-B/16,67,0,0.004963
+ViT-B/16,68,0,0.034016
+ViT-B/16,69,0,0.715977
+ViT-B/16,70,0,0.000895
+ViT-B/16,71,0,0.057718
+ViT-B/16,72,0,0.004979
+ViT-B/16,73,0,0.944508
+ViT-B/16,74,0,0.006099
+ViT-B/16,75,0,0.019837
+ViT-B/16,76,0,0.003103
+ViT-B/16,77,0,0.034954
+ViT-B/16,78,0,0.288452
+ViT-B/16,79,1,0.390779
+ViT-B/16,80,1,0.568595
+ViT-B/16,81,0,0.000708
+ViT-B/16,82,0,0.053487
+ViT-B/16,83,0,0.187761
+ViT-B/16,84,0,0.086935
+ViT-B/16,85,0,0.000185
+ViT-B/16,86,0,0.000836
+ViT-B/16,87,0,2.5e-05
+ViT-B/16,88,1,0.816275
+ViT-B/16,89,0,0.013334
+ViT-B/16,90,0,0.000365
+ViT-B/16,91,0,0.024604
+ViT-B/16,92,0,0.000448
+ViT-B/16,93,0,0.044912
+ViT-B/16,94,0,0.142489
+ViT-B/16,95,0,0.002712
+ViT-B/16,96,1,0.9717
+ViT-B/16,97,0,0.000306
+ViT-B/16,98,0,0.002533
+ViT-B/16,99,0,0.001248
+ViT-B/16,100,0,0.018263
+ViT-B/16,101,1,0.946489
+ViT-B/16,102,0,0.000159
+ViT-B/16,103,0,1.9e-05
+ViT-B/16,104,0,0.001235
+ViT-B/16,105,1,0.834814
+ViT-B/16,106,1,0.999737
+ViT-B/16,107,0,0.004213
+ViT-B/16,108,1,0.223186
+ViT-B/16,109,0,2.6e-05
+ViT-B/16,110,0,0.004283
+ViT-B/16,111,0,1e-05
+ViT-B/16,112,0,0.004904
+ViT-B/16,113,0,0.011277
+ViT-B/16,114,0,0.041813
+ViT-B/16,115,0,0.028823
+ViT-B/16,116,0,0.009959
+ViT-B/16,117,0,0.052927
+ViT-B/16,118,0,0.026085
+ViT-B/16,119,0,0.000301
+ViT-B/16,120,0,2.4e-05
+ViT-B/16,121,0,0.00273
+ViT-B/16,122,0,0.003324
+ViT-B/16,123,1,0.10284
+ViT-B/16,124,0,0.005583
+ViT-B/16,125,0,0.000572
+ViT-B/16,126,0,0.226968
+ViT-B/16,127,0,1e-05
+ViT-B/16,128,0,0.209883
+ViT-B/16,129,0,0.018769
+ViT-B/16,130,0,0.007589
+ViT-B/16,131,0,0.001542
+ViT-B/16,132,1,0.805857
+ViT-B/16,133,0,0.03017
+ViT-B/16,134,0,0.00228
+ViT-B/16,135,0,0.009009
+ViT-B/16,136,0,0.000222
+ViT-B/16,137,0,0.00389
+ViT-B/16,138,1,0.043468
+ViT-B/16,139,0,0.02972
+ViT-B/16,140,0,1e-05
+ViT-B/16,141,1,0.387918
+ViT-B/16,142,0,0.000108
+ViT-B/16,143,0,1e-05
+ViT-B/16,144,0,1e-05
+ViT-B/16,145,0,0.000361
+ViT-B/16,146,0,0.001989
+ViT-B/16,147,0,0.000248
+ViT-B/16,148,0,0.000457
+ViT-B/16,149,0,3.4e-05
+ViT-B/16,150,0,0.05297
+ViT-B/16,151,0,0.085472
+ViT-B/16,152,0,0.009252
+ViT-B/16,153,0,0.003099
+ViT-B/16,154,0,0.354452
+ViT-B/16,155,1,0.007315
+ViT-B/16,156,0,0.000262
+ViT-B/16,157,0,0.257731
+ViT-B/16,158,0,0.000426
+ViT-B/16,159,0,0.071361
+ViT-B/16,160,1,0.991585
+ViT-B/16,161,1,0.058379
+ViT-B/16,162,0,0.082814
+ViT-B/16,163,0,2.4e-05
+ViT-B/16,164,0,0.975536
+ViT-B/16,165,0,0.091888
+ViT-B/16,166,0,0.000572
+ViT-B/16,167,0,0.000303
+ViT-B/16,168,0,0.000118
+ViT-B/16,169,1,0.527557
+ViT-B/16,170,0,0.188218
+ViT-B/16,171,0,0.220292
+ViT-B/16,172,0,0.127318
+ViT-B/16,173,0,0.000765
+ViT-B/16,174,1,0.233093
+ViT-B/16,175,0,0.079735
+ViT-B/16,176,0,0.00027
+ViT-B/16,177,0,0.804232
+ViT-B/16,178,1,0.989582
+ViT-B/16,179,1,0.107117
+ViT-B/16,180,1,0.905287
+ViT-B/16,181,0,0.01933
+ViT-B/16,182,0,0.00338
+ViT-B/16,183,0,0.001631
+ViT-B/16,184,1,0.988116
+ViT-B/16,185,1,0.063148
+ViT-B/16,186,0,0.023179
+ViT-B/16,187,0,0.008712
+ViT-B/16,188,1,0.986936
+ViT-B/16,189,0,8.9e-05
+ViT-B/16,190,0,0.001163
+ViT-B/16,191,0,0.305507
+ViT-B/16,192,0,0.010749
+ViT-B/16,193,0,6.3e-05
+ViT-B/16,194,1,0.590542
+ViT-B/16,195,0,8.1e-05
+ViT-B/16,196,0,0.008289
+ViT-B/16,197,1,0.788668
+ViT-B/16,198,1,0.498485
+ViT-B/16,199,0,0.000145
+ViT-B/16,200,0,0.172198
+ViT-B/16,201,0,0.00119
+ViT-B/16,202,0,1e-05
+ViT-B/16,203,0,0.00088
+ViT-B/16,204,0,0.000329
+ViT-B/16,205,1,0.974005
+ViT-B/16,206,0,0.000905
+ViT-B/16,207,1,0.794736
+ViT-B/16,208,1,0.677106
+ViT-B/16,209,0,0.206857
+ViT-B/16,210,1,0.041386
+ViT-B/16,211,0,0.001063
+ViT-B/16,212,1,0.036117
+ViT-B/16,213,0,0.001229
+ViT-B/16,214,1,0.189776
+ViT-B/16,215,0,0.005043
+ViT-B/16,216,1,0.005965
+ViT-B/16,217,0,0.006585
+ViT-B/16,218,0,0.006414
+ViT-B/16,219,1,0.997611
+ViT-B/16,220,1,0.296638
+ViT-B/16,221,0,0.000523
+ViT-B/16,222,0,0.010621
+ViT-B/16,223,0,0.059618
+ViT-B/16,224,0,0.001413
+ViT-B/16,225,0,0.730779
+ViT-B/16,226,0,0.029153
+ViT-B/16,227,0,0.000588
+ViT-B/16,228,0,0.002313
+ViT-B/16,229,0,0.00024
+ViT-B/16,230,1,0.892244
+ViT-B/16,231,1,0.617617
+ViT-B/16,232,0,1e-05
+ViT-B/16,233,0,0.003816
+ViT-B/16,234,1,0.000952
+ViT-B/16,235,1,0.008572
+ViT-B/16,236,0,0.000133
+ViT-B/16,237,1,0.98427
+ViT-B/16,238,0,0.00213
+ViT-B/16,239,0,4.7e-05
+ViT-B/16,240,0,0.018853
+ViT-B/16,241,0,1e-05
+ViT-B/16,242,0,0.005174
+ViT-B/16,243,0,0.918916
+ViT-B/16,244,1,0.960435
+ViT-B/16,245,0,0.110689
+ViT-B/16,246,0,0.013221
+ViT-B/16,247,0,0.715549
+ViT-B/16,248,0,0.003114
+ViT-B/16,249,0,0.018933
+ViT-B/16,250,0,0.000704
+ViT-B/16,251,0,0.000122
+ViT-B/16,252,0,0.004516
+ViT-B/16,253,0,1e-05
+ViT-B/16,254,0,0.003107
+ViT-B/16,255,1,0.995469
+ViT-B/16,256,0,0.035232
+ViT-B/16,257,1,0.040586
+ViT-B/16,258,0,0.000272
+ViT-B/16,259,0,0.09408
+ViT-B/16,260,0,0.607774
+ViT-B/16,261,0,0.627693
+ViT-B/16,262,0,0.012442
+ViT-B/16,263,0,0.00035
+ViT-B/16,264,1,0.688474
+ViT-B/16,265,0,0.013112
+ViT-B/16,266,0,0.22406
+ViT-B/16,267,1,0.993076
+ViT-B/16,268,1,0.677538
+ViT-B/16,269,0,0.010675
+ViT-B/16,270,0,0.000423
+ViT-B/16,271,0,0.001158
+ViT-B/16,272,0,0.012446
+ViT-B/16,273,1,0.992078
+ViT-B/16,274,1,0.080028
+ViT-B/16,275,0,0.00231
+ViT-B/16,276,0,8.8e-05
+ViT-B/16,277,0,0.003541
+ViT-B/16,278,0,7.3e-05
+ViT-B/16,279,0,0.00977
+ViT-B/16,280,1,0.268176
+ViT-B/16,281,0,0.01592
+ViT-B/16,282,1,0.002932
+ViT-B/16,283,0,0.017009
+ViT-B/16,284,0,0.000666
+ViT-B/16,285,0,0.007574
+ViT-B/16,286,1,0.121437
+ViT-B/16,287,0,1e-05
+ViT-B/16,288,0,0.263323
+ViT-B/16,289,0,0.01034
+ViT-B/16,290,0,0.011766
+ViT-B/16,291,0,0.000351
+ViT-B/16,292,0,0.226203
+ViT-B/16,293,0,0.0269
+ViT-B/16,294,0,0.000891
+ViT-B/16,295,0,0.040824
+ViT-B/16,296,0,0.043742
+ViT-B/16,297,0,0.038772
+ViT-B/16,298,0,0.013883
+ViT-B/16,299,1,0.985976
+ViT-B/16,300,0,0.006968
+ViT-B/16,301,0,0.000744
+ViT-B/16,302,1,0.452237
+ViT-B/16,303,0,0.001348
+ViT-B/16,304,0,0.002958
+ViT-B/16,305,0,0.000117
+ViT-B/16,306,0,0.134173
+ViT-B/16,307,0,7.7e-05
+ViT-B/16,308,0,0.001256
+ViT-B/16,309,0,0.091653
+ViT-B/16,310,0,0.05793
+ViT-B/16,311,0,5.3e-05
+ViT-B/16,312,0,0.318959
+ViT-B/16,313,0,9.9e-05
+ViT-B/16,314,1,0.999961
+ViT-B/16,315,0,0.002898
+ViT-B/16,316,0,6.6e-05
+ViT-B/16,317,0,0.019319
+ViT-B/16,318,0,7.4e-05
+ViT-B/16,319,0,0.917651
+ViT-B/16,320,0,0.016069
+ViT-B/16,321,0,0.00131
+ViT-B/16,322,1,0.809674
+ViT-B/16,323,1,0.013314
+ViT-B/16,324,1,0.997584
+ViT-B/16,325,1,0.841086
+ViT-B/16,326,1,0.987758
+ViT-B/16,327,0,8.4e-05
+ViT-B/16,328,0,0.595875
+ViT-B/16,329,0,2.6e-05
+ViT-B/16,330,1,0.894259
+ViT-B/16,331,0,0.00137
+ViT-B/16,332,0,0.011513
+ViT-B/16,333,0,0.000643
+ViT-B/16,334,0,1.5e-05
+ViT-B/16,335,0,0.001051
+ViT-B/16,336,0,0.000439
+ViT-B/16,337,0,0.001047
+ViT-B/16,338,0,0.000325
+ViT-B/16,339,0,0.0672
+ViT-B/16,340,0,0.038603
+ViT-B/16,341,0,0.000149
+ViT-B/16,342,0,0.001693
+ViT-B/16,343,0,0.000207
+ViT-B/16,344,0,0.202545
+ViT-B/16,345,0,0.002116
+ViT-B/16,346,1,0.901856
+ViT-B/16,347,0,0.026771
+ViT-B/16,348,0,0.042329
+ViT-B/16,349,0,0.00024
+ViT-B/16,350,0,0.001799
+ViT-B/16,351,0,0.00045
+ViT-B/16,352,0,0.005029
+ViT-B/16,353,0,0.000118
+ViT-B/16,354,0,0.004201
+ViT-B/16,355,0,0.013081
+ViT-B/16,356,0,0.01207
+ViT-B/16,357,0,0.006363
+ViT-B/16,358,0,0.000123
+ViT-B/16,359,0,0.025787
+ViT-B/16,360,0,1e-05
+ViT-B/16,361,0,0.023594
+ViT-B/16,362,0,0.005406
+ViT-B/16,363,1,0.305321
+ViT-B/16,364,0,0.077461
+ViT-B/16,365,1,0.043666
+ViT-B/16,366,0,0.002722
+ViT-B/16,367,1,0.476033
+ViT-B/16,368,0,0.000948
+ViT-B/16,369,0,0.020593
+ViT-B/16,370,0,0.000646
+ViT-B/16,371,0,0.293163
+ViT-B/16,372,1,0.977155
+ViT-B/16,373,0,0.010125
+ViT-B/16,374,0,0.005317
+ViT-B/16,375,0,0.033021
+ViT-B/16,376,0,0.001125
+ViT-B/16,377,0,0.000211
+ViT-B/16,378,1,0.830277
+ViT-B/16,379,0,0.026718
+ViT-B/16,380,0,0.000287
+ViT-B/16,381,0,0.000216
+ViT-B/16,382,0,4.7e-05
+ViT-B/16,383,0,0.004386
+ViT-B/16,384,1,0.953233
+ViT-B/16,385,0,0.00015
+ViT-B/16,386,0,0.000746
+ViT-B/16,387,0,0.011832
+ViT-B/16,388,0,0.081929
+ViT-B/16,389,0,0.029534
+ViT-B/16,390,0,0.026719
+ViT-B/16,391,0,0.054322
+ViT-B/16,392,0,0.036847
+ViT-B/16,393,1,0.064386
+ViT-B/16,394,0,0.022729
+ViT-B/16,395,1,0.087928
+ViT-B/16,396,0,1.6e-05
+ViT-B/16,397,0,8.7e-05
+ViT-B/16,398,0,0.000267
+ViT-B/16,399,0,0.004103
+ViT-B/16,400,1,0.188499
+ViT-B/16,401,0,0.107597
+ViT-B/16,402,1,0.013637
+ViT-B/16,403,0,0.009064
+ViT-B/16,404,0,0.000898
+ViT-B/16,405,1,0.094713
+ViT-B/16,406,0,0.004219
+ViT-B/16,407,0,0.001841
+ViT-B/16,408,0,0.143075
+ViT-B/16,409,0,0.000706
+ViT-B/16,410,0,0.814197
+ViT-B/16,411,1,0.998351
+ViT-B/16,412,0,1e-05
+ViT-B/16,413,1,0.999763
+ViT-B/16,414,0,0.041143
+ViT-B/16,415,0,0.006011
+ViT-B/16,416,0,0.004718
+ViT-B/16,417,0,0.00013
+ViT-B/16,418,0,0.003993
+ViT-B/16,419,1,0.493766
+ViT-B/16,420,1,0.20917
+ViT-B/16,421,0,0.05336
+ViT-B/16,422,0,0.00142
+ViT-B/16,423,1,0.037908
+ViT-B/16,424,0,0.072471
+ViT-B/16,425,0,4.5e-05
+ViT-B/16,426,0,0.297563
+ViT-B/16,427,0,0.012795
+ViT-B/16,428,0,0.008145
+ViT-B/16,429,0,0.000807
+ViT-B/16,430,0,0.000252
+ViT-B/16,431,0,0.000146
+ViT-B/16,432,0,0.014693
+ViT-B/16,433,0,0.000179
+ViT-B/16,434,0,0.00027
+ViT-B/16,435,0,0.014688
+ViT-B/16,436,1,0.0203
+ViT-B/16,437,0,8.3e-05
+ViT-B/16,438,0,0.229914
+ViT-B/16,439,0,2.1e-05
+ViT-B/16,440,0,1e-05
+ViT-B/16,441,0,0.003736
+ViT-B/16,442,0,0.02612
+ViT-B/16,443,0,0.054987
+ViT-B/16,444,0,0.051554
+ViT-B/16,445,0,0.000387
+ViT-B/16,446,0,0.122116
+ViT-B/16,447,0,9.2e-05
+ViT-B/16,448,0,0.000703
+ViT-B/16,449,0,8.6e-05
+ViT-B/16,450,1,0.000688
+ViT-B/16,451,1,0.99654
+ViT-B/16,452,1,0.001253
+ViT-B/16,453,1,0.563316
+ViT-B/16,454,0,1e-05
+ViT-B/16,455,0,4.3e-05
+ViT-B/16,456,1,0.999159
+ViT-B/16,457,0,0.00017
+ViT-B/16,458,0,0.001992
+ViT-B/16,459,0,3.9e-05
+ViT-B/16,460,0,0.000837
+ViT-B/16,461,0,4.7e-05
+ViT-B/16,462,0,0.314549
+ViT-B/16,463,1,0.935943
+ViT-B/16,464,0,0.009456
+ViT-B/16,465,0,0.766014
+ViT-B/16,466,0,0.004906
+ViT-B/16,467,0,6.1e-05
+ViT-B/16,468,0,0.018458
+ViT-B/16,469,0,0.017257
+ViT-B/16,470,1,0.987002
+ViT-B/16,471,1,0.905052
+ViT-B/16,472,0,1e-05
+ViT-B/16,473,0,1e-05
+ViT-B/16,474,1,0.49777
+ViT-B/16,475,0,0.003989
+ViT-B/16,476,0,0.006727
+ViT-B/16,477,0,0.000245
+ViT-B/16,478,0,0.03108
+ViT-B/16,479,0,1.7e-05
+ViT-B/16,480,0,0.000233
+ViT-B/16,481,1,0.999107
+ViT-B/16,482,0,0.001245
+ViT-B/16,483,0,0.022801
+ViT-B/16,484,1,0.679777
+ViT-B/16,485,0,0.005798
+ViT-B/16,486,0,0.004325
+ViT-B/16,487,1,0.001617
+ViT-B/16,488,0,0.002779
+ViT-B/16,489,1,0.007249
+ViT-B/16,490,0,0.012717
+ViT-B/16,491,0,0.002909
+ViT-B/16,492,0,0.015495
+ViT-B/16,493,0,0.002313
+ViT-B/16,494,0,0.018972
+ViT-B/16,495,0,2.3e-05
+ViT-B/16,496,0,0.00617
+ViT-B/16,497,0,0.146642
+ViT-B/16,498,0,3e-05
+ViT-B/16,499,0,1e-05
+ViT-B/16,500,0,0.001015
+ViT-B/16,501,0,0.018803
+ViT-B/16,502,0,0.018884
+ViT-B/16,503,1,0.997423
+ViT-B/16,504,0,0.671661
+ViT-B/16,505,0,0.000725
+ViT-B/16,506,1,0.017557
+ViT-B/16,507,0,0.015733
+ViT-B/16,508,0,0.017037
+ViT-B/16,509,0,6e-05
+ViT-B/16,510,0,0.023361
+ViT-B/16,511,0,0.000354
+ViT-B/16,512,0,0.000191
+ViT-B/16,513,0,0.054736
+ViT-B/16,514,0,0.497241
+ViT-B/16,515,0,6.8e-05
+ViT-B/16,516,0,0.185607
+ViT-B/16,517,0,0.008703
+ViT-B/16,518,0,1e-05
+ViT-B/16,519,1,0.987772
+ViT-B/16,520,0,0.096415
+ViT-B/16,521,0,0.001776
+ViT-B/16,522,0,0.067636
+ViT-B/16,523,0,0.002582
+ViT-B/16,524,0,0.000781
+ViT-B/16,525,0,1e-05
+ViT-B/16,526,1,0.970709
+ViT-B/16,527,0,0.000726
+ViT-B/16,528,0,0.042438
+ViT-B/16,529,0,0.048068
+ViT-B/16,530,1,0.912665
+ViT-B/16,531,0,0.034787
+ViT-B/16,532,0,0.009212
+ViT-B/16,533,0,0.31115
+ViT-B/16,534,0,5.7e-05
+ViT-B/16,535,0,0.006942
+ViT-B/16,536,0,0.037118
+ViT-B/16,537,0,0.013224
+ViT-B/16,538,0,0.00057
+ViT-B/16,539,0,0.002884
+ViT-B/16,540,0,0.02266
+ViT-B/16,541,0,0.246669
+ViT-B/16,542,0,0.006142
+ViT-B/16,543,0,0.157211
+ViT-B/16,544,1,0.990145
+ViT-B/16,545,1,0.789644
+ViT-B/16,546,0,0.026619
+ViT-B/16,547,0,0.000835
+ViT-B/16,548,1,0.0139
+ViT-B/16,549,1,0.969989
+ViT-B/16,550,0,0.003211
+ViT-B/16,551,1,0.291083
+ViT-B/16,552,0,0.565888
+ViT-B/16,553,1,0.981965
+ViT-B/16,554,0,0.000478
+ViT-B/16,555,0,0.009275
+ViT-B/16,556,1,0.229966
+ViT-B/16,557,1,0.933202
+ViT-B/16,558,0,0.010087
+ViT-B/16,559,0,0.000391
+ViT-B/16,560,1,0.577699
+ViT-B/16,561,0,0.002328
+ViT-B/16,562,0,0.002697
+ViT-B/16,563,0,0.16347
+ViT-B/16,564,1,0.859654
+ViT-B/16,565,0,0.00075
+ViT-B/16,566,0,0.001169
+ViT-B/16,567,0,0.063678
+ViT-B/16,568,0,0.069453
+ViT-B/16,569,0,9.3e-05
+ViT-B/16,570,0,0.007196
+ViT-B/16,571,1,0.018635
+ViT-B/16,572,0,0.003791
+ViT-B/16,573,0,0.007965
+ViT-B/16,574,0,0.000981
+ViT-B/16,575,0,0.000424
+ViT-B/16,576,0,0.023624
+ViT-B/16,577,0,0.001149
+ViT-B/16,578,0,0.00323
+ViT-B/16,579,1,0.972105
+ViT-B/16,580,0,0.058081
+ViT-B/16,581,0,1.6e-05
+ViT-B/16,582,0,1.1e-05
+ViT-B/16,583,0,0.019422
+ViT-B/16,584,0,0.000158
+ViT-B/16,585,0,0.000199
+ViT-B/16,586,0,0.255305
+ViT-B/16,587,0,0.032886
+ViT-B/16,588,0,0.003447
+ViT-B/16,589,0,0.008765
+ViT-B/16,590,1,0.996566
+ViT-B/16,591,1,0.997316
+ViT-B/16,592,0,0.002358
+ViT-B/16,593,0,0.55862
+ViT-B/16,594,1,0.807969
+ViT-B/16,595,0,0.000571
+ViT-B/16,596,0,0.095992
+ViT-B/16,597,0,0.024527
+ViT-B/16,598,0,0.025025
+ViT-B/16,599,1,0.140507
+ViT-B/16,600,0,0.003336
+ViT-B/16,601,0,1e-05
+ViT-B/16,602,0,0.372407
+ViT-B/16,603,1,0.079542
+ViT-B/16,604,0,1e-05
+ViT-B/16,605,0,0.117896
+ViT-B/16,606,1,0.991586
+ViT-B/16,607,1,0.872956
+ViT-B/16,608,1,0.690229
+ViT-B/16,609,1,0.191664
+ViT-B/16,610,0,0.046831
+ViT-B/16,611,0,0.006312
+ViT-B/16,612,0,1e-05
+ViT-B/16,613,1,0.937718
+ViT-B/16,614,0,0.000167
+ViT-B/16,615,0,0.035924
+ViT-B/16,616,0,0.002884
+ViT-B/16,617,1,0.996831
+ViT-B/16,618,1,0.510009
+ViT-B/16,619,0,0.000361
+ViT-B/16,620,1,0.999844
+ViT-B/16,621,0,0.00091
+ViT-B/16,622,0,0.007205
+ViT-B/16,623,0,0.001548
+ViT-B/16,624,0,0.011939
+ViT-B/16,625,1,0.307018
+ViT-B/16,626,0,0.002618
+ViT-B/16,627,1,0.428552
+ViT-B/16,628,1,0.020719
+ViT-B/16,629,0,0.004581
+ViT-B/16,630,1,0.995461
+ViT-B/16,631,0,0.00427
+ViT-B/16,632,0,0.000172
+ViT-B/16,633,0,0.00823
+ViT-B/16,634,0,0.005787
+ViT-B/16,635,0,0.236258
+ViT-B/16,636,0,0.000271
+ViT-B/16,637,1,0.085178
+ViT-B/16,638,0,4.7e-05
+ViT-B/16,639,0,0.016666
+ViT-B/16,640,1,0.170851
+ViT-B/16,641,0,0.002016
+ViT-B/16,642,1,0.027263
+ViT-B/16,643,0,0.044979
+ViT-B/16,644,0,1e-05
+ViT-B/16,645,0,0.864471
+ViT-B/16,646,0,0.01429
+ViT-B/16,647,0,0.000145
+ViT-B/16,648,0,0.000112
+ViT-B/16,649,0,0.938839
+ViT-B/16,650,0,0.000835
+ViT-B/16,651,1,0.098536
+ViT-B/16,652,1,0.638291
+ViT-B/16,653,1,0.767047
+ViT-B/16,654,0,3.6e-05
+ViT-B/16,655,0,3.7e-05
+ViT-B/16,656,1,0.000835
+ViT-B/16,657,0,0.018904
+ViT-B/16,658,0,0.008709
+ViT-B/16,659,0,0.000377
+ViT-B/16,660,0,0.131283
+ViT-B/16,661,1,0.899684
+ViT-B/16,662,1,0.922162
+ViT-B/16,663,0,0.025492
+ViT-B/16,664,0,0.000109
+ViT-B/16,665,1,0.051931
+ViT-B/16,666,0,0.01353
+ViT-B/16,667,1,0.019622
+ViT-B/16,668,0,0.045748
+ViT-B/16,669,1,0.909241
+ViT-B/16,670,0,0.039342
+ViT-B/16,671,1,0.020551
+ViT-B/16,672,0,1e-05
+ViT-B/16,673,1,0.036983
+ViT-B/16,674,0,0.000234
+ViT-B/16,675,0,0.002219
+ViT-B/16,676,0,0.000455
+ViT-B/16,677,0,0.000131
+ViT-B/16,678,0,0.001661
+ViT-B/16,679,0,0.984707
+ViT-B/16,680,0,0.000886
+ViT-B/16,681,1,0.979
+ViT-B/16,682,1,0.240842
+ViT-B/16,683,0,0.067296
+ViT-B/16,684,0,4.5e-05
+ViT-B/16,685,0,0.002598
+ViT-B/16,686,0,0.00635
+ViT-B/16,687,0,0.007314
+ViT-B/16,688,1,0.038496
+ViT-B/16,689,0,0.00161
+ViT-B/16,690,0,1.3e-05
+ViT-B/16,691,0,1e-05
+ViT-B/16,692,0,0.001322
+ViT-B/16,693,1,0.942012
+ViT-B/16,694,0,0.000929
+ViT-B/16,695,1,0.999978
+ViT-B/16,696,0,0.076274
+ViT-B/16,697,1,0.951998
+ViT-B/16,698,0,0.005066
+ViT-B/16,699,0,0.017412
+ViT-B/16,700,0,0.000561
+ViT-B/16,701,0,0.002393
+ViT-B/16,702,0,0.015539
+ViT-B/16,703,0,0.0004
+ViT-B/16,704,1,0.482661
+ViT-B/16,705,0,0.028282
+ViT-B/16,706,0,0.000827
+ViT-B/16,707,0,0.601512
+ViT-B/16,708,0,4.7e-05
+ViT-B/16,709,0,0.000464
+ViT-B/16,710,0,0.001501
+ViT-B/16,711,1,0.573966
+ViT-B/16,712,0,0.01102
+ViT-B/16,713,0,0.00054
+ViT-B/16,714,0,0.000349
+ViT-B/16,715,0,0.000627
+ViT-B/16,716,0,0.08882
+ViT-B/16,717,0,0.022945
+ViT-B/16,718,0,1.7e-05
+ViT-B/16,719,1,0.354944
+ViT-B/16,720,1,0.98787
+ViT-B/16,721,0,0.005981
+ViT-B/16,722,0,5.3e-05
+ViT-B/16,723,0,0.04638
+ViT-B/16,724,1,0.002285
+ViT-B/16,725,0,0.001383
+ViT-B/16,726,1,0.642393
+ViT-B/16,727,1,0.998408
+ViT-B/16,728,0,0.000249
+ViT-B/16,729,1,0.998553
+ViT-B/16,730,0,0.003633
+ViT-B/16,731,1,0.944997
+ViT-B/16,732,0,0.000406
+ViT-B/16,733,0,0.01349
+ViT-B/16,734,1,0.927061
+ViT-B/16,735,0,4.1e-05
+ViT-B/16,736,0,0.02242
+ViT-B/16,737,0,0.061004
+ViT-B/16,738,0,0.045455
+ViT-B/16,739,0,0.237517
+ViT-B/16,740,0,0.000118
+ViT-B/16,741,1,0.969656
+ViT-B/16,742,0,0.59637
+ViT-B/16,743,0,3.2e-05
+ViT-B/16,744,1,0.254734
+ViT-B/16,745,0,1e-05
+ViT-B/16,746,0,0.029497
+ViT-B/16,747,0,0.000197
+ViT-B/16,748,0,0.001778
+ViT-B/16,749,0,0.001754
+ViT-B/16,750,0,0.282222
+ViT-B/16,751,0,0.003904
+ViT-B/16,752,0,1.5e-05
+ViT-B/16,753,1,0.992152
+ViT-B/16,754,0,0.001962
+ViT-B/16,755,0,6.4e-05
+ViT-B/16,756,0,5.7e-05
+ViT-B/16,757,0,0.007549
+ViT-B/16,758,0,0.005806
+ViT-B/16,759,0,5.8e-05
+ViT-B/16,760,0,0.008624
+ViT-B/16,761,0,0.001941
+ViT-B/16,762,1,0.664927
+ViT-B/16,763,1,0.999274
+ViT-B/16,764,0,0.033104
+ViT-B/16,765,0,2.5e-05
+ViT-B/16,766,0,0.000248
+ViT-B/16,767,0,0.000245
+ViT-B/16,768,0,0.083869
+ViT-B/16,769,0,0.000704
+ViT-B/16,770,1,0.011433
+ViT-B/16,771,0,0.000126
+ViT-B/16,772,1,0.378559
+ViT-B/16,773,0,0.007606
+ViT-B/16,774,0,0.140036
+ViT-B/16,775,0,1e-05
+ViT-B/16,776,0,0.120709
+ViT-B/16,777,0,0.005346
+ViT-B/16,778,0,0.002162
+ViT-B/16,779,0,5.5e-05
+ViT-B/16,780,0,0.001398
+ViT-B/16,781,0,0.041796
+ViT-B/16,782,0,0.521223
+ViT-B/16,783,0,0.000404
+ViT-B/16,784,0,0.000458
+ViT-B/16,785,1,0.9822
+ViT-B/16,786,0,0.557949
+ViT-B/16,787,0,0.00049
+ViT-B/16,788,0,0.000522
+ViT-B/16,789,1,0.009246
+ViT-B/16,790,0,0.000116
+ViT-B/16,791,1,0.553959
+ViT-B/16,792,0,0.00015
+ViT-B/16,793,0,0.776459
+ViT-B/16,794,0,0.000187
+ViT-B/16,795,0,5.2e-05
+ViT-B/16,796,0,0.001158
+ViT-B/16,797,0,0.001571
+ViT-B/16,798,1,0.839022
+ViT-B/16,799,0,0.02005
+ViT-B/16,800,0,0.000985
+ViT-B/16,801,0,0.000668
+ViT-B/16,802,1,0.770043
+ViT-B/16,803,0,0.007018
+ViT-B/16,804,1,0.560531
+ViT-B/16,805,1,0.051048
+ViT-B/16,806,0,0.00838
+ViT-B/16,807,0,0.10972
+ViT-B/16,808,0,0.001898
+ViT-B/16,809,1,0.995651
+ViT-B/16,810,0,0.000469
+ViT-B/16,811,1,0.138445
+ViT-B/16,812,0,0.026789
+ViT-B/16,813,0,0.000384
+ViT-B/16,814,0,0.000843
+ViT-B/16,815,0,0.018796
+ViT-B/16,816,0,0.000155
+ViT-B/16,817,1,0.729721
+ViT-B/16,818,0,0.000157
+ViT-B/16,819,0,0.8229
+ViT-B/16,820,0,1e-05
+ViT-B/16,821,1,0.833179
+ViT-B/16,822,0,0.087849
+ViT-B/16,823,0,1e-05
+ViT-B/16,824,0,0.03047
+ViT-B/16,825,0,0.001877
+ViT-B/16,826,1,0.942667
+ViT-B/16,827,0,0.002799
+ViT-B/16,828,1,0.968726
+ViT-B/16,829,0,9.2e-05
+ViT-B/16,830,0,0.000811
+ViT-B/16,831,0,0.000289
+ViT-B/16,832,0,0.00094
+ViT-B/16,833,1,0.010918
+ViT-B/16,834,0,0.009385
+ViT-B/16,835,0,0.03025
+ViT-B/16,836,0,0.014848
+ViT-B/16,837,0,0.016306
+ViT-B/16,838,0,0.000247
+ViT-B/16,839,0,0.168392
+ViT-B/16,840,0,0.000789
+ViT-B/16,841,0,6.7e-05
+ViT-B/16,842,1,0.000292
+ViT-B/16,843,0,0.000226
+ViT-B/16,844,0,0.021887
+ViT-B/16,845,1,0.947556
+ViT-B/16,846,0,0.008279
+ViT-B/16,847,0,0.000431
+ViT-B/16,848,0,9.2e-05
+ViT-B/16,849,0,0.517109
+ViT-B/16,850,0,0.000108
+ViT-B/16,851,0,0.000259
+ViT-B/16,852,1,0.906925
+ViT-B/16,853,1,0.672604
+ViT-B/16,854,0,0.012222
+ViT-B/16,855,0,0.000742
+ViT-B/16,856,1,0.914709
+ViT-B/16,857,0,0.005789
+ViT-B/16,858,0,0.095993
+ViT-B/16,859,0,0.665111
+ViT-B/16,860,0,0.000589
+ViT-B/16,861,0,0.02169
+ViT-B/16,862,0,0.312965
+ViT-B/16,863,0,0.001756
+ViT-B/16,864,0,0.00735
+ViT-B/16,865,0,0.000255
+ViT-B/16,866,0,0.021959
+ViT-B/16,867,1,0.998665
+ViT-B/16,868,0,0.002347
+ViT-B/16,869,0,0.000628
+ViT-B/16,870,0,0.01091
+ViT-B/16,871,1,0.909291
+ViT-B/16,872,1,0.721224
+ViT-B/16,873,0,0.001661
+ViT-B/16,874,0,1.4e-05
+ViT-B/16,875,1,0.947866
+ViT-B/16,876,1,0.096072
+ViT-B/16,877,0,0.00032
+ViT-B/16,878,1,0.192757
+ViT-B/16,879,0,6e-05
+ViT-B/16,880,0,0.025513
+ViT-B/16,881,0,0.000671
+ViT-B/16,882,0,0.002686
+ViT-B/16,883,0,0.002061
+ViT-B/16,884,0,0.014025
+ViT-B/16,885,0,0.743588
+ViT-B/16,886,0,0.001245
+ViT-B/16,887,1,0.999557
+ViT-B/16,888,0,0.015427
+ViT-B/16,889,0,0.050116
+ViT-B/16,890,1,0.929169
+ViT-B/16,891,0,2.5e-05
+ViT-B/16,892,0,0.007229
+ViT-B/16,893,0,0.000413
+ViT-B/16,894,0,0.000502
+ViT-B/16,895,0,0.117189
+ViT-B/16,896,0,0.460077
+ViT-B/16,897,1,0.984557
+ViT-B/16,898,0,0.002687
+ViT-B/16,899,0,5e-05

@@ -1,0 +1,128 @@
+group,subject,value,sex
+Vehicle,V00,53.113,M
+Vehicle,V01,28.735,F
+Vehicle,V02,42.289,F
+Vehicle,V03,43.018,M
+Vehicle,V04,41.948,M
+Vehicle,V05,35.485,F
+Vehicle,V06,30.424,M
+Vehicle,V07,47.56,F
+Vehicle,V08,46.787,F
+Vehicle,V09,37.015,M
+Vehicle,V10,39.745,F
+Vehicle,V11,31.152,F
+Vehicle,V12,53.247,F
+Vehicle,V13,42.918,M
+Vehicle,V14,49.859,M
+Vehicle,V15,37.031,F
+Vehicle,V16,31.763,F
+Vehicle,V17,54.454,M
+Vehicle,V18,35.246,F
+Vehicle,V19,38.371,F
+Vehicle,V20,37.823,F
+Vehicle,V21,32.32,F
+Vehicle,V22,49.47,M
+Vehicle,V23,34.124,F
+Vehicle,V24,42.21,F
+Vehicle,V25,38.45,F
+Vehicle,V26,43.236,M
+Vehicle,V27,50.299,F
+Vehicle,V28,41.379,F
+Vehicle,V29,40.13,M
+Vehicle,V30,46.275,F
+Vehicle,V31,40.343,M
+Vehicle,V32,41.601,M
+Vehicle,V33,36.157,F
+Low dose,L00,43.629,F
+Low dose,L01,42.199,F
+Low dose,L02,50.506,F
+Low dose,L03,45.81,M
+Low dose,L04,48.742,M
+Low dose,L05,55.504,M
+Low dose,L06,49.338,M
+Low dose,L07,46.863,M
+Low dose,L08,49.288,M
+Low dose,L09,54.688,M
+Low dose,L10,36.262,F
+Low dose,L11,39.419,F
+Low dose,L12,49.047,M
+Low dose,L13,39.634,F
+Low dose,L14,52.345,M
+Low dose,L15,37.174,F
+Low dose,L16,42.672,F
+Low dose,L17,49.685,M
+Low dose,L18,37.143,M
+Low dose,L19,47.486,M
+Low dose,L20,39.847,M
+Low dose,L21,55.226,M
+Low dose,L22,37.379,M
+Low dose,L23,35.942,F
+Low dose,L24,54.121,M
+Low dose,L25,49.279,F
+Low dose,L26,41.414,F
+Low dose,L27,52.414,F
+Low dose,L28,38.025,F
+Low dose,L29,34.254,F
+Low dose,L30,44.63,M
+Mid dose,M00,53.463,M
+Mid dose,M01,41.958,F
+Mid dose,M02,53.328,M
+Mid dose,M03,64.658,M
+Mid dose,M04,47.386,F
+Mid dose,M05,64.704,F
+Mid dose,M06,68.774,F
+Mid dose,M07,58.875,M
+Mid dose,M08,43.405,F
+Mid dose,M09,49.036,M
+Mid dose,M10,56.344,F
+Mid dose,M11,41.886,F
+Mid dose,M12,57.248,F
+Mid dose,M13,59.791,F
+Mid dose,M14,43.784,M
+Mid dose,M15,56.131,M
+Mid dose,M16,49.268,F
+Mid dose,M17,54.468,F
+Mid dose,M18,59.478,M
+Mid dose,M19,47.963,M
+Mid dose,M20,56.497,F
+Mid dose,M21,58.434,F
+Mid dose,M22,60.643,F
+Mid dose,M23,42.619,M
+Mid dose,M24,47.829,M
+Mid dose,M25,47.311,M
+Mid dose,M26,51.515,F
+Mid dose,M27,57.933,M
+Mid dose,M28,50.527,M
+Mid dose,M29,42.084,M
+Mid dose,M30,31.415,M
+Mid dose,M31,49.431,M
+Mid dose,M32,47.067,M
+High dose,H00,65.064,M
+High dose,H01,80.884,F
+High dose,H02,57.219,M
+High dose,H03,66.416,M
+High dose,H04,62.468,F
+High dose,H05,48.839,F
+High dose,H06,69.649,M
+High dose,H07,45.533,F
+High dose,H08,44.878,F
+High dose,H09,50.191,M
+High dose,H10,65.154,F
+High dose,H11,69.696,M
+High dose,H12,53.758,F
+High dose,H13,49.549,M
+High dose,H14,79.203,M
+High dose,H15,59.731,M
+High dose,H16,76.797,M
+High dose,H17,50.319,M
+High dose,H18,81.536,F
+High dose,H19,55.639,M
+High dose,H20,73.733,M
+High dose,H21,57.083,F
+High dose,H22,44.947,M
+High dose,H23,50.396,F
+High dose,H24,34.863,F
+High dose,H25,41.883,M
+High dose,H26,57.488,F
+High dose,H27,41.335,F
+High dose,H28,75.846,F

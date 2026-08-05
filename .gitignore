@@ -24,6 +24,13 @@ Thumbs.db
 *.eps
 *.tmp
 
+# ...but the bundled example images ARE part of the extension: the imaging
+# templates fall back to them when no file is selected.
+!sample_data/images/*.png
+
+# Local render output from tools/render_bank.py
+tools/_render/
+
 # IDE
 .vscode/
 .idea/

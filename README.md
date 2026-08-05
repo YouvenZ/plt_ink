@@ -113,14 +113,14 @@ C:\Users\[YourUsername]\AppData\Roaming\inkscape\extensions\
    plt_ink/
    ├── plt_ink.py
    ├── plt_ink.inx
+   ├── sample_data/          # example CSVs + imaging assets
    └── plt_ink_scripts/
-       ├── line_plots/
-       ├── scatter_plots/
-       ├── bar_charts/
-       ├── statistical/
-       ├── scientific/
-       ├── time_series/
-       └── publication/
+       ├── evaluation/
+       ├── analysis/
+       ├── clinical/
+       ├── stats/
+       ├── imaging/
+       └── basics/
    ```
 
 4. **Restart Inkscape**
@@ -233,19 +233,22 @@ Use pre-built templates from the script bank:
 **Available Categories:**
 | Category | Description |
 |----------|-------------|
-| `line_plots` | Basic line and curve plots |
-| `scatter_plots` | Scatter and bubble charts |
-| `bar_charts` | Bar and histogram plots |
-| `statistical` | Box plots, violin plots, etc. |
-| `scientific` | Contour, vector fields, etc. |
-| `time_series` | Time-based data visualization |
-| `publication` | Publication-ready templates |
+| `evaluation` | Training curves, ROC/PR, confusion matrix, calibration, model comparison |
+| `analysis` | Hyperparameter sweeps, Pareto fronts, learning curves, SHAP, embeddings |
+| `clinical` | Kaplan-Meier, forest plots, Bland-Altman, volcano, dose-response |
+| `stats` | Rainclouds, paired slopes, joint scatter, parity/residuals, clustermaps |
+| `imaging` | Segmentation panels and metrics, Grad-CAM, spectra, composite figures |
+| `basics` | 3D surfaces, contours, vector fields, dual-axis series, a demo figure |
 
 **How to use:**
-1. Select **Script Bank** as source
-2. Choose category
-3. Choose script
-4. Click Apply
+1. Click **Templates…** on the Script tab
+2. Search or filter by category; the description shows the columns the
+   template expects and the example data it falls back to
+3. Click Apply
+
+Every template in the first five categories is data-driven: it reads the file
+selected on the Data tab when the columns match, and otherwise falls back to a
+bundled example in `sample_data/`, so it always renders.
 
 </details>
 
@@ -572,70 +575,155 @@ plt.title('Test Plot')
 
 ## 📚 Script Bank
 
-### Available Scripts
+Thirty templates: twenty-five data-driven research figures plus five basics.
+Each research template declares the columns it needs and ships with an example
+CSV, so it renders before you have configured anything. None of them require
+scipy, seaborn or sklearn — numpy, pandas and matplotlib only.
 
-#### Line Plots (`line_plots/`)
-- `basic_line.py` - Simple line plot
-- `multi_line.py` - Multiple lines with legend
-- `styled_line.py` - Custom line styles
+#### Model Evaluation (`evaluation/`)
+| Script | Figure | Needs |
+|---|---|---|
+| `training_curves.py` | Train/val curves, mean ± s.d. over seeds, LR schedule | `model, seed, epoch, split, loss, accuracy, lr` |
+| `roc_pr_curves.py` | ROC + PR with bootstrap bands, AUC/AP, Youden point | `model, y_true, y_score` |
+| `confusion_matrix.py` | Counts + row-normalised, per-class P/R/F1, κ | `y_true, y_pred` |
+| `calibration_reliability.py` | Reliability diagram, ECE/MCE/Brier, score histogram | `model, y_true, y_score` |
+| `model_comparison_stats.py` | Bars with per-seed dots and permutation-test brackets | `dataset, model, seed, score` |
 
-#### Scatter Plots (`scatter_plots/`)
-- `basic_scatter.py` - Simple scatter plot
-- `bubble_chart.py` - Size-coded scatter
-- `colored_scatter.py` - Color-mapped scatter
+#### Model Analysis (`analysis/`)
+| Script | Figure | Needs |
+|---|---|---|
+| `hparam_sweep_heatmap.py` | 2-factor grid, best cell ringed, marginal best-of curves | `lr, batch_size, val_score` |
+| `pareto_tradeoff.py` | Accuracy vs cost, Pareto front traced, size-coded markers | `model, accuracy, latency_ms, params_m` |
+| `learning_curve_size.py` | Score vs training-set size with a fitted power law | `model, train_size, seed, score` |
+| `feature_importance_shap.py` | SHAP beeswarm + ranked mean\|SHAP\| with bootstrap CI | `feature, sample_id, shap_value, feature_value` |
+| `embedding_scatter.py` | t-SNE/UMAP with density contours and error rings | `x, y, label` |
 
-#### Bar Charts (`bar_charts/`)
-- `basic_bar.py` - Vertical bar chart
-- `horizontal_bar.py` - Horizontal bars
-- `grouped_bar.py` - Grouped comparison
-- `stacked_bar.py` - Stacked bars
+#### Clinical & Biostatistics (`clinical/`)
+| Script | Figure | Needs |
+|---|---|---|
+| `kaplan_meier.py` | Survival curves, censor ticks, at-risk table, log-rank, HR | `time, event, group` |
+| `forest_plot.py` | Subgroup/meta estimates, weights, random-effects diamonds, I² | `study, subgroup, estimate, ci_low, ci_high, weight` |
+| `bland_altman.py` | Bias, 95% LoA with CIs, proportional-bias test, Lin's CCC | `method_a, method_b` |
+| `volcano_plot.py` | FDR + fold-change thresholds, labelled top hits | `gene, log2fc, pvalue, padj` |
+| `dose_response.py` | 4PL fits, EC50 markers, bootstrap bands | `compound, dose, replicate, response` |
 
-#### Statistical (`statistical/`)
-- `histogram.py` - Histogram with density
-- `box_plot.py` - Box and whisker
-- `violin_plot.py` - Violin plot
+#### Distributions & Statistics (`stats/`)
+| Script | Figure | Needs |
+|---|---|---|
+| `raincloud_groups.py` | Half-violin + box + points, permutation tests, Hedges' g | `group, value` |
+| `paired_slope.py` | Per-subject before/after lines, sign-flip test, Cohen's dz | `subject, group, timepoint, value` |
+| `joint_scatter_marginals.py` | Regression + CI band with marginal KDEs, r/R²/slope/p | `x, y, group` |
+| `parity_residuals.py` | Predicted vs measured, residuals-vs-fitted, normal Q-Q | `y_true, y_pred, split` |
+| `correlation_clustermap.py` | Hierarchically ordered correlations with dendrograms | any wide numeric table |
 
-#### Scientific (`scientific/`)
-- `contour.py` - Contour plot
-- `heatmap.py` - 2D heatmap
-- `vector_field.py` - Quiver plot
+#### Imaging & Signals (`imaging/`)
+| Script | Figure | Needs |
+|---|---|---|
+| `segmentation_panel.py` | Image / GT / prediction / FP-FN error map per case, with Dice | images + masks |
+| `segmentation_metrics.py` | Per-structure Dice and HD95 boxplots, paired tests | `case_id, model, structure, dice, hd95` |
+| `gradcam_grid.py` | Input / saliency / overlay grid, lesion enrichment and IoU | images + saliency maps |
+| `signal_spectrum.py` | Time trace, Welch PSD with peak callouts, spectrogram | `channel, t, amplitude` |
+| `composite_figure.py` | Four mixed panels, a/b/c/d labels, shared legend, caption | a CSV + an image |
 
-#### Time Series (`time_series/`)
-- `time_plot.py` - Time-indexed data
-- `financial.py` - OHLC/candlestick
+#### Basics & Extras (`basics/`)
+- `3d_surface.py`, `contour_plot.py`, `vector_field.py` — field and surface plots
+- `time_series_dual_axis.py` — two series on twin y-axes
+- `training_dynamics.py` — heavily annotated demo figure (needs scipy)
 
-#### Publication (`publication/`)
-- `paper_figure.py` - Journal-ready styling
-- `subplot_grid.py` - Multi-panel figures
+### Regenerating the example data
+
+`sample_data/` is produced by a seeded generator, so it can be rebuilt or
+resized at will:
+
+```bash
+python tools/make_sample_data.py
+```
+
+To check every template still renders after an edit:
+
+```bash
+python tools/render_bank.py            # with each template's example data injected
+python tools/render_bank.py --no-data  # exercising the bundled-sample fallback
+```
 
 ### Creating Custom Scripts
 
-Add scripts to `plt_ink_scripts/[category]/`:
+Add scripts to `plt_ink_scripts/[category]/`. The docstring is the metadata:
+the first line is the title, the rest is the description, and any recognised
+`key: value` line is parsed by `plt_ink_bank.py` and shown in the template
+browser.
 
 ```python
 """
 My Custom Plot Template
-Description of what this plot does
+What this figure shows and when to use it.
+requires_data: true                      # shows the "needs data" badge
+data_columns: group, value               # validated against the chosen file
+sample_data: group_measurements.csv      # fallback, relative to sample_data/
+requires_image: true                     # optional
+sample_image: images/case01_image.png    # optional
+sample_mask: images/case01_mask_gt.png   # optional
+tags: distribution, comparison           # searchable in the browser
+note: requires scipy                     # caveat shown under the description
 """
 
+import os
+
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
-# Use pre-defined variables
-fig, ax = plt.subplots(figsize=(_fig_width, _fig_height))
+# Rename these to match your own file — nothing below uses raw column names.
+COLS = dict(group='group', value='value')
+SAMPLE = 'group_measurements.csv'
 
-# Your plotting code here
-x = np.linspace(0, 10, 100)
-y = np.sin(x)
 
-ax.plot(x, y)
-ax.set_title('My Custom Plot')
+def _opt(name, default):
+    """Read an extension setting, with a fallback when run standalone."""
+    value = globals().get(name)
+    return default if value is None else value
 
-if _show_grid:
-    ax.grid(True, alpha=0.3)
-if _show_legend:
-    ax.legend(loc=_legend_position)
+
+def _sample_dir():
+    """Where the bundled example data lives. Looked up lazily: `__file__` is
+    undefined when the code is exec'd inline."""
+    root = globals().get('_sample_data_dir')
+    if root:
+        return root
+    here = globals().get('__file__')
+    if here:
+        return os.path.join(os.path.dirname(os.path.abspath(here)),
+                            '..', '..', 'sample_data')
+    return 'sample_data'
+
+
+def _load(sample, needed):
+    """Use the extension's `data` when it carries the needed columns, else the
+    bundled example — so the template always renders."""
+    frame = globals().get('data')
+    if frame is not None and not set(needed) - set(map(str, frame.columns)):
+        return frame.copy()
+    return pd.read_csv(os.path.join(_sample_dir(), sample))
+
+
+df = _load(SAMPLE, COLS.values())
+
+fig, ax = plt.subplots(figsize=(_opt('_fig_width', 8.0),
+                                _opt('_fig_height', 5.0)),
+                       layout='constrained')
+ax.plot(df[COLS['value']].to_numpy())
+ax.set_ylabel('Value')
 ```
+
+**Variables the extension injects:** `_fig_width`, `_fig_height`, `_dpi`,
+`_show_grid`, `_show_legend`, `_legend_position`, `_colormap`, `_transparent`,
+`_subplot_rows`, `_subplot_cols`, `_sample_data_dir`, plus the helpers
+`apply_style(ax)` and `get_cmap(name)`. Reading them through `_opt()` keeps the
+template runnable outside the dialog.
+
+**Layout note:** if you pass `layout='constrained'`, the extension skips its
+own `tight_layout()` call, so your layout survives. Templates with
+equal-aspect panels, colorbars or nested grids should use it.
 
 ---
 
@@ -647,16 +735,19 @@ plt_ink/
 ├── plt_ink.inx             # Inkscape extension definition
 ├── README.md               # This file
 ├── LICENSE                 # MIT License
-└── plt_ink_scripts/        # Script bank directory
-    ├── line_plots/
-    │   ├── basic_line.py
-    │   └── ...
-    ├── scatter_plots/
-    ├── bar_charts/
-    ├── statistical/
-    ├── scientific/
-    ├── time_series/
-    └── publication/
+├── plt_ink_bank.py         # Category + template metadata (single source of truth)
+├── tools/
+│   ├── make_sample_data.py # Seeded generator for sample_data/
+│   └── render_bank.py      # Headless render test for every template
+├── sample_data/            # Example CSVs the templates fall back to
+│   └── images/             # Example slices, masks and saliency maps
+└── plt_ink_scripts/        # Template bank
+    ├── evaluation/
+    ├── analysis/
+    ├── clinical/
+    ├── stats/
+    ├── imaging/
+    └── basics/
 ```
 
 ---

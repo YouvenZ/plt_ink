@@ -1,0 +1,5 @@
+case_id,dice,lesion_px,label_1,label_2
+case01,0.9679,272,Liver,Tumour
+case02,0.9654,326,Liver,Tumour
+case03,0.9669,126,Liver,Tumour
+case04,0.965,145,Liver,Tumour

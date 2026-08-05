@@ -1426,8 +1426,19 @@ QUICK EXAMPLES
             if not it:
                 return
             m = metas[model[it][3]]
-            desc_lbl.set_markup(
-                f"<i>{GLib.markup_escape_text(m['description'])}</i>")
+            esc = GLib.markup_escape_text
+            lines = [f"<i>{esc(m['description'])}</i>"]
+            if m['data_columns']:
+                lines.append("<b>Columns:</b> <tt>%s</tt>"
+                             % esc(', '.join(m['data_columns'])))
+            assets = [a for a in (m['sample_data'], m['sample_image'],
+                                  m['sample_mask']) if a]
+            if assets:
+                lines.append("<b>Example data:</b> <tt>%s</tt>"
+                             % esc(', '.join(assets)))
+            if m['note']:
+                lines.append(f"<b>Note:</b> {esc(m['note'])}")
+            desc_lbl.set_markup('\n'.join(lines))
             try:
                 with open(m['path'], encoding='utf-8', errors='replace') as fh:
                     preview_buf.set_text(fh.read())
@@ -1617,6 +1628,11 @@ QUICK EXAMPLES
             "import matplotlib\nmatplotlib.use('Agg')\n"
             "import matplotlib.pyplot as plt\n"
             "import numpy as np\n"
+            "try:\n"
+            "    import pandas as pd\n"
+            "except Exception:\n"
+            "    pd = None\n"
+            f"_sample_data_dir = {plt_ink_bank.SAMPLE_DATA_DIR!r}\n"
             f"_fig_width = {self.fig_width_spin.get_value()!r}\n"
             f"_fig_height = {self.fig_height_spin.get_value()!r}\n"
             "_dpi = 96\n"
