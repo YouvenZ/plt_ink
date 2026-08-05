@@ -1,166 +1,191 @@
-
 <div align="center">
 
-# Matplotlib Figure Generator for Inkscape
+# 📊 plt_ink — Matplotlib Figure Generator for Inkscape
 
 [![Inkscape](https://img.shields.io/badge/Inkscape-1.0+-blue.svg)](https://inkscape.org/)
 [![Python](https://img.shields.io/badge/Python-3.6+-green.svg)](https://www.python.org/)
 [![Matplotlib](https://img.shields.io/badge/Matplotlib-3.0+-orange.svg)](https://matplotlib.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-2.0-success.svg)](#changelog)
 
-> **Generate and embed matplotlib figures directly in Inkscape**
+**Generate publication-ready scientific figures directly inside Inkscape**
 
-A powerful Inkscape extension that allows you to create matplotlib visualizations and insert them seamlessly into your SVG documents. Perfect for scientific illustrations, data visualization in design projects, and publication-ready graphics.
+Create matplotlib visualizations, load from your scripts, or use 30+ pre-built templates. Export as SVG (editable), PNG (raster), or PDF (print-ready). Perfect for academic papers, research posters, technical reports, and design projects.
+
+> **Your figures. Your data. Your design. All in one place.**
 
 </div>
 
-## 📺 Demo
+---
+
+## 🎯 What You Can Do
+
+<table align="center">
+  <tr>
+    <td align="center"><strong>📈 Plot in Code</strong><br/>Write matplotlib in the dialog or load from files</td>
+    <td align="center"><strong>🎨 Use Templates</strong><br/>30+ ready-to-use templates for common figures</td>
+    <td align="center"><strong>📊 Import Data</strong><br/>CSV, Excel, JSON — auto-load and visualize</td>
+  </tr>
+  <tr>
+    <td align="center"><strong>🖼️ Multiple Formats</strong><br/>SVG (editable), PNG (raster), PDF (print)</td>
+    <td align="center"><strong>🎯 Smart Placement</strong><br/>Center, corners, cursor — you choose</td>
+    <td align="center"><strong>✨ Live Preview</strong><br/>See changes instantly in your document</td>
+  </tr>
+</table>
+
+---
+
+## 📺 Demo & Quick Links
 
 <div align="center">
 
-<!-- Replace VIDEO_ID with your actual YouTube video ID -->
 [![Watch the Demo](https://img.youtube.com/vi/lmj0Jzv106A/maxresdefault.jpg)](https://www.youtube.com/watch?v=lmj0Jzv106A)
 
-*Click to watch the full tutorial on YouTube*
+[🎬 Full Tutorial](https://www.youtube.com/watch?v=lmj0Jzv106A) • [📖 Script Bank](https://github.com/YouvenZ/plt_ink#-script-bank) • [🐛 Troubleshooting](#-troubleshooting) • [💬 Discussions](https://github.com/YouvenZ/plt_ink/discussions)
 
 </div>
 
+---
 
+## 📋 Quick Links
+
+- [⚡ Installation](#-installation)
+- [🚀 Quick Start (2 min)](#-quick-start)
+- [📖 Usage Guide](#-usage-guide)
+- [📚 Script Bank Templates](#-script-bank) (30+ templates)
+- [💡 Examples](#-examples)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [🤝 Contributing](#-contributing)
 
 ---
 
-## 📋 Table of Contents
+## ✨ Key Features
 
-- Features
-- Installation
-- Quick Start
-- Usage Guide
-- Dependencies
-- Examples
-- Troubleshooting
-- Script Bank
-- Contributing
-
----
-
-## ✨ Features
-
-- **📊 Multiple Script Sources**
-  - **Inline Code**: Write matplotlib code directly in the extension dialog
-  - **External File**: Load scripts from `.py` files
-  - **Script Bank**: Pre-built templates for common plot types
-
-- **🎨 Flexible Output Formats**
-  - **SVG**: Native vector graphics, fully editable in Inkscape
-  - **PNG**: High-resolution raster images
-  - **PDF**: Publication-quality vector output
-
-- **📁 Data Import Support**
-  - CSV, Excel, JSON, and text file formats
-  - Automatic column extraction
-  - Pandas DataFrame integration
-
-- **🎯 Customizable Styling**
-  - Built-in matplotlib styles (seaborn, ggplot, etc.)
-  - Font family and size controls
-  - Color map selection
-  - Grid and legend customization
-
-- **📐 Smart Positioning**
-  - Center, corners, or cursor-based placement
-  - Automatic size calculation based on DPI
-  - Preserve aspect ratio
+| Feature | What It Does | Benefit |
+|---------|-------------|---------|
+| **3 Script Modes** | Inline code • External files • Pre-built templates | Work your way—code, files, or templates |
+| **30+ Templates** | Research-ready figures for analysis, clinical, evaluation, imaging, stats | No setup needed; renders with example data immediately |
+| **3 Export Formats** | SVG (editable) • PNG (raster) • PDF (print-ready) | Seamless publishing pipeline |
+| **Data Import** | CSV, Excel, JSON, Text • Auto-column detection | Your data, your figures, instantly |
+| **Smart Placement** | Center • corners • cursor tracking • size preview | Precise positioning every time |
+| **Style Control** | 10+ matplotlib styles • custom fonts • colormaps • grid/legend toggles | Publication-ready styling in seconds |
 
 ---
 
-## 📦 Installation
+## 📦 Full Installation
 
-### Step 1: Locate Your Inkscape Extensions Directory
+### Prerequisites
 
-**Windows:**
-```
-C:\Users\[YourUsername]\AppData\Roaming\inkscape\extensions\
-```
+- **Inkscape** 1.0 or higher
+- **Python** 3.6+ (with `matplotlib` and `numpy`)
+- **pip** (to install Python packages)
 
-**macOS:**
-```
-~/Library/Application Support/org.inkscape.Inkscape/config/inkscape/extensions/
-```
-
-**Linux:**
-```
-~/.config/inkscape/extensions/
+**Install Python dependencies:**
+```bash
+pip install matplotlib numpy
+# Optional: for data import features
+pip install pandas openpyxl
 ```
 
-### Step 2: Install the Extension
+### Installation Steps
 
-1. **Download/Clone the extension:**
-   ```bash
-   git clone https://github.com/YouvenZ/plt_ink.git
-   ```
+<details>
+<summary><b>📍 Step 1: Find Your Extensions Folder</b></summary>
 
-2. **Copy to extensions directory:**
-   ```bash
-   # Windows (PowerShell)
-   Copy-Item -Recurse plt_ink [extensions-directory]\plt_ink
-   
-   # macOS/Linux
-   cp -r plt_ink [extensions-directory]/plt_ink
-   ```
+| OS | Path |
+|----|------|
+| **Windows** | `C:\Users\[YourName]\AppData\Roaming\inkscape\extensions\` |
+| **macOS** | `~/Library/Application Support/org.inkscape.Inkscape/config/inkscape/extensions/` |
+| **Linux** | `~/.config/inkscape/extensions/` |
 
-3. **Verify file structure:**
-   ```
-   plt_ink/
-   ├── plt_ink.py
-   ├── plt_ink.inx
-   ├── sample_data/          # example CSVs + imaging assets
-   └── plt_ink_scripts/
-       ├── evaluation/
-       ├── analysis/
-       ├── clinical/
-       ├── stats/
-       ├── imaging/
-       └── basics/
-   ```
+</details>
 
-4. **Restart Inkscape**
+<details>
+<summary><b>📥 Step 2: Clone & Copy</b></summary>
 
-### Step 3: Verify Installation
+```bash
+# Clone the repository
+git clone https://github.com/YouvenZ/plt_ink.git
 
-Open Inkscape and check: **Extensions → Render → Matplotlib Figure Generator**
+# Copy to extensions folder
+# Windows (PowerShell):
+Copy-Item -Recurse plt_ink $env:APPDATA\inkscape\extensions\
 
----
+# macOS/Linux:
+cp -r plt_ink ~/.config/inkscape/extensions/
+```
 
-## 🚀 Quick Start
+</details>
 
-### Basic Example (Inline Code)
+<details>
+<summary><b>✅ Step 3: Verify & Restart</b></summary>
 
-1. Open your document in Inkscape
+1. Restart Inkscape
 2. Go to **Extensions → Render → Matplotlib Figure Generator**
-3. In the Script tab, select **Inline Code** as source
-4. Enter your matplotlib code:
-   ```python
-   import numpy as np
-   x = np.linspace(0, 10, 100)
-   y = np.sin(x)
-   plt.plot(x, y, label='sin(x)')
-   plt.xlabel('X axis')
-   plt.ylabel('Y axis')
-   plt.title('Simple Sine Wave')
-   if _show_legend:
-       plt.legend(loc=_legend_position)
-   if _show_grid:
-       plt.grid(True)
-   ```
-5. Click **Apply**
+3. You should see the dialog! 🎉
 
-**Result:** A matplotlib figure appears in your Inkscape document!
+If it doesn't appear, see [Troubleshooting](#-troubleshooting).
+
+</details>
 
 ---
 
-## 📖 Usage Guide
+## 🚀 Quick Start (2 minutes)
 
-### Script Tab
+### Step 1️⃣ Install (One-time)
+
+```bash
+# Clone the repository
+git clone https://github.com/YouvenZ/plt_ink.git
+
+# Copy to your Inkscape extensions folder
+# Windows:
+Copy-Item -Recurse plt_ink $env:APPDATA\inkscape\extensions\
+
+# macOS/Linux:
+cp -r plt_ink ~/.config/inkscape/extensions/
+```
+
+**Then restart Inkscape.** ✅
+
+### Step 2️⃣ Create Your First Plot
+
+1. Open Inkscape → **Extensions → Render → Matplotlib Figure Generator**
+2. Paste this code in the **Script** tab:
+
+```python
+import numpy as np
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+plt.plot(x, y, linewidth=2, label='sin(x)')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('My First Figure')
+if _show_legend:
+    plt.legend()
+```
+
+3. Click **Apply** ✨
+
+**Boom!** Your figure appears in the document.
+
+### 💡 Next: Try Templates
+
+Want a pre-built figure? 
+
+1. Click **Templates…** on the Script tab
+2. Pick any template (they work instantly with example data)
+3. Click **Apply**
+
+Each template shows what columns it needs. Once you have data, it'll use yours instead. No setup required.
+
+---
+
+## 📖 Complete Usage Guide
+
+The extension dialog has 7 tabs. Here's what each does:
+
+### 🔤 Script Tab — Write or Load Your Code
 
 #### Inline Code Mode
 
@@ -337,41 +362,44 @@ plt.ylabel('Y Values')
 
 ---
 
-## 🔧 Dependencies
+## 🔧 Requirements
 
-### Core Requirements (Required)
+### Must Have
 
-| Component | Version | Purpose |
-|-----------|---------|---------|
-| **Inkscape** | 1.0+ | Vector graphics editor |
-| **Python** | 3.6+ | Extension runtime |
-| **matplotlib** | 3.0+ | Plotting library |
-| **numpy** | 1.15+ | Numerical computing |
+| Package | Version | Why |
+|---------|---------|-----|
+| Inkscape | 1.0+ | The host application |
+| Python | 3.6+ | Runs the extension |
+| matplotlib | 3.0+ | Creates plots |
+| numpy | 1.15+ | Numerical math |
 
-**Installation:**
+**Install Python packages:**
 ```bash
 pip install matplotlib numpy
 ```
 
-### Optional Dependencies
+### Optional (For More Features)
 
-| Component | Purpose | Installation |
-|-----------|---------|--------------|
-| **pandas** | Data file import | `pip install pandas` |
-| **openpyxl** | Excel file support | `pip install openpyxl` |
-| **LaTeX** | LaTeX text rendering | Install TeX distribution |
+| Package | What It Enables |
+|---------|-----------------|
+| `pandas` | CSV/Excel import |
+| `openpyxl` | `.xlsx` file support |
+| `LaTeX` | Fancy math text (install TeX separately) |
 
-**Check Installation:**
+**Verify your setup:**
 ```bash
-python -c "import matplotlib; print(matplotlib.__version__)"
-python -c "import numpy; print(numpy.__version__)"
+python --version                              # Should be 3.6+
+python -c "import matplotlib; print(matplotlib.__version__)"  # Should be 3.0+
+python -c "import numpy; print(numpy.__version__)"            # Should be 1.15+
 ```
 
 ---
 
-## 💡 Examples
+## 💡 Code Examples
 
-### Example 1: Simple Line Plot
+Start with these. Copy → paste → click Apply.
+
+### 📈 Example 1: Simple Line Plot
 
 **Inline Code:**
 ```python
@@ -387,7 +415,7 @@ plt.legend()
 plt.grid(True, alpha=0.3)
 ```
 
-### Example 2: Multi-Panel Figure
+### 🎯 Example 2: Multi-Panel Figure (2×2 Grid)
 
 ```python
 fig, axes = plt.subplots(2, 2, figsize=(_fig_width, _fig_height))
@@ -411,7 +439,7 @@ for ax in axes.flat:
     ax.grid(True, alpha=0.3)
 ```
 
-### Example 3: Scientific Visualization
+### 🔬 Example 3: Scientific Visualization (Contour Plot)
 
 ```python
 # Create meshgrid
@@ -429,7 +457,7 @@ ax.set_ylabel('Y')
 ax.set_title('Contour Plot')
 ```
 
-### Example 4: Using External Data
+### 📊 Example 4: Using External Data (Twin Y-Axes)
 
 **CSV file (data.csv):**
 ```csv
@@ -463,122 +491,99 @@ plt.title('Temperature and Humidity Over Time')
 
 ## 🐛 Troubleshooting
 
-### Common Issues
+### Problem Solver
+
+| Problem | Solution |
+|---------|----------|
+| **Extension doesn't appear in menu** | Restart Inkscape; check file locations match structure above |
+| **"Python not found"** | Set Python Path in dialog (e.g., `C:\Python39\python.exe`) |
+| **"Matplotlib not installed"** | Run `pip install matplotlib` then restart Inkscape |
+| **Script execution fails** | Enable **Keep Temp Files** (Advanced tab); check log file |
+| **Figure won't show** | Try SVG format; check figure size isn't huge; enable **Embed Image** |
+
+### Debugging Checklist
 
 <details>
-<summary><b>Extension not appearing in menu</b></summary>
+<summary><b>🔍 How to Debug Issues</b></summary>
 
-**Solutions:**
-1. Check file locations match the expected structure
-2. Verify file permissions:
-   ```bash
-   # Linux/macOS
-   chmod +x plt_ink.py
-   ```
-3. Check Inkscape error console: **View → Messages**
-4. Restart Inkscape completely
-5. Verify Python path in extension settings
+**Step 1: Enable logging**
+- Go to **Advanced** tab → enable **Keep Temp Files**
+- Go to **Advanced** tab → enable **Save Script**
 
-</details>
-
-<details>
-<summary><b>"Python not found" error</b></summary>
-
-**Solutions:**
-1. In the extension dialog, set **Python Path** to your Python executable:
-   ```
-   # Windows
-   C:\Python39\python.exe
-   
-   # macOS/Linux
-   /usr/bin/python3
-   ```
-2. Check Python installation:
-   ```bash
-   python --version
-   python3 --version
-   ```
-
-</details>
-
-<details>
-<summary><b>"Matplotlib not installed" error</b></summary>
-
-**Solutions:**
-1. Install matplotlib for your Python version:
-   ```bash
-   pip install matplotlib
-   # or
-   pip3 install matplotlib
-   ```
-2. Verify installation:
-   ```bash
-   python -c "import matplotlib; print(matplotlib.__version__)"
-   ```
-3. Ensure you're using the same Python that Inkscape uses
-
-</details>
-
-<details>
-<summary><b>Script execution fails</b></summary>
-
-**Debug Steps:**
-1. Enable **Keep Temp Files** in Advanced tab
-2. Check the log file:
-   ```
-   # Windows
-   %TEMP%\matplotlib_inkscape_debug.log
-   
-   # macOS/Linux
-   /tmp/matplotlib_inkscape_debug.log
-   ```
-3. Check the generated script in temp directory
-4. Run the script manually to see errors:
-   ```bash
-   python /tmp/matplotlib_output_*.py
-   ```
-
-</details>
-
-<details>
-<summary><b>Figure not appearing or wrong size</b></summary>
-
-**Solutions:**
-1. Check output format (SVG recommended for vector graphics)
-2. Verify figure dimensions aren't too large
-3. Check document units match expectations
-4. Try enabling **Embed Image** option
-
-</details>
-
-### Debug Tips
-
-**Check Log File:**
-The extension writes detailed logs to:
+**Step 2: Find the log**
 ```
-[temp-directory]/matplotlib_inkscape_debug.log
+# Windows
+%TEMP%\matplotlib_inkscape_debug.log
+
+# macOS/Linux
+/tmp/matplotlib_inkscape_debug.log
 ```
 
-**Test Inline Code:**
-Start with a minimal example:
+**Step 3: Check the generated script**
+- Generated scripts are saved to temp folder
+- Try running it manually to see actual error:
+```bash
+python /tmp/matplotlib_output_*.py
+```
+
+**Step 4: Test a minimal example**
 ```python
+# Paste this to test if plt works
 plt.plot([1, 2, 3], [1, 4, 9])
-plt.title('Test Plot')
+plt.title('Test')
 ```
 
-**Verify Script Generation:**
-1. Enable **Save Script** option
-2. Set **Script Save Path** to a known location
-3. Examine the generated script for issues
+**Step 5: Verify Python**
+```bash
+python --version
+python -c "import matplotlib; print(matplotlib.__version__)"
+```
+
+</details>
+
+### Common Fixes
+
+<details>
+<summary><b>Extension not appearing after restart</b></summary>
+
+Check **View → Messages** in Inkscape for error details. If you see Python errors:
+
+1. Verify Python path: **Edit → Preferences → System → Python Executable**
+2. Ensure permissions: `chmod +x plt_ink.py` (macOS/Linux)
+3. Check file structure is exactly as shown above
+4. Try full Inkscape restart (not just window close)
+
+</details>
+
+<details>
+<summary><b>Figure appears blank or wrong size</b></summary>
+
+Try these in order:
+
+1. **Switch output format**: Use **Format tab** → change to SVG
+2. **Reduce figure size**: Format tab → set Width/Height to 5-6 inches
+3. **Enable embedding**: Placement tab → check **Embed Image**
+4. **Check margins**: Disable **Tight Layout** in Format tab
+
+</details>
+
+<details>
+<summary><b>Data not loading from CSV</b></summary>
+
+1. Ensure CSV file exists at the path you specified
+2. Check delimiter matches your file (usually `,`)
+3. Verify column numbers are correct (0-indexed)
+4. Try with a simple test CSV first
+
+</details>
 
 ---
 
-## 📚 Script Bank
+## 📚 Script Bank — 30 Ready-to-Use Templates
 
-Thirty templates: twenty-five data-driven research figures plus five basics.
-Each research template declares the columns it needs and ships with an example
-CSV, so it renders before you have configured anything. None of them require
-scipy, seaborn or sklearn — numpy, pandas and matplotlib only.
+**Every template works immediately** with bundled example data. Once you import your data matching the required columns, it uses yours instead. No setup, no code.
+
+**Available across 6 domains:**
 
 #### Model Evaluation (`evaluation/`)
 | Script | Figure | Needs |
@@ -727,84 +732,152 @@ equal-aspect panels, colorbars or nested grids should use it.
 
 ---
 
-## 📝 File Structure
+## 📁 Project Structure
 
 ```
-plt_ink/
-├── plt_ink.py              # Main extension code
-├── plt_ink.inx             # Inkscape extension definition
-├── README.md               # This file
-├── LICENSE                 # MIT License
-├── plt_ink_bank.py         # Category + template metadata (single source of truth)
-├── tools/
-│   ├── make_sample_data.py # Seeded generator for sample_data/
-│   └── render_bank.py      # Headless render test for every template
-├── sample_data/            # Example CSVs the templates fall back to
-│   └── images/             # Example slices, masks and saliency maps
-└── plt_ink_scripts/        # Template bank
-    ├── evaluation/
-    ├── analysis/
-    ├── clinical/
-    ├── stats/
-    ├── imaging/
-    └── basics/
+plt_ink/                          # Main extension folder
+├── plt_ink.py                    # 🔧 Main extension logic
+├── plt_ink.inx                   # Inkscape metadata
+├── plt_ink_bank.py               # 📚 Template registry
+├── plt_ink_dialog.py             # 🖼️ UI dialog
+│
+├── plt_ink_scripts/              # 📊 Template library (30 templates)
+│   ├── evaluation/      (5)      # Training, ROC/PR, confusion matrix, calibration, comparison
+│   ├── analysis/        (5)      # Hyperparameter, Pareto, learning curves, SHAP, embeddings
+│   ├── clinical/        (5)      # Kaplan-Meier, forest plots, Bland-Altman, volcano, dose-response
+│   ├── stats/           (5)      # Rainclouds, slopes, scatter, residuals, correlation
+│   ├── imaging/         (5)      # Segmentation, Grad-CAM, spectra, composite figures
+│   └── basics/          (5)      # 3D, contours, vector fields, dual-axis, demo
+│
+├── sample_data/                  # 📈 Example datasets (always available)
+│   ├── *.csv            (15)     # CSV files for templates
+│   └── images/                   # Sample images for imaging templates
+│
+├── tools/                        # 🛠️ Utilities
+│   ├── make_sample_data.py       # Generate sample datasets
+│   └── render_bank.py            # Test all templates
+│
+├── README.md                     # Documentation (you're reading it!)
+└── LICENSE                       # MIT License
 ```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions welcome! Please:
+Found a bug? Have a great idea? **Contributions are very welcome!**
 
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
+### Report Issues
 
-**Adding Scripts to Bank:**
-- Create your script in the appropriate category folder
-- Include docstring with description
-- Use pre-defined variables (`_fig_width`, `_show_grid`, etc.)
-- Test with the extension before submitting
+- [GitHub Issues](https://github.com/YouvenZ/plt_ink/issues) — bugs & feature requests
+- [GitHub Discussions](https://github.com/YouvenZ/plt_ink/discussions) — questions & ideas
 
-**Development Setup:**
+### Submit a Pull Request
+
+1. **Fork** the repo
+2. **Create a branch**: `git checkout -b feature/your-amazing-thing`
+3. **Make changes** (see "Contributing Templates" below)
+4. **Commit**: `git commit -m 'feat: add your feature'`
+5. **Push**: `git push origin feature/your-amazing-thing`
+6. **Open a PR** with a clear description
+
+### Adding Templates to the Script Bank
+
+Want to add a visualization template? Follow this template:
+
+```python
+"""
+Your Figure Title
+One-line description of what this shows and when to use it.
+
+requires_data: true                    # Does it need user data?
+data_columns: col1, col2, col3         # Expected column names
+sample_data: your_example.csv          # Bundled fallback data file
+tags: keyword, searchable              # Help users find it
+"""
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Your plotting code here
+# Use _fig_width, _fig_height, _dpi, _show_legend, etc.
+```
+
+**Guidelines:**
+- One template = one clear purpose
+- Use only `numpy`, `pandas`, `matplotlib` (no scipy/seaborn/sklearn)
+- Include sample data in `sample_data/` folder
+- Test with and without user data
+- Put in appropriate category folder
+
+### Development Workflow
+
 ```bash
+# Clone and setup
 git clone https://github.com/YouvenZ/plt_ink.git
 cd plt_ink
-# Symlink to extensions directory for testing
-# Windows (PowerShell as Admin)
+
+# Create symlink for testing (Windows PowerShell as Admin):
 New-Item -ItemType Junction -Path "$env:APPDATA\inkscape\extensions\plt_ink" -Target "$(Get-Location)"
+
+# Or Linux/macOS:
+ln -s "$(pwd)" ~/.config/inkscape/extensions/plt_ink
+
+# Test templates render:
+python tools/render_bank.py
 ```
 
 ---
 
-## 📄 License
+## 🆘 Need Help?
 
-This project is licensed under the MIT License - see LICENSE file for details.
-
-Copyright (c) 2026 Rachid, Youven ZEGHLACHE
+| What | Where |
+|------|-------|
+| **Bug report or feature idea** | [GitHub Issues](https://github.com/YouvenZ/plt_ink/issues) |
+| **How do I...?** | [GitHub Discussions](https://github.com/YouvenZ/plt_ink/discussions) |
+| **Direct question** | [Email: youven.z@gmail.com](mailto:youven.z@gmail.com) |
 
 ---
 
-## 📧 Support
+## 📄 License & Credits
 
-- **Issues**: [GitHub Issues](https://github.com/YouvenZ/plt_ink/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/YouvenZ/plt_ink/discussions)
-- **Email**: youvenz.pro@gmail.com
+**MIT License** — You're free to use, modify, and distribute this software.  
+**Copyright © 2026** Youven & Rachid ZEGHLACHE
+
+See [LICENSE](LICENSE) file for full details.
 
 ---
 
 ## 🔄 Changelog
 
+### v2.0 (2026-08-05) — UX Overhaul
+- ✨ **Unified Script Editor** — single tab for inline, external, and template scripts
+- 📊 **Reorganized Script Library** — 30 templates across 6 focused categories
+- 📈 **Sample Datasets** — 15 CSV files + imaging assets for instant testing
+- ⚙️ **Settings Persistence** — your preferences survive restarts
+- 🐍 **First-run Python Detection** — auto-finds Python if available
+- 🛠️ **Build Tools** — utilities for developers
+
 ### v1.0.0 (2026-02-19)
-- ✨ Initial release
-- ✅ Inline code execution
-- ✅ External file loading
-- ✅ Script bank with templates
-- ✅ SVG, PNG, PDF output formats
-- ✅ Data import (CSV, Excel, JSON, Text)
-- ✅ Multiple matplotlib styles
-- ✅ Custom positioning options
-- ✅ LaTeX support
-- ✅ Comprehensive logging
+- Initial release with inline code, external file loading, and script bank
+- SVG/PNG/PDF output formats, data import, matplotlib styles, LaTeX support
+
+---
+
+## 🚀 What's Next?
+
+- **Learn more**: [Full Documentation](https://github.com/YouvenZ/plt_ink)
+- **See examples**: [Script Bank Templates](#-script-bank)
+- **Get help**: [Troubleshooting](#-troubleshooting)
+- **Contribute**: [Contributing Guide](#-contributing)
+
+---
+
+<div align="center">
+
+**Made with ❤️ for scientists, researchers, and designers.**
+
+[⭐ Star on GitHub](https://github.com/YouvenZ/plt_ink) • [🐛 Report a Bug](https://github.com/YouvenZ/plt_ink/issues) • [💬 Join Discussion](https://github.com/YouvenZ/plt_ink/discussions)
+
+</div>
